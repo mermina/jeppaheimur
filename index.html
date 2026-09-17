@@ -503,6 +503,17 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 }
 /* On a phone the nav and the search cannot share a row, so each takes its own. */
 @media (max-width:760px){
+  /* Logo + language switch + basket share the first row. At default sizes they
+     come to ~393px against ~358px of usable width on a 390px phone, so each is
+     trimmed just enough to fit rather than left to wrap. */
+  .hdr__in{gap:10px}
+  .mark{gap:8px;padding:7px 10px;font-size:12px;letter-spacing:.06em}
+  .mark__m{width:28px}
+  .mark__t span{font-size:7.5px;letter-spacing:.1em;margin-top:2px}
+  .hdr__r{gap:6px}
+  .lang button{padding:6px 8px;font-size:11px}
+  .cart{padding:6px 9px;font-size:11px}
+
   .srch{order:3;flex:1 1 100%;max-width:none;margin-left:0}
   .nav{
     order:4;flex:1 1 100%;
