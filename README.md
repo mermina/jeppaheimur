@@ -1,6 +1,6 @@
 # Jeppaheimur — website preview
 
-## 👉 Open the site: **https://mermina.github.io/jeppaheimur-preview/**
+## 👉 Open the site: **https://mermina.github.io/jeppaheimur/**
 
 A working preview of the Jeppaheimur site — aukahlutir í jeppann / accessories for 4x4s.
 Works on a phone as well as a computer.
