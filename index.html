@@ -192,7 +192,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 .hero h1{font-size:clamp(28px,4.5vw,62px);letter-spacing:-.015em}
 .hero h1 em{font-style:normal;display:block;color:var(--ink-2)}
 .hero .rule{width:64px;height:2px;background:var(--accent);margin:22px 0 20px}
-.hero p{margin:0;font-size:clamp(15px,1.5vw,18px);color:var(--ink-2);max-width:36ch}
+.hero p{margin:0;font-size:clamp(15px,1.5vw,18px);color:var(--ink-2);max-width:36ch;
+  text-wrap:pretty}
 .hero__v{position:relative;overflow:hidden;aspect-ratio:2/1;background:#0C1116;
   border-radius:2px}
 
@@ -594,7 +595,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
     <div class="hero__t">
       <h1><span data-t="heroA">Aukahlutir</span><em data-t="heroB">í jeppann</em></h1>
       <div class="rule"></div>
-      <p data-t="heroP">Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.</p>
+      <p data-t="heroP">Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.</p>
     </div>
     <div class="hero__m">
       <div class="hero__v">
@@ -1216,8 +1217,8 @@ const UI = {
   navShipping:['Sendingar','Shipping'], navContact:['Hafa samband','Contact'],
 
   heroA:['Aukahlutir','Accessories'], heroB:['í jeppann','for your 4×4'],
-  heroP:['Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.',
-         'Pick your car and see only the parts that fit it. Easy to browse, with a full description on every product — so you know exactly what you are getting.'],
+  heroP:['Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.',
+         'Pick your car and see only the parts that fit it. Easy to browse, with a full description on every product — so you know exactly what you are getting.'],
   shot1t:['Mynd 01 — forsíða','Photo 01 — front page'],
   shot1d:['Hvítur Land Cruiser 150 á 35", snorkel og brettakantar sjáanleg. Hálendi eða möl, dagsljós, bíllinn á þrem fjórðu.',
           'White Land Cruiser 150 on 35s, snorkel and arch trims visible. Highland or gravel, daylight, three-quarter view.'],
