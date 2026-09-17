@@ -151,12 +151,13 @@ img,svg,video{display:block;max-width:100%}
 .band{padding:clamp(40px,6vw,76px) var(--gut);border-top:1px solid var(--line)}
 .band.dark{border-top:0}
 #story,#makes{scroll-margin-top:104px}
-/* The story headline has to sit on one line. Its column is roughly 0.44 x the
-   viewport, and the line measures ~21.5px wide per 1px of font-size, so the
-   size is derived from that rather than picked — 1.9vw leaves headroom for the
-   longer Icelandic wording. Below 940px the band stacks and it wraps, which is
-   correct on a phone. */
-#story h2{font-size:clamp(19px,1.9vw,37px)}
+/* The headline shares the paragraph's measure, so the block reads as one
+   column of text rather than a wide title over narrow copy. .lead is capped at
+   46ch of 16px body text = 441.6px, which is 27.6rem — the same cap here.
+   Consequence: fitting the line inside 441.6px caps the type at ~20px, because
+   the line measures ~21.5px wide per 1px of font-size. That is inherent to
+   matching the paragraph, not a style choice. */
+#story h2{font-size:clamp(17px,1.35vw,20px);max-width:27.6rem}
 /* The band was vertically centred, so expanding the story made the row taller
    and the photograph slid down to re-centre. Anchoring both columns to the top
    means the text grows downward and the photograph does not move. */
