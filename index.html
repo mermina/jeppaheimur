@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- DRAFT: keeps the preview out of Google while figures and claims are unconfirmed.
+     REMOVE THIS LINE BEFORE LAUNCH or the real site will never be indexed. -->
+<meta name="robots" content="noindex,nofollow">
+<title>Jeppaheimur — aukahlutir í jeppann</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════════
+   Light shop, two dark moments.
+
+   A parts shop should be light: photographs read truer, prices are
+   easier to scan, and it feels like retail rather than a showreel.
+   So the page is paper-white, and dark is spent deliberately — on the
+   hero, where it makes the video carry, on the wholesale strip, and
+   on the footer, which anchors the page.
+
+   Components speak only in tokens (--ink, --line, --paper, --accent),
+   so a section marked .dark re-declares them and everything inside
+   adapts without a second set of rules.
+   ════════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#FFFFFF;          /* cards, plates, inputs */
+  --bg:#F4F5F7;             /* the page */
+  --bg-2:#EBEDF0;           /* quiet fills */
+  --ink:#141A20;            /* headings, prices */
+  --ink-2:#59646D;          /* body */
+  --ink-3:#8A949C;          /* labels, meta */
+  --line:#E1E5E9;           /* hairlines */
+  --edge:#C7CED4;           /* borders that must be seen */
+  --accent:#B0611A;         /* amber, dark enough for white */
+  --accent-lift:#F0A335;    /* the same amber, for dark bands */
+  --good:#2F7D55;
+  --warn:#B4551F;
+
+  --dark:#101720;
+  --dark-2:#18212B;
+
+  /* press feel: fast in, slower out — a switch snaps down and eases back */
+  --press:90ms; --lift:170ms;
+
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --gut:clamp(16px,4vw,48px);
+}
+
+/* a dark section: same components, different tokens */
+.dark{
+  --paper:#1C252F; --bg:var(--dark); --bg-2:#141C24;
+  --ink:#F1F3F5; --ink-2:#A3AEB6; --ink-3:#77828A;
+  --line:#27323C; --edge:#3D4852; --accent:var(--accent-lift);
+  --good:#7FB894; --warn:#E0905A;
+  background:var(--dark); color:var(--ink);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.portrait:focus-visible{outline-offset:6px;border-radius:50%}
+.dark :focus-visible{outline-color:var(--accent-lift)}
+img,svg,video{display:block;max-width:100%}
+
+/* ─── header ─── */
+.hdr{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.hdr__in{
+  display:flex;align-items:center;gap:clamp(14px,1.8vw,26px);
+  padding:10px var(--gut);
+}
+.mark{
+  display:inline-flex;align-items:center;gap:11px;
+  font-family:var(--display);font-weight:900;font-size:14px;letter-spacing:.1em;
+  text-transform:uppercase;padding:9px 13px;border-radius:2px;
+  background:var(--dark);color:#F1F3F5;white-space:nowrap;
+}
+.mark{transition:transform var(--lift) ease, box-shadow var(--lift) ease}
+.mark:hover{transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(16,23,32,.4)}
+.mark:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.4);
+  transition-duration:var(--press)}
+.mark__m{width:38px;height:auto;flex:none}
+.mark__t{display:block;line-height:1.05}
+.mark__t span{color:var(--accent-lift);font-size:8.5px;display:block;letter-spacing:.14em;
+  font-weight:500;margin-top:3px;white-space:nowrap}
+.srch{
+  /* the search no longer needs to eat the whole row — it shrinks first and
+     stops growing once it is comfortably wide enough to type a part name */
+  flex:1 1 150px;min-width:140px;max-width:340px;margin-left:auto;
+  display:flex;align-items:center;gap:9px;
+  border:1px solid var(--edge);background:var(--paper);border-radius:2px;padding:8px 11px;
+}
+.srch input{flex:1;min-width:0;background:none;border:0;color:var(--ink);font:inherit;font-size:14px}
+.srch input::placeholder{color:var(--ink-3)}
+.srch svg{flex:none;stroke:var(--ink-3)}
+.hdr__r{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px}
+.lang{display:flex;align-items:center;border:1px solid var(--edge);border-radius:2px;overflow:hidden}
+.lang button{
+  font:inherit;font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+  background:var(--paper);border:0;color:var(--ink-3);padding:7px 10px;cursor:pointer;
+}
+.lang button+button{border-left:1px solid var(--line)}
+.lang button:hover{color:var(--ink)}
+.lang button[aria-pressed="true"]{background:var(--dark);color:#fff}
+.cart{border:1px solid var(--edge);border-radius:2px;padding:7px 11px;color:var(--ink);
+  letter-spacing:.04em;white-space:nowrap;background:var(--paper)}
+.nav{
+  display:flex;gap:clamp(14px,1.5vw,22px);font-size:13.5px;color:var(--ink-2);
+  flex:0 0 auto;min-width:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  position:relative;white-space:nowrap;padding-bottom:5px;cursor:pointer;
+  color:var(--ink-2);
+  transition:color var(--lift) ease, transform var(--press) ease;
+}
+.nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;
+  transition:transform var(--lift) ease;
+}
+/* hover: the text firms up to full ink and the orange rule sweeps in.
+   Deliberately NOT orange text — that belongs to the current page alone. */
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:scaleX(1)}
+.nav a:active{transform:translateY(1px)}
+/* a click leaves focus behind on some browsers; don't let it read as selected */
+.nav a:focus:not(:focus-visible){color:var(--ink-2)}
+.nav a:focus:not(:focus-visible)::after{transform:scaleX(0)}
+.nav a[aria-current="page"]:focus:not(:focus-visible){color:var(--accent)}
+.nav a[aria-current="page"]:focus:not(:focus-visible)::after{transform:scaleX(1)}
+/* the current page keeps a thicker rule, so it stays distinguishable from
+   whatever the cursor happens to be over */
+.nav a[aria-current="page"]{color:var(--accent)}
+.nav a[aria-current="page"]::after{transform:scaleX(1);height:3px}
+
+/* ─── generic ─── */
+.band{padding:clamp(40px,6vw,76px) var(--gut);border-top:1px solid var(--line)}
+.band.dark{border-top:0}
+#story,#makes{scroll-margin-top:104px}
+/* The story headline has to sit on one line. Its column is roughly 0.44 x the
+   viewport, and the line measures ~21.5px wide per 1px of font-size, so the
+   size is derived from that rather than picked — 1.9vw leaves headroom for the
+   longer Icelandic wording. Below 940px the band stacks and it wraps, which is
+   correct on a phone. */
+#story h2{font-size:clamp(19px,1.9vw,37px)}
+/* The band was vertically centred, so expanding the story made the row taller
+   and the photograph slid down to re-centre. Anchoring both columns to the top
+   means the text grows downward and the photograph does not move. */
+#story .two{align-items:start}
+.hero.dark{border-bottom:1px solid var(--line)}
+.dark .ftbot{color:#6E7A83}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 18px;display:flex;align-items:baseline;gap:12px;
+}
+.eyebrow::after{content:"";height:1px;flex:1;background:var(--line)}
+h1,h2,h3{font-family:var(--display);font-weight:900;text-transform:uppercase;margin:0;line-height:.95;
+  color:var(--ink)}
+h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
+.lead{color:var(--ink-2);max-width:46ch}
+.prose{max-width:62ch;color:var(--ink-2)}
+.prose p{margin:0 0 16px}
+.prose strong{color:var(--ink);font-weight:600}
+.ph{padding:clamp(28px,4vw,52px) var(--gut) clamp(22px,3vw,34px);border-bottom:1px solid var(--line);
+  background:var(--paper)}
+.ph h1{font-size:clamp(30px,5vw,54px);letter-spacing:-.015em}
+.ph .rule{width:56px;height:2px;background:var(--accent);margin:18px 0 16px}
+.ph p{margin:0;color:var(--ink-2);max-width:56ch;font-size:clamp(15px,1.4vw,17px)}
+
+/* ─── hero: the one place the page goes dark on purpose ─── */
+.hero{
+  display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr);
+  gap:clamp(24px,3vw,40px);align-items:center;
+  padding:clamp(32px,4.5vw,64px) var(--gut) clamp(32px,4.5vw,64px) 0;
+}
+.hero__t{padding-left:var(--gut)}
+.hero h1{font-size:clamp(28px,4.5vw,62px);letter-spacing:-.015em}
+.hero h1 em{font-style:normal;display:block;color:var(--ink-2)}
+.hero .rule{width:64px;height:2px;background:var(--accent);margin:22px 0 20px}
+.hero p{margin:0;font-size:clamp(15px,1.5vw,18px);color:var(--ink-2);max-width:36ch}
+.hero__v{position:relative;overflow:hidden;aspect-ratio:2/1;background:#0C1116;
+  border-radius:2px}
+
+.hero__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* ─── photo slots ─── */
+.shot{
+  position:relative;overflow:hidden;background:var(--bg-2);
+  border:1px solid var(--line);min-height:150px;border-radius:2px;
+}
+.shot>svg.scene{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.shot--sq{aspect-ratio:4/3;min-height:0}
+
+/* ─── the make plates ─── */
+.plates{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.plate{
+  position:relative;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:158px;padding:26px 18px;text-align:center;
+  border:1px solid var(--line);border-radius:3px;background:var(--paper);
+  box-shadow:0 1px 2px rgba(16,23,32,.05),0 10px 22px -16px rgba(16,23,32,.35);
+  overflow:hidden;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+  cursor:pointer;
+}
+.plate__emb__face{display:block;width:100%;max-width:172px;height:80px;margin:0 auto 20px}
+.plate__emb{width:100%;height:100%}
+.plate__n{
+  display:block;font-family:var(--display);font-weight:900;
+  font-size:clamp(11px,1.15vw,13px);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-2);
+}
+.plate:hover{transform:translateY(-3px);border-color:var(--edge);
+  box-shadow:0 2px 4px rgba(16,23,32,.07),0 16px 30px -18px rgba(16,23,32,.45)}
+.plate:active{
+  transform:translateY(0) scale(.985);
+  box-shadow:inset 0 2px 8px rgba(16,23,32,.20);
+  transition-duration:var(--press);
+}
+.plate:hover .plate__n{color:var(--ink)}
+.plate .beam{
+  position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .22s ease;
+}
+.plate:hover .beam{transform:scaleX(1)}
+.plate .rv,.plate .rv2{display:none}
+
+.more{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;
+  font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em;flex-wrap:wrap;
+}
+.more a{color:var(--ink-2);border-bottom:1px solid var(--edge);padding-bottom:1px;cursor:pointer}
+.more a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ─── proof ─── */
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.proof>div,.proof>a{background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  padding:26px 22px;display:block}
+/* card 04 leads somewhere, so it behaves like the other things you can press */
+.proof__link{cursor:pointer;transition:transform var(--lift) ease,border-color var(--lift) ease,
+  box-shadow var(--lift) ease}
+.proof__link:hover{border-color:var(--edge);transform:translateY(-2px);
+  box-shadow:0 14px 28px -20px rgba(16,23,32,.45)}
+.proof__link:hover h3{color:var(--accent)}
+.proof__link:active{transform:translateY(0) scale(.994);
+  box-shadow:inset 0 2px 8px rgba(16,23,32,.14);transition-duration:var(--press)}
+.proof__more{display:block;margin-top:14px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.05em;color:var(--accent)}
+.proof h3{font-size:15px;letter-spacing:.07em;margin-bottom:8px}
+.proof p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.proof .num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;
+  display:block;margin-bottom:12px}
+
+/* ─── chips ─── */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;
+  border:1px solid var(--edge);background:var(--paper);border-radius:2px;
+  padding:8px 13px;color:var(--ink-2);cursor:pointer;
+}
+.chip{transition:transform var(--lift) ease,border-color var(--lift) ease,
+       color var(--lift) ease,background var(--lift) ease}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip:active{transform:translateY(1px);transition-duration:var(--press)}
+.chip[aria-pressed="true"]{border-color:var(--dark);background:var(--dark);color:#fff}
+
+/* ─── fitted strip ─── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:9px;letter-spacing:.02em}
+.cap b{color:var(--ink-2);font-weight:500}
+
+/* ─── two-up, buttons, wholesale strip ─── */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.btn{
+  display:inline-block;font-family:var(--display);font-weight:700;font-size:13px;
+  letter-spacing:.12em;text-transform:uppercase;padding:13px 22px;border-radius:2px;
+  border:1px solid var(--dark);background:var(--dark);color:#F1F3F5;cursor:pointer;
+  box-shadow:0 1px 2px rgba(16,23,32,.16);
+  transition:transform var(--lift) ease, box-shadow var(--lift) ease,
+             background var(--lift) ease, border-color var(--lift) ease;
+}
+.btn:hover{background:#1E2831;border-color:#1E2831;
+  transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(16,23,32,.45)}
+/* pressed: sits down into the page, highlight gone, shadow turned inward */
+.btn:active{
+  transform:translateY(1px);
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.34);
+  background:#0B1015;border-color:#0B1015;
+  transition-duration:var(--press);
+}
+.btn--a{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn--a:hover{background:#C96E1F;border-color:#C96E1F}
+.btn--a:active{background:#8F4E14;border-color:#8F4E14}
+.btn--w{width:100%;text-align:center}
+.dark .btn{background:var(--paper);border-color:var(--edge);color:var(--ink);
+  box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.dark .btn:hover{background:#243040;border-color:#4A5661;
+  box-shadow:0 6px 18px -6px rgba(0,0,0,.65)}
+.dark .btn:active{background:#131B24;border-color:#35414C;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.55)}
+.dark .btn--a{background:var(--accent-lift);border-color:var(--accent-lift);color:#1A1205}
+.dark .btn--a:hover{background:#FFB650;border-color:#FFB650}
+.dark .btn--a:active{background:#CE8522;border-color:#CE8522}
+.wh{display:flex;align-items:center;gap:clamp(16px,3vw,40px);flex-wrap:wrap}
+.wh h2{font-size:clamp(20px,2.6vw,28px)}
+.wh p{margin:10px 0 0;color:var(--ink-2);max-width:46ch}
+
+/* ─── footer ─── */
+.ft{padding:clamp(34px,4vw,56px) var(--gut) 40px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:26px;font-size:14px;color:var(--ink-2)}
+.ft h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 12px;font-weight:500}
+.ft ul{margin:0;padding:0;list-style:none}
+.ft li{margin-bottom:7px}
+.ft a{cursor:pointer}
+.ft a:hover{color:var(--accent)}
+.pay{display:flex;flex-wrap:wrap;gap:6px}
+.pay span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
+  border:1px solid var(--line);padding:5px 8px;color:var(--ink-3);border-radius:2px}
+.ftbot{padding:0 var(--gut) 14px;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  letter-spacing:.04em;line-height:1.6;max-width:96ch}
+.ftbot:last-of-type{padding-bottom:44px}
+
+/* ─── make / shop pages ─── */
+.crumb{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);
+  padding:22px var(--gut) 0;text-transform:uppercase;background:var(--paper)}
+.crumb a{cursor:pointer}
+.crumb a:hover{color:var(--accent)}
+.mkhd{display:flex;align-items:flex-end;gap:clamp(16px,3vw,34px);padding:14px var(--gut) 26px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap;background:var(--paper)}
+.mkhd h1{font-size:clamp(34px,6vw,64px);letter-spacing:-.015em}
+.mkhd__mark__face{display:block;width:clamp(76px,10vw,120px);height:clamp(40px,5vw,60px);flex:none}
+.mkhd__mark{width:100%;height:100%}
+.mkhd__c{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.05em;
+  padding-bottom:5px;margin-left:auto}
+.filters{padding:20px var(--gut);border-bottom:1px solid var(--line);display:grid;gap:14px;
+  background:var(--paper)}
+.frow{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.flab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);min-width:72px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:clamp(20px,3vw,32px) var(--gut)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  padding:0 0 18px;display:block;position:relative;cursor:pointer;
+  transition:border-color .16s ease,box-shadow .16s ease}
+.card .shot{border:0;border-bottom:1px solid var(--line);border-radius:2px 2px 0 0}
+.card__b{padding:15px 18px 0}
+.card h3{font-family:var(--body);font-weight:600;font-size:16px;text-transform:none;
+  letter-spacing:0;line-height:1.35;margin-bottom:6px;color:var(--ink)}
+.card__mk{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:6px}
+.fit{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.02em;margin:0 0 12px}
+.card__f{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 18px}
+.price{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.01em;color:var(--ink)}
+.price s{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--ink-3);
+  text-decoration:none;display:block;letter-spacing:.04em}
+.stock{font-family:var(--mono);font-size:11px;color:var(--good);letter-spacing:.04em;
+  display:flex;align-items:center;gap:6px;white-space:nowrap}
+.stock::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+.stock--0{color:var(--warn)}
+.stock--0::before{background:var(--warn)}
+.card{transition:transform var(--lift) ease,border-color var(--lift) ease,
+       box-shadow var(--lift) ease}
+.card:hover{border-color:var(--edge);transform:translateY(-2px);
+  box-shadow:0 16px 30px -20px rgba(16,23,32,.5)}
+.card:active{transform:translateY(0) scale(.994);
+  box-shadow:inset 0 2px 8px rgba(16,23,32,.16);transition-duration:var(--press)}
+.card:hover h3{color:var(--accent)}
+.empty{padding:52px var(--gut);text-align:center;border-bottom:1px solid var(--line);
+  background:var(--paper)}
+.empty h3{font-size:17px;letter-spacing:.06em;margin-bottom:8px}
+.empty p{color:var(--ink-2);margin:0 auto 18px;max-width:40ch}
+
+/* ─── product page ─── */
+.pdp{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,56px);
+  padding:24px var(--gut) clamp(40px,6vw,72px)}
+.pdp h1{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.01em;font-family:var(--body);
+  font-weight:600;text-transform:none;line-height:1.2}
+.sku{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em;margin:0 0 16px}
+.pprice{font-family:var(--display);font-weight:900;font-size:clamp(28px,3.4vw,38px);margin:22px 0 4px}
+.vsk{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em;margin:0 0 20px}
+.fittab{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+.fittab th,.fittab td{text-align:left;padding:10px 0;border-bottom:1px solid var(--line);
+  vertical-align:top}
+.fittab th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;width:40%}
+.pdp__acts{display:grid;gap:9px;margin:22px 0}
+.link-out{font-size:14px;color:var(--ink-2);display:inline-flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--edge);padding-bottom:2px;cursor:pointer}
+.link-out:hover{color:var(--accent);border-color:var(--accent)}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+
+/* ─── inner pages ─── */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.box{border:1px solid var(--line);background:var(--paper);border-radius:2px;padding:24px 22px}
+.box h3{font-size:14.5px;letter-spacing:.07em;margin-bottom:9px}
+.box p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.box .num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;
+  display:block;margin-bottom:11px}
+.rows{width:100%;border-collapse:collapse;font-size:15px;max-width:74ch}
+.rows th,.rows td{text-align:left;padding:14px 0;border-bottom:1px solid var(--line);
+  vertical-align:top}
+.rows th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;width:38%}
+.rows td{color:var(--ink)}
+.form{display:grid;gap:12px;max-width:52ch}
+.form label{display:grid;gap:5px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.form input,.form textarea{
+  font:inherit;font-size:15px;font-family:var(--body);color:var(--ink);
+  background:var(--paper);border:1px solid var(--edge);border-radius:2px;padding:11px 12px;
+}
+.form input:focus,.form textarea:focus{border-color:var(--ink-3);outline:none}
+.form textarea{min-height:104px;resize:vertical}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.facts{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 0}
+.facts>div{background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  padding:20px 24px;flex:1 1 150px}
+.facts b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,34px);
+  color:var(--accent);line-height:1}
+.facts span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:7px}
+
+.qa{max-width:78ch;display:grid;gap:10px}
+.qa details{background:var(--paper);border:1px solid var(--line);border-radius:2px}
+.qa summary{
+  cursor:pointer;list-style:none;padding:16px 46px 16px 18px;position:relative;
+  font-weight:600;font-size:16px;color:var(--ink);
+}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{
+  content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;
+  border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+  transform:translateY(-70%) rotate(45deg);transition:transform .18s ease;
+}
+.qa details[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+.qa summary:hover{color:var(--accent)}
+.qa details[open] summary{border-bottom:1px solid var(--line)}
+.qa .a{padding:14px 18px 18px;color:var(--ink-2);font-size:15px}
+.qa .a p{margin:0 0 12px}
+.qa .a p:last-child{margin:0}
+.qa .a strong{color:var(--ink);font-weight:600}
+
+.portrait{
+  width:100%;max-width:clamp(250px,40vw,470px);aspect-ratio:1;border-radius:50%;
+  overflow:hidden;margin:0 auto;background:var(--bg-2);cursor:pointer;
+  box-shadow:0 0 0 1px rgba(255,255,255,.10),0 18px 40px -22px rgba(0,0,0,.65);
+  transition:transform var(--lift) ease, box-shadow var(--lift) ease;
+}
+.portrait img{width:100%;height:100%;object-fit:cover;
+  transition:transform 520ms cubic-bezier(.2,.7,.3,1)}
+.portrait:hover img{transform:scale(1.06)}
+.portrait:hover{
+  box-shadow:0 0 0 2px var(--accent-lift),0 24px 50px -22px rgba(0,0,0,.8);
+}
+.portrait:active{
+  transform:scale(.982);
+  box-shadow:0 0 0 2px var(--accent-lift),inset 0 3px 12px rgba(0,0,0,.45);
+  transition-duration:var(--press);
+}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.more-btn{
+  font:inherit;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;
+  background:none;border:0;padding:0;cursor:pointer;color:var(--accent);
+  border-bottom:1px solid currentColor;
+}
+.more-btn{transition:transform var(--press) ease,color var(--lift) ease}
+.more-btn:hover{color:var(--ink)}
+.more-btn:active{transform:translateY(1px)}
+.btn--tt{background:transparent;border-color:var(--edge);color:var(--ink);
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:none}
+.btn--tt:hover{border-color:var(--accent);color:var(--accent);background:transparent}
+.dark .btn--tt{background:transparent;border-color:var(--edge);color:var(--ink)}
+.dark .btn--tt:hover{border-color:var(--accent);color:var(--accent);background:transparent}
+
+.screen{display:none}
+.screen.on{display:block}
+
+/* Too narrow for one row: wrap to TWO rows rather than three —
+   logo + controls above, nav + search below. */
+@media (max-width:1300px) and (min-width:941px){
+  .proof{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:1200px){
+  .hdr__in{flex-wrap:wrap;padding-bottom:9px}
+  .mark{order:1}
+  .hdr__r{order:2;margin-left:auto}
+  .nav{order:3;flex:1 1 auto}
+  /* whatever wraps to the second row starts at the left margin, so the row
+     reads normally instead of dangling on the right */
+  .srch{order:4;flex:0 1 300px;max-width:340px;margin-left:0}
+}
+/* On a phone the nav and the search cannot share a row, so each takes its own. */
+@media (max-width:760px){
+  .srch{order:3;flex:1 1 100%;max-width:none;margin-left:0}
+  .nav{
+    order:4;flex:1 1 100%;
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%);
+            mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%);
+  }
+}
+@media (max-width:940px){
+  .hero{grid-template-columns:1fr;padding-bottom:32px}
+  .hero__t{padding-right:var(--gut)}
+  .hero__m{padding:0 var(--gut)}
+  .plates{grid-template-columns:repeat(2,1fr)}
+  .proof,.strip,.grid,.two,.pdp,.trio{grid-template-columns:1fr}
+  .proof>div{padding:20px 18px}
+  .ft{grid-template-columns:repeat(2,1fr)}
+  .hdr__in{flex-wrap:wrap}
+  .srch{order:3;width:100%;flex:none}
+  .form .row2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .hero__vid{display:none}
+}
+</style>
+</head>
+<body>
+
+
+<header class="hdr">
+  <div class="hdr__in">
+    <a class="mark" data-go="home" aria-label="Jeppaheimur">
+      <svg class="mark__m" viewBox="0 0 112 78" aria-hidden="true">
+        <!-- The E's top bar runs straight on into the W's first downstroke, so the
+             two letters are one continuous line. The colour changes at the joint,
+             which is what makes the merge legible: white hands over to orange. -->
+        <g fill="none" stroke-width="10" stroke-linecap="butt" stroke-linejoin="miter">
+          <path d="M48 70 H14 V8 H48" stroke="#F1F3F5"/>
+          <path d="M14 39 H40" stroke="#F1F3F5"/>
+          <path d="M44 8 L59 70 L73 33 L87 70 L101 8" stroke="var(--accent-lift)"/>
+        </g>
+      </svg>
+      <span class="mark__t">Jeppaheimur<span>Aukahlutir í jeppann</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a data-go="home" data-scroll="makes" data-t="navChoose">Veldu bíl</a>
+      <a data-go="shop"      data-t="navShop">Veldu hlut</a>
+      <a data-go="wholesale" data-t="navWholesale">Heildsala</a>
+      <a data-go="home" data-scroll="story" data-t="navAbout">Sagan okkar</a>
+      <a data-go="faq"       data-t="navFaq">Spurt og svarað</a>
+      <a data-go="contact"   data-t="navContact">Hafa samband</a>
+    </nav>
+    <label class="srch">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.5-4.5"/></svg>
+      <input data-tp="searchPh" aria-label="Leita">
+    </label>
+    <div class="hdr__r">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="is" aria-pressed="true">IS</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <span class="cart" data-t="cart">Karfa (0)</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════════════ HOME ══════════════════ -->
+<main class="screen on" id="home">
+  <section class="hero dark">
+    <div class="hero__t">
+      <h1><span data-t="heroA">Aukahlutir</span><em data-t="heroB">í jeppann</em></h1>
+      <div class="rule"></div>
+      <p data-t="heroP">Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.</p>
+    </div>
+    <div class="hero__m">
+      <div class="hero__v">
+        <video class="hero__vid" autoplay muted loop playsinline preload="metadata"
+               poster="assets/hero-highlands.jpg">
+          <source src="assets/hero-highlands.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="band" id="makes" style="border-top:0">
+    <p class="eyebrow" data-t="gridEyebrow">Veldu bíl</p>
+    <div class="plates" id="plates"></div>
+    <div class="more">
+      <span data-t="gridMore">Finnur þú ekki bílinn þinn? Sendu okkur línu — við flytjum inn eftir beiðni.</span>
+      <a data-go="cars" data-t="allMakes">Allar tegundir →</a>
+    </div>
+  </section>
+
+
+  
+
+  
+  
+
+  <section class="band dark" id="story">
+    <div class="two">
+      <div class="portrait" id="storyPhoto" role="button" tabindex="0"
+           aria-expanded="false" aria-controls="storyRest">
+        <img src="assets/edvard-portrait.jpg" width="800" height="800"
+             data-talt="portraitAlt" alt="Edvard við eigin Camaro á hálendinu">
+      </div>
+      <div>
+        <p class="eyebrow" data-t="storyEyebrow">Sagan okkar</p>
+        <h2 data-t="storyH">Áhugamál varð að vandaðri vinnu.</h2>
+        <p class="lead" style="margin:16px 0 14px" data-t="storyB">
+          Ég hef breytt bílum í meira en níu ár — byggt á trausti og verklegri reynslu.
+        </p>
+        <p class="lead" style="margin:0 0 14px" data-t="storyR1"></p>
+        <div class="story__rest" id="storyRest" hidden>
+          <p class="lead" style="margin:0 0 14px" data-t="storyR2"></p>
+          <p class="lead" style="margin:0 0 14px" data-t="storyR3"></p>
+          <p class="lead" style="margin:0 0 14px" data-t="storyLang"></p>
+        </div>
+        <button class="more-btn" id="storyMore" aria-expanded="false"
+                aria-controls="storyRest" data-t="storyMoreBtn">…meira</button>
+        <div class="acts">
+          <a class="btn btn--tt" href="https://www.tiktok.com/@edvardxrcst"
+             target="_blank" rel="noopener">TikTok · @edvardxrcst →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+<section class="band">
+    <div class="proof">
+      <div><span class="num">01</span><h3 data-t="p1h">Sýnt á bíl</h3>
+        <p data-t="p1b">Hver hlutur er myndaður uppsettur á bíl, svo þú sérð hvað þú ert að kaupa.</p></div>
+      <div><span class="num">02</span><h3 data-t="p2h">Til á lager hér</h3>
+        <p data-t="p2b">Vörurnar eru á Íslandi. Þú bíður ekki í fjórar vikur eftir sendingu.</p></div>
+      <div><span class="num">03</span><h3 data-t="p3h">Verðið er verðið</h3>
+        <p data-t="p3b">Verð með VSK, sent á land allt. Engin verð „eftir samtali“.</p></div>
+      <a class="proof__link" data-go="wholesale"><span class="num">04</span>
+        <h3 data-t="p4h">Heildsala fyrir verkstæði</h3>
+        <p data-t="p4b">Rekurðu verkstæði eða selur áfram? Fast verð frá tiltekinni pöntun og beint samband við okkur.</p>
+        <span class="proof__more" data-t="p4link">Heildsala →</span></a>
+    </div>
+  </section>
+
+  </main>
+
+<!-- ══════════════════ CHOOSE YOUR CAR ══════════════════ -->
+<main class="screen" id="cars">
+  <div class="ph">
+    <h1 data-t="carsH">Veldu bíl</h1><div class="rule"></div>
+    <p data-t="carsP">Við eigum aukahluti fyrir þessar tegundir. Finnurðu ekki þína — sendu okkur línu, við flytjum inn eftir beiðni.</p>
+  </div>
+  <section class="band" style="border-top:0">
+    <div class="plates" id="platesAll"></div>
+  </section>
+  <section class="band">
+    <p class="eyebrow" data-t="carsMoreH">Fáar vörur enn þá</p>
+    <p class="lead" data-t="carsMoreP">Þessar tegundir eru að byggjast upp. Vörurnar þeirra eru undir Veldu hlut á meðan.</p>
+    <div class="chips" id="platesRest" style="margin-top:16px"></div>
+  </section>
+</main>
+
+<!-- ══════════════════ SHOP (all products) ══════════════════ -->
+<main class="screen" id="shop">
+  <div class="ph">
+    <h1 data-t="shopH">Veldu hlut</h1><div class="rule"></div>
+    <p data-t="shopP">Allt sem við eigum, síað eftir bíltegund og flokki. Veistu hvaða bíl þú ert með? Byrjaðu á Veldu bíl.</p>
+  </div>
+  <div class="filters">
+    <div class="frow"><span class="flab" data-t="fMake">Tegund</span><div class="chips" id="shopMakeFilter"></div></div>
+    <div class="frow"><span class="flab" data-t="fCat">Flokkur</span><div class="chips" id="shopCatFilter"></div></div>
+  </div>
+  <div class="grid" id="shopProds"></div>
+</main>
+
+<!-- ══════════════════ MAKE ══════════════════ -->
+<main class="screen" id="make">
+  <p class="crumb"><a data-go="home" data-t="crumbHome">Forsíða</a> / <span id="mkCrumb">Toyota</span></p>
+  <div class="mkhd">
+    <span id="mkFace"></span>
+    <h1 id="mkName">Toyota</h1>
+    <span class="mkhd__c" id="mkCount"></span>
+  </div>
+  <div class="filters">
+    <div class="frow">
+      <span class="flab" data-t="fModel">Gerð</span>
+      <div class="chips" id="mkModelFilter"></div>
+    </div>
+    <div class="frow">
+      <span class="flab" data-t="fCat">Flokkur</span>
+      <div class="chips" id="mkCatFilter"></div>
+    </div>
+  </div>
+  <div class="grid" id="prods"></div>
+  <div class="empty">
+    <h3 data-t="emptyH">Engin vara fannst</h3>
+    <p data-t="emptyB">Við eigum ekki þennan flokk fyrir þessa tegund í augnablikinu. Sendu okkur línu — við flytjum inn eftir beiðni.</p>
+    <a class="btn" data-go="contact" data-t="enquire">Senda fyrirspurn</a>
+  </div>
+</main>
+
+<!-- ══════════════════ PRODUCT ══════════════════ -->
+<main class="screen" id="product">
+  <p class="crumb"><a data-go="home" data-t="crumbHome">Forsíða</a> /
+    <a data-go="make">Toyota</a> / <span data-t="catSnorkel">Snorkel</span></p>
+  <div class="pdp">
+    <div>
+      <div class="shot" style="aspect-ratio:4/3" data-scene="snorkel">
+      </div>
+      <div class="thumbs">
+        <div class="shot" style="aspect-ratio:1;min-height:0" data-scene="part"></div>
+        <div class="shot" style="aspect-ratio:1;min-height:0" data-scene="front"></div>
+        <div class="shot" style="aspect-ratio:1;min-height:0" data-scene="workshop"></div>
+      </div>
+    </div>
+    <div>
+      <h1 data-t="pdpName">Snorkel — Toyota Land Cruiser 150</h1>
+      <p class="sku"><span data-t="skuLabel">Vörunúmer</span> TOY-SNK-150</p>
+      <p style="color:var(--ink-2);margin:0" data-t="pdpDesc">
+        Loftinntak upp á þak fyrir vatnavaðanir og mikið ryk. Sett á með boltum á upprunalega
+        festipunkta — engin klipping.
+      </p>
+      <p class="pprice" id="pdpPrice"></p>
+      <p class="vsk" id="pdpVsk"></p>
+      <table class="fittab">
+        <tr><th data-t="tFits">Passar við</th><td>Land Cruiser 150 · 2010–2017</td></tr>
+        <tr><th data-t="tMaterial">Efni</th><td data-t="vMaterial">Höggþolið plast, UV-varið</td></tr>
+        <tr><th data-t="tFitting">Uppsetning</th><td data-t="vFitting">Á upprunalega punkta, engin klipping</td></tr>
+      </table>
+      <div class="pdp__acts">
+        <a class="btn btn--a btn--w" data-go="contact" data-t="enquire">Senda fyrirspurn</a>
+      </div>
+      <a class="link-out" href="https://www.tiktok.com/@edvardxrcst" target="_blank" rel="noopener" data-t="seeFitting">Sjáðu uppsetninguna á TikTok →</a>
+    </div>
+  </div>
+</main>
+
+<!-- ══════════════════ WHOLESALE ══════════════════ -->
+<main class="screen" id="wholesale">
+  <div class="ph">
+    <h1 data-t="whPageH">Heildsala</h1><div class="rule"></div>
+    <p data-t="whPageP">Rekurðu verkstæði eða selur áfram? Við bjóðum heildsöluverð frá tiltekinni pöntun, og beint samband við okkur í stað þess að fara gegnum vefinn.</p>
+  </div>
+  <section class="band">
+    <div class="trio">
+      <div class="box"><span class="num">01</span><h3 data-t="wh1H">Fast verð, ekki tilboð í hvert sinn</h3>
+        <p data-t="wh1B">Þú fær verðlista og veist hvað hluturinn kostar áður en þú lofar viðskiptavini þínum nokkru.</p></div>
+      <div class="box"><span class="num">02</span><h3 data-t="wh2H">Beint samband</h3>
+        <p data-t="wh2B">Þú talar við okkur, ekki við vefform. Við svörum hvort hluturinn passar og hvenær hann kemur.</p></div>
+      <div class="box"><span class="num">03</span><h3 data-t="wh3H">Á lager á Íslandi</h3>
+        <p data-t="wh3B">Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.</p></div>
+    </div>
+  </section>
+  <section class="band">
+    <p class="eyebrow" data-t="whTermsH">Skilmálar heildsölu</p>
+    <table class="rows">
+      <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">TALA VANTAR — Edvard ákveður</td></tr>
+      <tr><th data-t="whR2">Afsláttur</th><td data-t="whV2">TALA VANTAR — þrep eftir magni</td></tr>
+      <tr><th data-t="whR3">Greiðsluskilmálar</th><td data-t="whV3">ÓSTAÐFEST — reikningur eða fyrirframgreiðsla</td></tr>
+      <tr><th data-t="whR4">Afhending</th><td data-t="whV4">ÓSTAÐFEST — sjá Sendingar</td></tr>
+    </table>
+  </section>
+  <section class="band">
+    <p class="eyebrow" data-t="whFormH">Sendu okkur línu</p>
+    <div class="form">
+      <div class="row2">
+        <label><span data-t="fCompany">Fyrirtæki</span><input type="text"></label>
+        <label><span data-t="fKt">Kennitala</span><input type="text"></label>
+      </div>
+      <div class="row2">
+        <label><span data-t="fName">Nafn</span><input type="text"></label>
+        <label><span data-t="fPhone">Sími</span><input type="tel"></label>
+      </div>
+      <label><span data-t="fEmail">Netfang</span><input type="email"></label>
+      <label><span data-t="fMsg">Hvað ertu að leita að?</span><textarea></textarea></label>
+      <a class="btn btn--a" style="justify-self:start" data-t="fSend">Senda</a>
+    </div>
+  </section>
+</main>
+
+
+<!-- ══════════════════ SHIPPING ══════════════════ -->
+<main class="screen" id="shipping">
+  <div class="ph">
+    <h1 data-t="shH">Sendingar</h1><div class="rule"></div>
+    <p data-t="shP">Við sendum á land allt. Hér er hvað það kostar, hvað það tekur og hvernig þú skilar ef hluturinn passar ekki.</p>
+  </div>
+  <section class="band">
+    <table class="rows">
+      <tr><th data-t="shR1">Frí sending yfir</th><td data-t="shV1">15.000 kr. — TALA ÓSTAÐFEST</td></tr>
+      <tr><th data-t="shR2">Sendingarkostnaður</th><td data-t="shV2">TALA VANTAR — eftir þyngd og stærð</td></tr>
+      <tr><th data-t="shR3">Afhendingartími</th><td data-t="shV3">1–3 virkir dagar — ÓSTAÐFEST</td></tr>
+      <tr><th data-t="shR4">Sendingarleiðir</th><td data-t="shV4">ÓSTAÐFEST — Íslandspóstur, Samskip, Eimskip?</td></tr>
+      <tr><th data-t="shR5">Afhending á staðnum</th><td data-t="shV5">ÓSTAÐFEST — er starfsstöð? hvar?</td></tr>
+      <tr><th data-t="shR6">Stórir hlutir</th><td data-t="shV6">Framgrindur og toppgrindur — sérsending, ÓSTAÐFEST</td></tr>
+    </table>
+  </section>
+  <section class="band">
+    <p class="eyebrow" data-t="shRetH">Skilaréttur</p>
+    <div class="prose">
+      <p data-t="shRet1">Þú hefur <strong>14 daga</strong> til að skila vöru sem þú hefur ekki notað, í upprunalegum pakkningum. Við endurgreiðum þegar varan er komin til okkar.</p>
+      <p data-t="shRet2">Passar hluturinn ekki á bílinn þinn? Hafðu samband áður en þú setur hann á — hlutur sem hefur verið boraður eða málaður er ekki hægt að skila.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════ Q&A ══════════════════ -->
+<main class="screen" id="faq">
+  <div class="ph">
+    <h1 data-t="faqH">Spurt og svarað</h1><div class="rule"></div>
+    <p data-t="faqP">Þetta er það sem er oftast spurt um. Finnurðu ekki svarið — sendu okkur línu.</p>
+  </div>
+  <section class="band">
+    <div class="qa" id="qa"></div>
+  </section>
+  <section class="band">
+    <div class="wh">
+      <div>
+        <h2 data-t="faqCtaH">Fannst svarið ekki?</h2>
+        <p data-t="faqCtaB">Sendu okkur bíltegund og árgerð, þá svörum við hvort hluturinn passar.</p>
+      </div>
+      <a class="btn btn--a" style="margin-left:auto" data-go="contact" data-t="navContact">Hafa samband</a>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<main class="screen" id="contact">
+  <div class="ph">
+    <h1 data-t="coH">Hafa samband</h1><div class="rule"></div>
+    <p data-t="coP">Spurning um hvort hlutur passar á bílinn þinn? Skrifaðu eða hringdu — það er fljótlegast að segja okkur árgerð og gerð.</p>
+  </div>
+  <section class="band">
+    <div class="two" style="align-items:start">
+      <div>
+        <table class="rows" style="max-width:none">
+          <tr><th data-t="coEmail">Netfang</th><td>xxx@xxx.is</td></tr>
+          <tr><th data-t="coPhone">Sími</th><td>+354 xxx xxxx</td></tr>
+          <tr><th data-t="coHours">Opnunartími</th><td data-t="coHoursV">ÓSTAÐFEST</td></tr>
+          <tr><th data-t="coSocial">Samfélagsmiðlar</th><td><a class="link-out" href="https://www.tiktok.com/@edvardxrcst" target="_blank" rel="noopener">@edvardxrcst</a></td></tr>
+        </table>
+      </div>
+      <div>
+        <p class="eyebrow" data-t="coFormH">Skrifaðu okkur</p>
+        <div class="form">
+          <div class="row2">
+            <label><span data-t="fName">Nafn</span><input type="text"></label>
+            <label><span data-t="fPhone">Sími</span><input type="tel"></label>
+          </div>
+          <label><span data-t="fEmail">Netfang</span><input type="email"></label>
+          <div class="row2">
+            <label><span data-t="fCarMake">Bíltegund</span><input type="text" placeholder="Toyota"></label>
+            <label><span data-t="fCarYear">Árgerð</span><input type="text" placeholder="2014"></label>
+          </div>
+          <label><span data-t="fMsg">Hvað ertu að leita að?</span><textarea></textarea></label>
+          <a class="btn btn--a" style="justify-self:start" data-t="fSend">Senda</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="dark">
+<footer class="ft">
+  <div>
+    <h4 data-t="ftShop">Verslun</h4>
+    <ul>
+      <li><a data-go="home" data-scroll="makes" data-t="navChoose">Veldu bíl</a></li>
+      <li><a data-go="shop" data-t="navShop">Veldu hlut</a></li>
+      <li><a data-go="wholesale" data-t="navWholesale">Heildsala</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4 data-t="ftInfo">Upplýsingar</h4>
+    <ul>
+      <li><a data-go="shipping" data-t="navShipping">Sendingar</a></li>
+      <li><a data-go="shipping" data-t="ftTerms">Skilmálar</a></li>
+      <li><a data-go="home" data-scroll="story" data-t="navAbout">Sagan okkar</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4 data-t="ftContact">Samband</h4>
+    <ul>
+      <li><a data-go="contact" data-t="navContact">Hafa samband</a></li>
+      <li>xxx@xxx.is</li>
+      <li><a href="https://www.tiktok.com/@edvardxrcst" target="_blank" rel="noopener">TikTok</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4 data-t="ftPay">Greiðslur</h4>
+    <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>NETGÍRÓ</span><span data-t="payInstal">RAÐGREIÐSLUR</span><span data-t="payTransfer">MILLIFÆRSLA</span></div>
+  </div>
+</footer>
+<p class="ftbot" data-t="ftBot">Öll verð með VSK · kt. 000000-0000</p>
+</div>
+
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   Aukahlutir í jeppann — design mockup
+   Nine screens, two languages, two plate treatments.
+   Nothing here is production code: it is a drawing that clicks.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── body-type silhouettes, for the wordmark plates and the scenes ── */
+const SIL = {
+  wagon:'<polygon points="9,31 11,18 24,17 31,6 87,6 97,17 111,19 113,31"/><circle cx="33" cy="34" r="8"/><circle cx="91" cy="34" r="8"/>',
+  pickup:'<polygon points="7,31 9,19 25,18 33,7 61,7 68,18 109,18 111,31"/><circle cx="30" cy="34" r="8"/><circle cx="92" cy="34" r="8"/>',
+  small:'<polygon points="20,31 21,17 30,16 36,6 76,6 84,16 100,18 101,31"/><circle cx="37" cy="34" r="8"/><circle cx="86" cy="34" r="8"/>'
+};
+const carG = (t,x,y,s,f) => `<g transform="translate(${x} ${y}) scale(${s})" fill="${f}">${SIL[t]}</g>`;
+
+/* ── placeholder scenes, in the Iceland palette ──────────────────
+   Rhyolite ochre, moss, glacier blue, black sand, dusk. Flat vector,
+   drawn here, no external images — the file works offline.
+   All disposable: every one is replaced by a photograph of Edvard's.
+   Gradient ids are suffixed per scene so several can coexist on a page.
+   ──────────────────────────────────────────────────────────────── */
+const SCENES = {
+
+  /* hero — its own wide framing, because a 4:3 scene sliced into a
+     letterbox magnifies about 2x and loses the landscape */
+  highlandWide: `
+    <defs>
+      <linearGradient id="skyW" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1B3546"/><stop offset=".62" stop-color="#3D6274"/>
+        <stop offset="1" stop-color="#B5714A"/>
+      </linearGradient>
+      <linearGradient id="ridgeW" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#C89257"/><stop offset="1" stop-color="#6E4728"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="180" fill="url(#skyW)"/>
+    <path d="M0 92 L46 58 L82 78 L128 42 L182 84 L232 56 L288 92 L340 66 L400 86 L400 180 L0 180Z" fill="url(#ridgeW)"/>
+    <path d="M128 42 L148 58 L108 58Z" fill="#DCE8ED" opacity=".82"/>
+    <path d="M232 56 L246 66 L218 66Z" fill="#DCE8ED" opacity=".5"/>
+    <path d="M0 108 L88 96 L168 110 L252 98 L330 112 L400 102 L400 180 L0 180Z" fill="#54604E"/>
+    <rect y="126" width="400" height="54" fill="#221F1D"/>
+    <ellipse cx="200" cy="127" rx="250" ry="8" fill="#2E2A26"/>
+    <ellipse cx="56" cy="152" rx="16" ry="4" fill="#191716"/>
+    <ellipse cx="332" cy="166" rx="21" ry="5" fill="#191716"/>
+    ${carG('wagon', 148, 84, 0.95, '#E8EBED')}
+    <path d="M186 112 l6 -27 h9 l-3 27z" fill="#3C4650"/>`,
+
+  /* snorkel — closer, rhyolite behind, the intake picked out */
+  snorkel: `
+    <defs>
+      <linearGradient id="skyS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#224052"/><stop offset="1" stop-color="#6E8FA0"/>
+      </linearGradient>
+      <linearGradient id="ridgeS" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#C08A52"/><stop offset="1" stop-color="#7A4F2C"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#skyS)"/>
+    <path d="M0 132 L70 96 L124 124 L190 88 L262 128 L330 104 L400 126 L400 300 L0 300Z" fill="url(#ridgeS)"/>
+    <path d="M190 88 L208 104 L172 104Z" fill="#E2ECF0" opacity=".78"/>
+    <path d="M0 168 L96 156 L196 172 L300 158 L400 170 L400 300 L0 300Z" fill="#4E6B48"/>
+    <rect y="200" width="400" height="100" fill="#221F1D"/>
+    <ellipse cx="200" cy="201" rx="250" ry="10" fill="#2E2A26"/>
+    ${carG('wagon', 56, 118, 2.4, '#EDF0F1')}
+    <path d="M124 150 l9 -46 h13 l-4 46z" fill="#333C45"/>
+    <rect x="119" y="146" width="27" height="7" rx="2.5" fill="#333C45"/>`,
+
+  /* gravel — moss and black rock, arch trims picked out */
+  gravel: `
+    <defs>
+      <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2B4C5E"/><stop offset="1" stop-color="#7FA3B4"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#skyG)"/>
+    <path d="M0 116 L90 88 L170 114 L250 86 L330 118 L400 100 L400 300 L0 300Z" fill="#59452F"/>
+    <path d="M0 146 L84 132 L176 152 L268 134 L360 150 L400 142 L400 300 L0 300Z" fill="#546F49"/>
+    <path d="M0 178 L96 168 L200 184 L308 170 L400 180 L400 300 L0 300Z" fill="#3E5437"/>
+    <rect y="192" width="400" height="108" fill="#221F1D"/>
+    <ellipse cx="200" cy="193" rx="250" ry="9" fill="#2E2A26"/>
+    ${carG('small', 86, 130, 1.9, '#E4E8EA')}
+    <path d="M147 190 a24 24 0 0 1 48 0 l-9 0 a15 15 0 0 0 -30 0z" fill="#2A323A"/>
+    <path d="M240 190 a24 24 0 0 1 48 0 l-9 0 a15 15 0 0 0 -30 0z" fill="#2A323A"/>`,
+
+  /* night — blue hour, the light bar lit. The one place amber is content. */
+  night: `
+    <defs>
+      <linearGradient id="skyN" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0B1A26"/><stop offset="1" stop-color="#274859"/>
+      </linearGradient>
+      <linearGradient id="beamN" x1="1" y1="0" x2="0" y2="0">
+        <stop offset="0" stop-color="#F0A335" stop-opacity=".42"/>
+        <stop offset="1" stop-color="#F0A335" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#skyN)"/>
+    <circle cx="322" cy="52" r="3" fill="#CFE2EA" opacity=".8"/>
+    <circle cx="358" cy="86" r="2" fill="#CFE2EA" opacity=".6"/>
+    <circle cx="286" cy="30" r="2" fill="#CFE2EA" opacity=".5"/>
+    <path d="M0 140 L80 112 L150 138 L230 108 L310 140 L400 118 L400 300 L0 300Z" fill="#16242E"/>
+    <rect y="200" width="400" height="100" fill="#0B1116"/>
+    <path d="M104 162 L0 118 L0 210 Z" fill="url(#beamN)"/>
+    <path d="M104 178 L0 162 L0 236 Z" fill="url(#beamN)"/>
+    ${carG('pickup', 92, 134, 1.8, '#39454F')}
+    <rect x="104" y="156" width="48" height="8" rx="3.5" fill="#FFCB6B"/>
+    <circle cx="100" cy="178" r="6" fill="#FFCB6B"/>
+    <ellipse cx="128" cy="160" rx="42" ry="14" fill="#F0A335" opacity=".22"/>`,
+
+  /* front — symmetrical, warm workshop wall behind. For bull bars. */
+  front: `
+    <defs>
+      <linearGradient id="wallF" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8A6742"/><stop offset="1" stop-color="#4A3728"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#wallF)"/>
+    <rect y="214" width="400" height="86" fill="#2B2724"/>
+    <ellipse cx="200" cy="216" rx="190" ry="10" fill="#211E1B"/>
+    <path d="M120 92 h160 a16 16 0 0 1 16 16 v106 h-192 v-106 a16 16 0 0 1 16 -16z" fill="#E8EBED"/>
+    <rect x="142" y="104" width="116" height="36" rx="5" fill="#2E4A57"/>
+    <rect x="128" y="152" width="42" height="17" rx="4" fill="#FFF3D4"/>
+    <rect x="230" y="152" width="42" height="17" rx="4" fill="#FFF3D4"/>
+    <g fill="#B9C0C4">
+      <rect x="178" y="150" width="6" height="21"/><rect x="188" y="150" width="6" height="21"/>
+      <rect x="198" y="150" width="6" height="21"/><rect x="208" y="150" width="6" height="21"/>
+      <rect x="218" y="150" width="6" height="21"/>
+    </g>
+    <rect x="110" y="178" width="180" height="8" rx="4" fill="#5A646C"/>
+    <rect x="148" y="178" width="8" height="36" fill="#5A646C"/>
+    <rect x="244" y="178" width="8" height="36" fill="#5A646C"/>
+    <rect x="108" y="194" width="26" height="22" fill="#1B1917"/>
+    <rect x="266" y="194" width="26" height="22" fill="#1B1917"/>`,
+
+  /* part — a component on a workshop bench */
+  part: `
+    <defs>
+      <linearGradient id="benchP" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3A4A52"/><stop offset="1" stop-color="#222C32"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#benchP)"/>
+    <rect y="206" width="400" height="94" fill="#7A5535"/>
+    <rect y="206" width="400" height="5" fill="#9C6F45"/>
+    <ellipse cx="200" cy="216" rx="146" ry="24" fill="#2B2724" opacity=".5"/>
+    <path d="M92 196 q104 -86 216 -18 l-16 30 q-92 -58 -178 14z" fill="#44505A"/>
+    <path d="M92 196 q104 -86 216 -18 l-5 9 q-100 -62 -200 15z" fill="#93A3AD"/>
+    <circle cx="126" cy="188" r="5" fill="#222A30"/>
+    <circle cx="278" cy="176" r="5" fill="#222A30"/>`,
+
+  /* workshop — the part itself, on a lit bench */
+  workshop: `
+    <rect width="400" height="300" fill="#2F3A41"/>
+    <ellipse cx="200" cy="90" rx="150" ry="80" fill="#4A5860" opacity=".5"/>
+    <rect y="196" width="400" height="104" fill="#7A5535"/>
+    <rect y="196" width="400" height="5" fill="#A27347"/>
+    <ellipse cx="200" cy="208" rx="130" ry="20" fill="#2B2724" opacity=".45"/>
+    <path d="M132 190 l24 -96 h32 l-12 96z" fill="#8E9CA6"/>
+    <path d="M132 190 l24 -96 h9 l-18 96z" fill="#C2CCD2"/>
+    <rect x="126" y="182" width="66" height="10" rx="4" fill="#5C676F"/>`,
+
+  /* person — Edvard beside his own car, moss and rhyolite behind */
+  person: `
+    <defs>
+      <linearGradient id="skyPe" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#254456"/><stop offset="1" stop-color="#83A5B5"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#skyPe)"/>
+    <path d="M0 122 L84 94 L162 120 L244 92 L326 122 L400 104 L400 300 L0 300Z" fill="#6B4E31"/>
+    <path d="M0 158 L96 146 L204 164 L306 148 L400 160 L400 300 L0 300Z" fill="#4E6B48"/>
+    <rect y="200" width="400" height="100" fill="#221F1D"/>
+    <ellipse cx="220" cy="201" rx="220" ry="9" fill="#2E2A26"/>
+    ${carG('wagon', 150, 148, 1.6, '#DDE3E6')}
+    <g fill="#2B3A45">
+      <circle cx="96" cy="140" r="14" fill="#8A6A52"/>
+      <path d="M80 158 h32 a6 6 0 0 1 6 6 v44 h-44 v-44 a6 6 0 0 1 6 -6z"/>
+      <rect x="84" y="206" width="11" height="50"/><rect x="99" y="206" width="11" height="50"/>
+    </g>`
+};
+const VB = { highlandWide:'0 0 400 180' };   /* everything else is composed at 4:3 */
+
+const sceneSvg = name => SCENES[name]
+  ? `<svg class="scene" viewBox="${VB[name] || '0 0 400 300'}"
+       preserveAspectRatio="xMidYMid slice" aria-hidden="true">${SCENES[name]}</svg>`
+  : '';
+
+function paintScenes(){
+  document.querySelectorAll('.shot[data-scene]').forEach(el=>{
+    if(el.querySelector('svg.scene')) return;
+    el.insertAdjacentHTML('afterbegin', sceneSvg(el.dataset.scene));
+  });
+}
+
+
+/* ── car symbols ─────────────────────────────────────────────────
+   One profile per make, drawn from the vehicle Edvard actually sells
+   parts for — lifted, on chunky tyres, because that is the visual
+   language of this trade. The genuinely distinctive shapes are drawn
+   distinctively (the Jimny is stubby, the Wrangler has a flat screen
+   and exposed wheels, the Defender has its alpine roof, the RAM has
+   that tall bonnet); the big wagons resemble each other because in
+   real life they do.
+
+   Body takes the brand colour, glass is a dark wash, tyres near-black
+   with a rim. Three tones, no gradients.
+   ──────────────────────────────────────────────────────────────── */
+const CARS = {
+  cruiser: { /* Land Cruiser — long, tall wagon */
+    body:'M6 34 L7 20 L18 18 L30 9 L102 9 L112 19 L124 21 L126 34 Z',
+    glass:'M33 13 h63 l7 6 H26 z', w:[[34,41,13],[100,41,13]] },
+  jimny: { /* Jimny — short, upright, stubby overhangs */
+    body:'M24 34 L25 19 L34 17 L40 8 L90 8 L96 17 L106 19 L107 34 Z',
+    glass:'M43 12 h44 l5 5 H37 z', w:[[44,41,12],[90,41,12]] },
+  wrangler: { /* Wrangler — flat screen, shortest overhangs, biggest tyres */
+    body:'M18 33 L18 18 L30 17 L33 7 L96 7 L100 17 L114 18 L114 33 Z',
+    glass:'M36 11 h57 l3 5 H33 z', w:[[36,40,15],[98,40,15]] },
+  patrol: { /* Patrol — long wagon, softer nose */
+    body:'M6 34 L8 20 L20 18 L33 10 L101 10 L111 19 L124 21 L126 34 Z',
+    glass:'M36 14 h60 l6 5 H29 z', w:[[34,41,13],[100,41,13]] },
+  ranger: { /* Ranger — double cab, bed behind */
+    body:'M6 34 L7 22 L20 20 L31 10 L66 10 L74 21 L122 21 L124 34 Z',
+    glass:'M35 14 h26 l5 6 H29 z', w:[[32,41,13],[102,41,13]] },
+  pajero: { /* Pajero — mid wagon */
+    body:'M12 34 L13 21 L26 19 L36 11 L98 11 L106 20 L120 22 L121 34 Z',
+    glass:'M39 15 h55 l5 5 H33 z', w:[[38,41,12],[100,41,12]] },
+  defender: { /* Defender — square, alpine roof step */
+    body:'M10 33 L10 19 L22 18 L26 9 L38 9 L38 5 L96 5 L96 9 L104 18 L120 19 L120 33 Z',
+    glass:'M31 13 h64 l4 5 H28 z', w:[[34,40,13],[98,40,13]] },
+  ram: { /* RAM — tall bonnet, long bed */
+    body:'M4 34 L4 21 L34 21 L34 13 L46 10 L80 10 L88 22 L128 22 L128 34 Z',
+    glass:'M50 14 h27 l5 7 H46 z', w:[[32,41,14],[104,41,14]] }
+};
+
+/* Display colour for the car body. Mostly the official brand colour —
+   but Jeep's and RAM's official colour is #000000, and a black car on a
+   dark plate is invisible, so those two take a realistic silver instead.
+   Ford's navy and Land Rover's green are lifted just enough to read. */
+const CAR_COLOR = {
+  Toyota:'#EB0A1E', Suzuki:'#E30613', Nissan:'#D6002F', Mitsubishi:'#E60012',
+  Ford:'#3E7CB8', 'Land Rover':'#3E8C5A',
+  Jeep:'#C9D2D8', RAM:'#AEB8C0'
+};
+
+const carIcon = (type, color, cls) => {
+  const c = CARS[type]; if(!c) return '';
+  const tyres = c.w.map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#0F1419"/>`).join('');
+  const rims  = c.w.map(([x,y,r])=>
+    `<circle cx="${x}" cy="${y}" r="${r*0.46}" fill="#4A555E"/>` +
+    `<circle cx="${x}" cy="${y}" r="${r*0.2}" fill="#20272D"/>`).join('');
+  return `<svg class="${cls}" viewBox="0 0 132 58" aria-hidden="true">
+    <path d="${c.body}" fill="${color}"/>
+    <path d="${c.glass}" fill="rgba(6,10,14,.58)"/>
+    ${tyres}${rims}</svg>`;
+};
+
+/* ── brand emblems: the real marks ─────────────────────────────────
+   Source: Simple Icons (simple-icons@13 via jsDelivr), monochrome
+   single-path versions, embedded inline so the file works offline.
+   Each carries its official brand colour. The icon collection is CC0;
+   the marks remain each manufacturer's trademark and their use stays
+   subject to the owner's policy — see §2 of the spec.
+
+   A make with no mark here falls back to its wordmark plate, so an
+   addition from Anna cannot break the grid.
+   ──────────────────────────────────────────────────────────────── */
+
+const EMB = {
+  'Toyota': { c:'#EB0A1E', vb:'-0.3 3.55 24.6 16.9', d:`M12 3.848C5.223 3.848 0 7.298 0 12c0 4.702 5.224 8.152 12 8.152S24 16.702 24 12c0-4.702-5.223-8.152-12-8.152zm7.334 3.839c0 1.08-1.725 1.913-4.488 2.246-.26-2.58-1.005-4.279-1.963-4.913 2.948.184 6.45 1.227 6.45 2.667zM12 16.401c-.96 0-1.746-1.5-1.808-4.389.577.047 1.18.072 1.808.072.628 0 1.23-.025 1.807-.072-.061 2.89-.847 4.389-1.807 4.389zm0-6.308c-.59 0-1.155-.019-1.69-.054.261-1.728.92-3.15 1.69-3.15.77 0 1.428 1.422 1.689 3.15-.535.034-1.099.054-1.689.054zm-.882-5.075c-.956.633-1.706 2.333-1.964 4.915C6.391 9.6 4.665 8.767 4.665 7.687c0-1.44 3.504-2.49 6.453-2.669zM2.037 11.68a5.265 5.265 0 011.048-3.164c.27 1.547 2.522 2.881 5.972 3.37V12c0 3.772.879 6.203 2.087 6.97-5.107-.321-9.107-3.48-9.107-7.29zm10.823 7.29c1.207-.767 2.087-3.198 2.087-6.97v-.115c3.447-.488 5.704-1.826 5.972-3.37a5.26 5.26 0 011.049 3.165c-.004 3.81-4.008 6.969-9.109 7.29z` },
+
+  'Suzuki': { c:'#E30613', vb:'-0.19 -0.3 24.39 24.6', d:`M17.369 19.995C13.51 22.39 12 24 12 24L.105 15.705s5.003-3.715 9.186-.87l5.61 3.882.683-.453L.106 7.321s2.226-.65 6.524-3.315C10.49 1.609 12 0 12 0l11.895 8.296s-5.003 3.715-9.187.87L9.1 5.281l-.683.454L23.893 16.68s-2.224.649-6.524 3.315Z` },
+
+  'Jeep': { c:'#000000', vb:'-0.3 6.87 24.6 10.26', d:`M4.1651 7.1687v5.2011c0 .6762-.444 1.0777-1.1628 1.0777-.7185 0-1.0992-.5283-1.0992-1.0992v-.9299H0v.9514c0 .972.296 2.7068 3.0235 2.7068 2.7272 0 3.1082-1.8614 3.1082-2.7488V7.1687Zm4.9177 2.1562c-1.7973 0-2.6003 1.6485-2.6003 3.0657 0 1.4168.9094 2.7912 2.7695 2.7912 1.6285.021 2.707-1.0361 2.707-1.8187h-1.7977s-.2113.5078-.8458.5078c-.6343 0-.9934-.3596-.9934-1.2265h3.6576c0-2.7277-1.3526-3.3195-2.897-3.3195zm5.8471 0c-1.7968 0-2.6007 1.6485-2.6007 3.0657 0 1.4168.9094 2.7912 2.7705 2.7912 1.628.021 2.7067-1.0361 2.7067-1.8187h-1.7978s-.2116.5078-.8454.5078c-.6348 0-.9942-.3596-.9942-1.2265h3.6574c0-2.7277-1.3523-3.3195-2.8965-3.3195zm6.7435.0635c-.9132 0-1.3186.4962-1.3401.522-.1283.1538-.2875.3165-.2875-.0782v-.2959h-1.8193v7.295h1.8398V14.822c0-.148.1478-.126.2543 0 .1063.1277.5711.4443 1.3752.4443C23.155 15.2663 24 13.9978 24 12.264c0-2.2415-1.4162-2.8757-2.3266-2.8756Zm-12.401 1.1203c.6766 0 .972.5073.972 1.0365H8.3843c0-.5718.2327-1.0365.8882-1.0365zm5.8468 0c.6767 0 .9724.5073.9724 1.0365H14.231c0-.5718.2332-1.0365.8883-1.0365zm5.9204.296c.9318 0 1.1.7189 1.1 1.4593 0 .74-.1272 1.7124-1.0141 1.7124-.8884 0-1.1212-.5709-1.1017-1.6486.022-1.0788.4441-1.523 1.0158-1.523zm2.2813 4.5664a.5855.5855 0 0 0-.5856.5857c0 .3233.2617.5856.5856.5856.3218 0 .585-.2623.585-.5856 0-.3233-.2632-.5857-.585-.5857zm0 .062a.524.524 0 0 1 .5236.5237c0 .2884-.2346.5246-.5236.5246a.5258.5258 0 0 1-.525-.5246c0-.289.2352-.5236.525-.5236zm-.2108.2024v.6208h.0725v-.2689h.1764l.1159.269h.0806l-.1216-.2873c.0386-.0133.0514-.0227.072-.0447.0266-.0287.0434-.0739.0434-.115 0-.1034-.0796-.174-.195-.174zm.0705.0676h.1722c.072 0 .1177.041.1177.1045 0 .072-.0485.1168-.1278.1168h-.1621z` },
+
+  'Nissan': { c:'#C3002F', vb:'-0.3 1.66 24.6 20.68', d:`M20.576 14.955l-.01.028c-1.247 3.643-4.685 6.086-8.561 6.086-3.876 0-7.32-2.448-8.562-6.09l-.01-.029H.71v.329l1.133.133c.7.08.847.39 1.038.78l.048.096c1.638 3.495 5.204 5.752 9.08 5.752 3.877 0 7.443-2.257 9.081-5.747l.048-.095c.19-.39.338-.7 1.038-.781l1.134-.134v-.328zM3.443 9.012c1.247-3.643 4.686-6.09 8.562-6.09 3.876 0 7.319 2.447 8.562 6.09l.01.028h2.728v-.328l-1.134-.133c-.7-.081-.847-.39-1.038-.781l-.047-.096C19.448 4.217 15.88 1.96 12.005 1.96c-3.881 0-7.443 2.257-9.081 5.752l-.048.095c-.19.39-.338.7-1.038.781l-1.133.133v.329h2.724zm13.862 1.586l-1.743 2.795h.752l.31-.5h2.033l.31.5h.747l-1.743-2.795zm1.033 1.766h-1.395l.7-1.124zm2.81-1.066l2.071 2.095H24v-2.795h-.614v2.085l-2.062-2.085h-.795v2.795h.619zM0 13.393h.619v-2.095l2.076 2.095h.781v-2.795h-.619v2.085L.795 10.598H0zm4.843-2.795h.619v2.795h-.62zm4.486 2.204c-.02.005-.096.005-.124.005H6.743v.572h2.5c.019 0 .167 0 .195-.005.51-.048.743-.472.743-.843 0-.381-.243-.79-.705-.833-.09-.01-.166-.01-.2-.01H7.643a.83.83 0 0 1-.181-.014c-.129-.034-.176-.148-.176-.243 0-.086.047-.2.18-.238a.68.68 0 0 1 .172-.014h2.357v-.562H7.6c-.1 0-.176.004-.238.014a.792.792 0 0 0-.695.805c0 .343.214.743.685.81.086.009.205.009.258.009H9.2c.029 0 .1 0 .114.005.181.023.243.157.243.276a.262.262 0 0 1-.228.266zm4.657 0c-.02.005-.096.005-.129.005H11.4v.572h2.5c.019 0 .167 0 .195-.005.51-.048.743-.472.743-.843 0-.381-.243-.79-.705-.833-.09-.01-.166-.01-.2-.01H12.3a.83.83 0 0 1-.181-.014c-.129-.034-.176-.148-.176-.243 0-.086.047-.2.18-.238a.68.68 0 0 1 .172-.014h2.357v-.562h-2.395c-.1 0-.176.004-.238.014a.792.792 0 0 0-.695.805c0 .343.214.743.686.81.085.009.204.009.257.009h1.59c.029 0 .1 0 .114.005.181.023.243.157.243.276a.267.267 0 0 1-.228.266Z` },
+
+  'Ford': { c:'#00274E', vb:'-0.3 7.2 24.6 9.6', d:`M12 8.236C5.872 8.236.905 9.93.905 12.002S5.872 15.767 12 15.767c6.127 0 11.094-1.693 11.094-3.765 0-2.073-4.967-3.766-11.094-3.766zm-5.698 6.24c-.656.005-1.233-.4-1.3-1.101a1.415 1.415 0 0 1 .294-1.02c.195-.254.525-.465.804-.517.09-.017.213-.006.264.054.079.093.056.194-.023.234-.213.109-.47.295-.597.55a.675.675 0 0 0 .034.696c.263.397.997.408 1.679-.225.169-.156.32-.304.473-.48.3-.344.4-.47.8-1.024.005-.006.006-.014.004-.018-.003-.007-.009-.01-.02-.01-.267.007-.5.087-.725.255-.065.048-.159.041-.2-.021-.046-.07-.013-.163.062-.215.363-.253.76-.298 1.166-.367 0 0 .028.002.051-.03.167-.213.292-.405.47-.621.178-.22.41-.42.586-.572.246-.212.404-.283.564-.37.043-.022-.005-.049-.018-.049-.896-.168-1.827-.386-2.717-.056-.616.23-.887.718-.757 1.045.093.231.397.27.683.13a1.55 1.55 0 0 0 .611-.544c.087-.134.27-.038.171.195-.26.611-.757 1.097-1.363 1.118-.516.016-.849-.363-.848-.831.002-.924 1.03-1.532 2.11-1.622 1.301-.108 2.533.239 3.825.395.989.12 1.938.123 2.932-.106.118-.025.2.05.193.168-.01.172-.143.337-.47.516-.373.204-.763.266-1.17.27-.984.008-1.901-.376-2.85-.582.002.041.012.091-.023.117-.525.388-1 .782-1.318 1.334-.011.013-.005.025.013.024.277-.015.525-.022.783-.042.045-.004.047-.015.043-.048a.64.64 0 0 1 .2-.558c.172-.153.387-.17.53-.06.16.126.147.353.058.523a.63.63 0 0 1-.382.31s-.03.006-.026.034c.006.043.2.151.217.18.017.027.008.07-.021.102a.123.123 0 0 1-.095.045c-.033 0-.053-.012-.096-.035a.92.92 0 0 1-.27-.217c-.024-.031-.037-.032-.099-.029-.279.017-.714.059-1.009.096-.071.008-.082.022-.096.047-.47.775-.972 1.61-1.523 2.17-.592.6-1.083.758-1.604.762zM19.05 10.71c-.091.158-1.849 2.834-1.96 3.11-.035.088-.04.155-.004.204.092.124.297.051.425-.038.381-.262.645-.58.937-.858.017-.013.046-.018.065 0 .043.04.106.091.15.137a.04.04 0 0 1 .002.057 5.873 5.873 0 0 1-.904.911c-.47.364-.939.457-1.172.224a.508.508 0 0 1-.14-.316c-.002-.057-.031-.06-.058-.034-.278.275-.76.579-1.198.362-.366-.18-.451-.618-.383-.986.001-.008-.006-.06-.051-.03a1.28 1.28 0 0 1-.3.162.853.853 0 0 1-.366.077.518.518 0 0 1-.451-.253.759.759 0 0 1-.095-.347c-.001-.011-.017-.032-.033-.005-.3.457-.579.899-.875 1.363-.016.022-.03.036-.06.037l-.587.001c-.036 0-.053-.028-.034-.063.104-.2.674-1.03 1.06-1.736.107-.194.085-.294.019-.337-.083-.054-.248.027-.387.133-.379.287-.697.735-.859.935-.095.117-.185.291-.433.56-.391.425-.91.669-1.408.5a.848.848 0 0 1-.546-.58c-.015-.052-.044-.066-.073-.032-.08.1-.245.249-.383.342-.015.011-.052.033-.084.017a.851.851 0 0 1-.152-.199.07.07 0 0 1 .016-.08c.197-.173.305-.271.391-.38.064-.08.113-.17.17-.315.12-.302.393-.866.938-1.158a1.81 1.81 0 0 1 .652-.219c.1-.01.183.002.213.08.011.033.039.105.056.158.011.032.003.057-.035.071-.32.122-.643.311-.865.61-.253.338-.321.746-.152.98.123.17.322.2.514.139.29-.092.538-.363.666-.663.138-.329.16-.717.058-1.059-.016-.059-.001-.104.037-.136.077-.063.184-.112.215-.128a.14.14 0 0 1 .182.045c.106.157.163.378.17.607.006.049.026.05.05.025.19-.202.366-.418.568-.58.185-.147.422-.267.643-.262.286.006.428.2.419.546-.001.044.03.04.051.011a1.19 1.19 0 0 1 .24-.264c.198-.163.4-.236.611-.222.26.02.468.257.425.527a.53.53 0 0 1-.281.406.362.362 0 0 1-.405-.044.336.336 0 0 1-.096-.322c.005-.025-.027-.048-.054-.02-.254.264-.273.606-.107.76.183.17.458.056.658-.075.366-.239.65-.563.979-.813.218-.166.467-.314.746-.351a.87.87 0 0 1 .454.052c.2.081.326.25.342.396.004.043.036.048.063.01.158-.246 1.005-1.517 1.075-1.65.02-.041.044-.047.089-.047h.606c.035 0 .051.02.036.047zm-2.32 2.204a.053.053 0 0 0-.003.04c.003.02.03.04.056.05.01.003.015.01.004.032-.075.16-.143.252-.237.391a1.472 1.472 0 0 1-.3.325c-.178.147-.424.307-.628.2-.09-.047-.13-.174-.127-.276.004-.288.132-.584.369-.875.288-.355.607-.539.816-.438.216.103.148.354.05.55zm-5.949-1.881a.398.398 0 0 1 .132-.345c.057-.05.133-.062.18-.022.052.045.027.157-.026.234a.43.43 0 0 1-.245.177c-.018.004-.034-.004-.041-.044zM12 7.5C5.34 7.5 0 9.497 0 12c0 2.488 5.383 4.5 12 4.5s12-2.02 12-4.5-5.383-4.5-12-4.5zm0 8.608C5.649 16.108.5 14.27.5 12.002.5 9.733 5.65 7.895 12 7.895s11.498 1.838 11.498 4.107c0 2.268-5.148 4.106-11.498 4.106z` },
+
+  'Mitsubishi': { c:'#E60012', vb:'-0.3 1.32 24.6 21.36', d:`M8 22.38H0l4-6.92h8zm8 0h8l-4-6.92h-8zm0-13.84l-4-6.92-4 6.92 4 6.92Z` },
+
+  'Land Rover': { c:'#005A2B', vb:'-0.3 5.38 24.6 13.24', d:`M10.182 11.491h.717l.625-1.85.365 1.85h.718l.978-2.858-.75.001-.522 1.554-.299-1.554h-1.01l-.025.074.05.048c.053.053.05.114.005.246l-.852 2.489zm3.749-2.489l-.853 2.49h1.259c.54 0 .847-.12 1.098-.387.313-.332.6-1.195.59-1.67-.009-.485-.322-.8-.98-.8H13.9l-.024.073.05.048c.052.053.05.114.004.246m.685.31h.313c.213 0 .33.071.333.236.002.106-.027.252-.137.565-.098.28-.176.443-.287.562-.088.094-.207.135-.478.135h-.261l.517-1.498zm4.066.347H16.78l-.247.68h1.318l-1.497.509-.093.243 2.157-.71.264-.722zM5.043 11.492h1.95l.236-.682H6.095l.75-2.176h-.979l-.024.074.049.048c.053.053.051.114.005.246l-.853 2.49zm2.153-.001h.83l.359-.632h.859l.008.632h.753l-.162-2.857H8.716l-.025.074.036.036c.06.058.035.142-.184.49l-1.347 2.257zm1.996-2.067h.026l.014.864h-.527l.487-.864zM8.01 12.11H6.776l-.025.074.05.05c.053.051.05.113.004.245l-.862 2.49h.788l.337-.989h.267l.296.988h.792l-.372-1.01a.76.76 0 0 0 .433-.194c.149-.136.252-.326.337-.607.124-.407.049-.64-.031-.76-.11-.164-.342-.287-.78-.287m.068 1.038c-.05.122-.104.151-.175.18a.845.845 0 0 1-.245.026H7.28l.205-.591h.455c.136 0 .192.07.194.152a.759.759 0 0 1-.057.233m10.436-1.038H17.28l-.024.074.05.05c.053.051.05.113.005.245l-.863 2.49h.789l.336-.988h.267l.297.987h.79l-.37-1.01a.758.758 0 0 0 .431-.194c.15-.136.253-.326.338-.607.124-.407.05-.64-.03-.76-.11-.164-.343-.287-.782-.287m.069 1.038c-.05.122-.104.151-.174.18a.849.849 0 0 1-.245.026h-.376l.203-.591h.455c.136 0 .192.07.193.152a.747.747 0 0 1-.056.233m1.367-4.742c-2.365-1.222-5.31-1.69-7.95-1.69s-5.585.468-7.95 1.69C2.72 9.093 1.035 10.331 1.035 12c0 1.669 1.686 2.907 3.015 3.594 2.365 1.222 5.31 1.69 7.95 1.69 2.64 0 5.585-.467 7.95-1.69 1.329-.687 3.015-1.925 3.015-3.594 0-1.67-1.685-2.907-3.015-3.594m-.12 6.954c-2.33 1.203-5.227 1.66-7.83 1.66-2.603 0-5.5-.457-7.83-1.66C2.939 14.721 1.3 13.546 1.3 12c0-1.548 1.638-2.722 2.87-3.359C6.5 7.438 9.398 6.981 12 6.981c2.603 0 5.5.456 7.83 1.66 1.233.637 2.87 1.81 2.87 3.36 0 1.547-1.638 2.721-2.87 3.359m.595-7.873C18.171 6.322 15.18 5.681 12 5.681c-3.179 0-6.17.641-8.425 1.806C2.24 8.177 0 9.681 0 12s2.24 3.823 3.575 4.513C5.829 17.678 8.821 18.32 12 18.32c3.18 0 6.171-.641 8.425-1.806C21.76 15.823 24 14.32 24 12c0-2.32-2.24-3.823-3.575-4.513m-.293 8.46C17.967 17.064 15.08 17.68 12 17.68s-5.966-.616-8.132-1.735C1.786 14.87.638 13.468.638 12c0-1.469 1.148-2.87 3.23-3.946C6.034 6.936 8.921 6.32 12 6.32c3.08 0 5.967.617 8.132 1.735 2.083 1.075 3.23 2.477 3.23 3.946 0 1.468-1.147 2.87-3.23 3.946m-9.41-3.87h-.091c-.539 0-.846.144-1.099.412-.314.333-.609 1.23-.603 1.706.006.484.32.82.978.82h.096c.54 0 .848-.145 1.1-.413.314-.333.603-1.23.597-1.706-.006-.484-.32-.82-.979-.82m.046 1.515c-.098.281-.175.462-.288.581-.09.094-.207.161-.48.161-.212 0-.33-.087-.33-.251-.002-.107.027-.268.141-.582.098-.28.175-.462.289-.581.088-.094.207-.161.478-.161.213 0 .331.087.33.25.003.108-.026.27-.14.583M6.035 12.48l-2.157.709-.263.723h1.902l.248-.681H4.446l1.497-.507.092-.244zm7.846-.369l-1.046 2.055h-.022l-.053-2.055h-.875l-.034.074.075.046c.073.051.093.103.102.246l.119 2.492h.975l1.573-2.858h-.814zm2.396 1.712l.219-.597H15.49l.156-.457h1.088l.24-.66H14.92l-.029.084.05.049c.053.051.05.112.004.246l-.855 2.48h1.92l.232-.663h-1.12l.164-.482h.991z` },
+
+  'RAM': { c:'#000000', vb:'0.26 -0.3 23.47 24.6', d:`M11.46 22.432l-.515-1.14h-.024l-.579 1.14h1.118zm.222.755h-1.556L9.792 24H7.344l1.791-3.359h3.627L14.494 24h-2.448l-.364-.813zm9.516-1.122h-.105L20.048 24h-1.492l-1.042-1.926-.099.001L17.406 24h-2.239v-3.359h3.522l.627 1.056h.03l.686-1.056h3.403V24h-2.239l.002-1.935zm-18.319.1h.467c.501 0 .647-.161.65-.322.007-.311-.052-.553-.625-.553h-.492v.875zm.512.703h-.499V24H.564v-3.359h3.358c1.761 0 2.48.29 2.566 1.037.043.372-.161 1.043-.977 1.11L6.728 24H4.265l-.874-1.132zM11.844.412c-2.642.003-5.658.155-6.66.24-1.093.093-1.289.164-1.29 1.087l-.009.838c-.008.658-.02 1.587-.02 2.633 0 1.704.101 3.717.226 5.373.134 1.761.24 3.152 2.458 4.475 1.704 1.016 4.668 2.484 4.697 2.498.171.085.565.275.699.327a.531.531 0 0 0 .126 0c.137-.054.572-.27.786-.366.021-.009 2.077-.95 4.608-2.459 2.218-1.323 2.324-2.714 2.459-4.476.125-1.656.226-3.67.226-5.374 0-1.045-.012-1.974-.02-2.632l-.008-.838c-.004-.813-.158-.993-1.291-1.087-1.002-.083-4.018-.238-6.66-.241h-.327v.002zM12.173 0c2.632.003 5.647.139 6.7.243 1.337.131 1.662.194 1.662 1.496 0 1.027.047 5.619-.199 8.875-.138 1.806-.257 3.365-2.658 4.798a50.914 50.914 0 0 1-4.71 2.487c-.311.138-.721.37-.804.387a.884.884 0 0 1-.312 0c-.092-.019-.593-.265-.786-.36-.193-.094-3.067-1.525-4.726-2.514-2.401-1.432-2.52-2.991-2.658-4.798-.247-3.256-.2-7.849-.2-8.875 0-1.302.325-1.365 1.662-1.496C6.197.139 9.212.003 11.844 0h.329zM8.279 2.312c1.95 0 2.955 1.664 3.532 2.876l-.181.991c-1.01-2.1-2.215-3.436-3.674-3.436-1.577 0-2.465 2.012-2.693 2.351.407-1.034 1.591-2.782 3.016-2.782zm10.343 2.783c-.229-.339-1.116-2.351-2.693-2.351-1.459 0-2.663 1.336-3.674 3.436l-.182-.992c.576-1.212 1.581-2.876 3.532-2.876 1.426 0 2.611 1.748 3.017 2.783zm-3.444 4.12c-.163.071-.288.117-.288.117l.098-.846.522-.684c.161.769.149 1.203-.332 1.413zm-6.374 0c-.481-.21-.493-.644-.332-1.414l.522.684.098.846s-.126-.045-.288-.116zm8.367-4.41c-1.276-.025-2.381.961-3.127 3.352l.419.264-.173.998-.952.338-.187 1.292.462-.587.649-.132-.289.778-.895.499-.318 2.084.12.783-.92.356v.001l-.844-.357.12-.783-.318-2.084-.895-.499-.288-.778.649.132.462.587-.188-1.292-.952-.338-.173-.998.418-.264c-.745-2.39-1.85-3.376-3.127-3.352-1.02.02-1.778 1.209-1.693 2.466l.885.105c.317 1.773.612 4.025 1.28 4.025.203 0 .212-.319.212-.577 0-.627-.378-1.38-.378-2.575 0-.552.179-1.027.587-1.027.277 0 .402.074.532.315-.11.818-.114 1.52.525 1.953.141.095.446.382.446.382s.525 2.067.557 2.205c.03.126.104.298.161.403l.666 1.163s.199 1.249.241 1.465c.105.533.648.579 1.091.583h.123c.444-.003.986-.049 1.091-.583.042-.215.241-1.465.241-1.465l.666-1.163c.057-.105.132-.277.161-.403.032-.138.558-2.205.558-2.205s.305-.287.446-.382c.638-.433.635-1.135.524-1.953.131-.241.255-.315.532-.315.408 0 .587.475.587 1.027 0 1.196-.378 1.948-.378 2.575 0 .259.008.577.212.577.667 0 .963-2.252 1.279-4.025l.885-.105c.086-1.257-.672-2.446-1.692-2.466zm-4.953-3.33c1.928 0 5.848.197 6.1.222.326.029.541.074.614.153.073.074.095.158.107.344.012.173.023.858.023.859.007.612.018 1.475.018 2.446 0 .57-.004 1.176-.014 1.791l.132.086c.011-.644.015-1.281.015-1.877 0-.972-.011-1.836-.018-2.448 0-.001-.011-.684-.023-.866-.012-.189-.038-.323-.146-.43-.136-.13-.366-.157-.695-.192-.265-.026-4.175-.222-6.113-.223-.278.002-.571-.003-.854-.003-2.323 0-5.419.21-5.675.226-.379.025-.58.033-.717.189-.106.13-.137.323-.144.513-.005.185-.007.786-.007.787-.007.611-.018 1.476-.018 2.448 0 .587.004 1.214.015 1.848l.132-.086c-.01-.604-.013-1.201-.013-1.762 0-.971.011-1.835.018-2.447 0-.001.002-.603.008-.784.004-.176.041-.348.113-.431.074-.096.236-.12.621-.141.257-.016 3.349-.226 5.665-.226l.856.004zm7.121 6.071l-.146.277s-.582.061-.602.061c-.281 2.239-1.19 4.63-2.183 4.63-.327 0-.336-.507-.336-1.111 0-.257.036-.486.076-.687-.106.197-.289.918-.289 1.534 0 .72.405 1.116 1.097 1.116.702 0 1.289-.343 1.673-.981-.248.686-.732 1.281-1.767 1.903a45.997 45.997 0 0 1-4.298 2.27c-.181.081-.416.187-.601.266-.17-.079-.333-.161-.47-.228-.025-.012-2.769-1.371-4.34-2.308-.969-.581-1.455-1.14-1.716-1.772.382.551.915.85 1.565.85.692 0 1.097-.396 1.097-1.116 0-.616-.182-1.337-.289-1.534.041.201.076.43.076.687 0 .603-.009 1.111-.336 1.111-.993 0-1.905-2.402-2.185-4.641l-.564-.058-.18-.336s-.033 1.075.003 1.78c.036.706.11 1.312.337 2.17.043.164.093.318.15.462.198.946.658 1.729 1.974 2.509 1.58.942 4.322 2.3 4.349 2.313.149.073.349.173.527.254.194-.081.459-.201.658-.29.021-.01 1.971-.883 4.312-2.278 1.458-.864 1.865-1.731 2.029-2.82.013-.05.027-.1.039-.152.194-.868.274-1.322.31-2.028.032-.606.031-1.591.03-1.853z` }
+};
+
+/* ── copy ────────────────────────────────────────────────────────
+   Site chrome lives here — it belongs to the site.
+   Product copy lives in PRODS/CATS with [is, en] pairs — it belongs
+   to KATALOGUR_master, which is why those read like sheet columns.
+   That split is the real architecture (PRD §6), not a mockup trick.
+   ──────────────────────────────────────────────────────────────── */
+const UI = {
+  searchPh:['Leita — snorkel, brettakantar, Land Cruiser…','Search — snorkel, arch trims, Land Cruiser…'],
+  cart:['Karfa (0)','Basket (0)'],
+  navShop:['Veldu hlut','Choose part'], navChoose:['Veldu bíl','Choose car'],
+  navWholesale:['Heildsala','Wholesale'], navAbout:['Sagan okkar','Our story'],
+  navShipping:['Sendingar','Shipping'], navContact:['Hafa samband','Contact'],
+
+  heroA:['Aukahlutir','Accessories'], heroB:['í jeppann','for your 4×4'],
+  heroP:['Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.',
+         'Pick your car and see only the parts that fit it. Easy to browse, with a full description on every product — so you know exactly what you are getting.'],
+  shot1t:['Mynd 01 — forsíða','Photo 01 — front page'],
+  shot1d:['Hvítur Land Cruiser 150 á 35", snorkel og brettakantar sjáanleg. Hálendi eða möl, dagsljós, bíllinn á þrem fjórðu.',
+          'White Land Cruiser 150 on 35s, snorkel and arch trims visible. Highland or gravel, daylight, three-quarter view.'],
+
+  gridEyebrow:['Veldu bíl','Choose car'],
+  gridMore:['Finnur þú ekki bílinn þinn? Sendu okkur línu — við flytjum inn eftir beiðni.',
+            'Can’t find your car? Send us a line — we import on request.'],
+  allMakes:['Allar tegundir →','All makes →'],
+
+  p1h:['Sýnt á bíl','Shown fitted'],
+  p1b:['Hver hlutur er myndaður uppsettur á bíl, svo þú sérð hvað þú ert að kaupa.',
+       'Every part is photographed fitted to a vehicle, so you can see what you are buying.'],
+  p2h:['Til á lager hér','In stock in Iceland'],
+  p2b:['Vörurnar eru á Íslandi. Þú bíður ekki í fjórar vikur eftir sendingu.',
+       'The parts are already here. You are not waiting four weeks for a shipment.'],
+  p3h:['Verðið er verðið','The price is the price'],
+  p3b:['Verð með VSK, sent á land allt. Engin verð „eftir samtali“.',
+       'Prices include VAT, shipped nationwide. No “ask us for a price”.'],
+
+  shot5t:['Mynd 05 — um Edvard','Photo 05 — about Edvard'],
+  shot5d:['Edvard við eigin bíl, í vinnufötum, ekki stúdíómynd.','Edvard with his own car, in work clothes, not a studio shot.'],
+  storyEyebrow:['Sagan okkar','Our story'],
+  storyH:['Áhugamál varð að vandaðri vinnu.','Passion turned into quality work.'],
+  storyMoreBtn:['…meira','…more'],
+  storyLessBtn:['…minna','…less'],
+  storyR1:['Í byrjun var það bara fyrir hann sjálfan. Hann vildi að bílarnir hans litu út og keyrðu eins og hann sá þá fyrir sér — stærri dekk, snorkel, annað útlit, meira afl — svo hann breytti þeim. Svo fór fólk að stoppa hann og spyrja hvort bíllinn væri til sölu.',
+           'At the beginning it was only for himself. He wanted his cars to look and drive the way he pictured them — bigger wheels, a snorkel, a different stance, more power — so he changed them. Then people started stopping him to ask whether the car was for sale.'],
+  storyR2:['Það kenndi honum dálítið. Flestir vilja útkomuna, ekki verkefnið. Þeir hafa ekki tímann, vita ekki hvar á að fá hlutina og langar ekki að eyða heilum vetri í að komast að því. Þannig að hann fór að gera það fyrir þá: velja hlutina, flytja þá inn og vinna með fagmönnum sem hann treystir.',
+           'That taught him something. Most people want the result, not the project. They don’t have the time, they don’t know where to get the parts, and they’d rather not spend a winter finding out. So he started doing it for them: choosing the parts, bringing them in, and working with people he trusts to fit them.'],
+  storyR3:['Í dag eru hlutirnir sem hann fær þeir sömu og hann setur á sína eigin bíla — og hann heldur verðinu skynsamlegu.',
+           'Today the parts he brings in are the same ones he puts on his own cars — and he keeps prices that make sense.'],
+  storyB:['Edvard hefur breytt bílum í meira en níu ár — byggt á trausti og verklegri reynslu.',
+          'Edvard has been building cars for more than nine years — built on trust and hands-on experience.'],
+  storyLang:['Edvard hefur alþjóðlegan bakgrunn og talar fjögur mál — íslensku, ensku, pólsku og úkraínsku, svo þú getur átt samskipti við hann á því máli sem þér er eðlilegast.',
+             'Edvard’s background is international and he speaks four languages — Icelandic, English, Polish and Ukrainian, so you can communicate with him in whichever suits you best.'],
+
+  p4h:['Heildsala fyrir verkstæði','Wholesale for garages'],
+  p4b:['Rekurðu verkstæði eða selur áfram? Fast verð frá tiltekinni pöntun og beint samband við okkur.',
+       'Run a garage or resell? Fixed pricing from a set order quantity, and a direct line to us.'],
+  p4link:['Heildsala →','Wholesale →'],
+
+  ftShop:['Verslun','Shop'], ftInfo:['Upplýsingar','Information'],
+  ftContact:['Samband','Contact'], ftPay:['Greiðslur','Payment'], ftTerms:['Skilmálar','Terms'],
+  payInstal:['RAÐGREIÐSLUR','INSTALMENTS'], payTransfer:['MILLIFÆRSLA','BANK TRANSFER'],
+  ftBot:['Öll verð með VSK · kt. 000000-0000','All prices include VAT · reg. 000000-0000'],
+
+  /* choose your car */
+  carsH:['Veldu bíl','Choose car'],
+  carsP:['Við eigum aukahluti fyrir þessar tegundir. Finnurðu ekki þína — sendu okkur línu, við flytjum inn eftir beiðni.',
+         'We stock accessories for these makes. Can’t find yours — send us a line, we import on request.'],
+  carsMoreH:['Fáar vörur enn þá','Only a few products so far'],
+  carsMoreP:['Þessar tegundir eru að byggjast upp. Vörurnar þeirra eru undir Veldu hlut á meðan.',
+             'These makes are still filling up. Their products live under Choose part for now.'],
+
+  /* shop */
+  shopH:['Veldu hlut','Choose part'],
+  shopP:['Allt sem við eigum, síað eftir bíltegund og flokki. Veistu hvaða bíl þú ert með? Byrjaðu á Veldu bíl.',
+         'Everything we stock, filtered by make and category. Know which car you have? Start at Choose car.'],
+
+  crumbHome:['Forsíða','Home'],
+  fMake:['Tegund','Make'], fModel:['Gerð','Model'], fCat:['Flokkur','Category'],
+  fAll:['Allar','All'], fAllCats:['Allt','All'],
+  fits:['Passar við','Fits'], inclVat:['með VSK','incl. VAT'],
+  inStock:['Til á lager','In stock'], soldOut:['Uppselt','Sold out'],
+  emptyH:['Engin vara fannst','No products found'],
+  emptyB:['Við eigum ekki þennan flokk fyrir þessa tegund í augnablikinu. Sendu okkur línu — við flytjum inn eftir beiðni.',
+          'We do not have this category for this make right now. Send us a line — we import on request.'],
+  enquire:['Senda fyrirspurn','Send an enquiry'],
+
+  /* product */
+  catSnorkel:['Snorkel','Snorkel'],
+  pdpName:['Snorkel — Toyota Land Cruiser 150','Snorkel — Toyota Land Cruiser 150'],
+  shotPt:['Mynd — vara','Photo — product'],
+  shotPd:['Snorkel uppsettur á Land Cruiser 150, bíllinn í mynd.','Snorkel fitted to a Land Cruiser 150, whole car in frame.'],
+  th2:['_02 nærmynd','_02 close-up'], th3:['_03 festingar','_03 mountings'], th4:['_04 varan sjálf','_04 the part itself'],
+  skuLabel:['Vörunúmer','Product no.'],
+  pdpDesc:['Loftinntak upp á þak fyrir vatnavaðanir og mikið ryk. Sett á með boltum á upprunalega festipunkta — engin klipping.',
+           'Raised air intake for river crossings and heavy dust. Bolts to the original mounting points — no cutting.'],
+  pdpVsk:['Verð með VSK · frí sending yfir {free}','Price includes VAT · free shipping over {free}'],
+  tFits:['Passar við','Fits'],
+  tMaterial:['Efni','Material'], vMaterial:['Höggþolið plast, UV-varið','Impact-resistant plastic, UV-stable'],
+  tFitting:['Uppsetning','Fitting'], vFitting:['Á upprunalega punkta, engin klipping','Original mounting points, no cutting'],
+  seeFitting:['Sjáðu uppsetninguna á TikTok →','See the fitting on TikTok →'],
+
+  /* wholesale */
+  whPageH:['Heildsala','Wholesale'],
+  whPageP:['Rekurðu verkstæði eða selur áfram? Við bjóðum heildsöluverð frá tiltekinni pöntun, og beint samband við okkur í stað þess að fara gegnum vefinn.',
+           'Run a garage or resell? We offer wholesale pricing from a set order quantity, and a direct line to us instead of going through the website.'],
+  wh1H:['Fast verð, ekki tilboð í hvert sinn','Fixed pricing, not a quote every time'],
+  wh1B:['Þú fær verðlista og veist hvað hluturinn kostar áður en þú lofar viðskiptavini þínum nokkru.',
+        'You get a price list, so you know the cost before you promise your own customer anything.'],
+  wh2H:['Beint samband','A direct line'],
+  wh2B:['Þú talar við okkur, ekki við vefform. Við svörum hvort hluturinn passar og hvenær hann kemur.',
+        'You talk to us, not to a web form. We answer whether it fits and when it lands.'],
+  wh3H:['Á lager á Íslandi','Stock here in Iceland'],
+  wh3B:['Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.',
+        'The car is in your workshop today, not for four weeks while a shipment crawls over.'],
+  whTermsH:['Skilmálar heildsölu','Wholesale terms'],
+  whR1:['Lágmarkspöntun','Minimum order'], whV1:['TALA VANTAR — Edvard ákveður','FIGURE MISSING — Edvard decides'],
+  whR2:['Afsláttur','Discount'], whV2:['TALA VANTAR — þrep eftir magni','FIGURE MISSING — tiers by quantity'],
+  whR3:['Greiðsluskilmálar','Payment terms'], whV3:['ÓSTAÐFEST — reikningur eða fyrirframgreiðsla','UNCONFIRMED — invoice or prepayment'],
+  whR4:['Afhending','Delivery'], whV4:['ÓSTAÐFEST — sjá Sendingar','UNCONFIRMED — see Shipping'],
+  whFormH:['Sendu okkur línu','Send us a line'],
+  fCompany:['Fyrirtæki','Company'], fKt:['Kennitala','Company reg. no.'],
+  fName:['Nafn','Name'], fPhone:['Sími','Phone'], fEmail:['Netfang','Email'],
+  fMsg:['Hvað ertu að leita að?','What are you looking for?'], fSend:['Senda','Send'],
+  fCarMake:['Bíltegund','Car make'], fCarYear:['Árgerð','Year'],
+
+  /* about */
+
+  /* shipping */
+  shH:['Sendingar','Shipping'],
+  shP:['Við sendum á land allt. Hér er hvað það kostar, hvað það tekur og hvernig þú skilar ef hluturinn passar ekki.',
+       'We ship nationwide. Here is what it costs, how long it takes, and how you return something that does not fit.'],
+  shR1:['Frí sending yfir','Free shipping over'], shV1:['15.000 kr. — TALA ÓSTAÐFEST','15,000 ISK — FIGURE UNCONFIRMED'],
+  shR2:['Sendingarkostnaður','Shipping cost'], shV2:['TALA VANTAR — eftir þyngd og stærð','FIGURE MISSING — by weight and size'],
+  shR3:['Afhendingartími','Delivery time'], shV3:['1–3 virkir dagar — ÓSTAÐFEST','1–3 working days — UNCONFIRMED'],
+  shR4:['Sendingarleiðir','Carriers'], shV4:['ÓSTAÐFEST — Íslandspóstur, Samskip, Eimskip?','UNCONFIRMED — Íslandspóstur, Samskip, Eimskip?'],
+  shR5:['Afhending á staðnum','Local pickup'], shV5:['ÓSTAÐFEST — er starfsstöð? hvar?','UNCONFIRMED — is there a premises? where?'],
+  shR6:['Stórir hlutir','Oversized items'], shV6:['Framgrindur og toppgrindur — sérsending, ÓSTAÐFEST','Bull bars and roof racks — special delivery, UNCONFIRMED'],
+  shRetH:['Skilaréttur','Returns'],
+  shRet1:['Þú hefur <strong>14 daga</strong> til að skila vöru sem þú hefur ekki notað, í upprunalegum pakkningum. Við endurgreiðum þegar varan er komin til okkar.',
+          'You have <strong>14 days</strong> to return an unused item in its original packaging. We refund once it reaches us.'],
+  shRet2:['Passar hluturinn ekki á bílinn þinn? Hafðu samband áður en þú setur hann á — hlutur sem hefur verið boraður eða málaður er ekki hægt að skila.',
+          'Part doesn’t fit your car? Talk to us before you fit it — anything drilled or painted cannot be returned.'],
+
+  /* contact */
+  coH:['Hafa samband','Contact'],
+  coP:['Spurning um hvort hlutur passar á bílinn þinn? Skrifaðu eða hringdu — það er fljótlegast að segja okkur árgerð og gerð.',
+       'Wondering whether a part fits your car? Write or call — the quickest thing is to tell us the make and year.'],
+  navFaq:['Spurt og svarað','Q&A'],
+  faqH:['Spurt og svarað','Questions & answers'],
+  faqP:['Þetta er það sem er oftast spurt um. Finnurðu ekki svarið — sendu okkur línu.',
+        'The things we get asked most. If your answer is not here, send us a line.'],
+  faqCtaH:['Fannst svarið ekki?','Didn’t find your answer?'],
+  faqCtaB:['Sendu okkur bíltegund og árgerð, þá svörum við hvort hluturinn passar.',
+           'Send us the make and year of your car and we will tell you whether it fits.'],
+
+  portraitAlt:['Edvard við eigin Camaro á hálendinu','Edvard with his own Camaro in the highlands'],
+  coEmail:['Netfang','Email'], coPhone:['Sími','Phone'],
+  coHours:['Opnunartími','Opening hours'], coHoursV:['ÓSTAÐFEST','UNCONFIRMED'],
+  coSocial:['Samfélagsmiðlar','Social'], coFormH:['Skrifaðu okkur','Write to us']
+};
+
+/* ── catalogue stand-in ──────────────────────────────────────────
+   Ordered by product count: the grid shows the shop's real shape.
+   First four are already folders in the Drive; the rest need Anna.
+   Make names are proper nouns — one sheet column, never translated.
+   ──────────────────────────────────────────────────────────────── */
+const MAKES = [
+  {n:'Toyota',     c:14, s:'wagon',  models:'Land Cruiser · Hilux · Prado · RAV4', car:'cruiser'},
+  {n:'Suzuki',     c:11, s:'small',  models:'Jimny · Vitara · Grand Vitara', car:'jimny'},
+  {n:'Jeep',       c:9,  s:'wagon',  models:'Wrangler · Cherokee · Grand Cherokee', car:'wrangler'},
+  {n:'Nissan',     c:7,  s:'wagon',  models:'Patrol · Navara · X-Trail', car:'patrol'},
+  {n:'Ford',       c:6,  s:'pickup', models:'Ranger · F-150 · Explorer', car:'ranger'},
+  {n:'Mitsubishi', c:6,  s:'pickup', models:'Pajero · L200 · Outlander', car:'pajero'},
+  {n:'Land Rover', c:5,  s:'wagon',  models:'Defender · Discovery', car:'defender'},
+  {n:'RAM',        c:4,  s:'pickup', models:'1500 · 2500 · 3500', car:'ram'},
+  /* below the floor — text row on the Veldu bíl page, no plate */
+  {n:'Isuzu',      c:3,  s:'pickup', models:'D-Max', car:'ranger'},
+  {n:'Dodge',      c:2,  s:'pickup', models:'Ram 2500', car:'ram'},
+  {n:'Volkswagen', c:1,  s:'pickup', models:'Amarok'}
+];
+const FLOOR = 4;   /* a make below this gets no plate — see the note on the grid */
+
+/* categories: sheet column `category`, one row per language.
+   "Brettakantar" is arch trims to some English buyers and fender flares to
+   others — a search decision for Edvard, not a translation decision. */
+const CATS = [
+  ['Snorkel','Snorkel'], ['Brettakantar','Arch trims'], ['Vindhlífar','Wind deflectors'],
+  ['Mottur','Floor mats'], ['Aukaljós','Auxiliary lights'], ['Framgrind','Bull bar'],
+  ['Toppgrind','Roof rack'], ['Spil','Winch']
+];
+
+/* PRODS reads like the sheet on purpose: name is two columns,
+   price / stock / fit are one column each, because they are not language. */
+const PRODS = [
+  {make:'Toyota', cat:0, name:['Snorkel','Snorkel'], fit:'Land Cruiser 150 · 2010–2017',
+   price:34900, stock:3, shot:'lc150_snorkel_01.jpg', scene:'snorkel',
+   d:['Snorkel uppsettur á bíl, hlið','Snorkel fitted, side view'], car:'ranger'},
+  {make:'Toyota', cat:1, name:['Brettakantar, sett af fjórum','Arch trims, set of four'], fit:'Land Cruiser 150 · 2010–2017',
+   price:28500, stock:5, shot:'lc150_brettak_01.jpg', scene:'gravel',
+   d:['Brettakantar á bíl, bíllinn allur','Arch trims fitted, whole car']},
+  {make:'Toyota', cat:2, name:['Vindhlífar á rúður','Window wind deflectors'], fit:'Hilux · 2016–2023',
+   price:12900, stock:8, shot:'hilux_vindhlifar_01.jpg', scene:'part',
+   d:['Vindhlífar, nærmynd á hurð','Deflectors, close-up on door']},
+  {make:'Toyota', cat:3, name:['Gúmmímottur, djúpar','Rubber floor mats, deep'], fit:'Land Cruiser 150 · 2010–2017',
+   price:16400, stock:12, shot:'lc150_mottur_01.jpg', scene:'workshop',
+   d:['Mottur inni í bílnum','Mats inside the car']},
+  {make:'Toyota', cat:4, name:['Aukaljós, LED-bar 20"','Auxiliary LED bar, 20"'],
+   fit:['Allar gerðir · með festingu','All models · bracket included'],
+   price:44900, stock:2, shot:'toyota_ljosabar_01.jpg', scene:'night',
+   d:['Ljósabar á bíl, kvöldmynd','Light bar fitted, evening shot']},
+  {make:'Toyota', cat:5, name:['Framgrind','Bull bar'], fit:'Hilux · 2016–2023',
+   price:89000, stock:0, shot:'hilux_framgrind_01.jpg', scene:'front',
+   d:['Framgrind á bíl, framan á','Bull bar fitted, front view']},
+  {make:'Suzuki', cat:1, name:['Brettakantar, breiðir','Arch trims, wide'], fit:'Jimny · 2018–2024',
+   price:31500, stock:4, shot:'jimny_brettak_01.jpg', scene:'gravel',
+   d:['Brettakantar á Jimny','Arch trims on a Jimny']},
+  {make:'Jeep', cat:4, name:['Aukaljós, þokuljós','Auxiliary fog lights'], fit:'Wrangler JL · 2018–2024',
+   price:26900, stock:6, shot:'wrangler_ljos_01.jpg', scene:'night',
+   d:['Þokuljós á Wrangler, kvöld','Fog lights on a Wrangler, evening']},
+  {make:'Nissan', cat:0, name:['Snorkel','Snorkel'], fit:'Patrol Y61 · 1997–2013',
+   price:36400, stock:2, shot:'patrol_snorkel_01.jpg', scene:'snorkel',
+   d:['Snorkel á Patrol','Snorkel on a Patrol']},
+  {make:'Land Rover', cat:6, name:['Toppgrind','Roof rack'], fit:'Defender 110 · 2020–',
+   price:112000, stock:1, shot:'defender_toppgrind_01.jpg', scene:'highlandWide',
+   d:['Toppgrind á Defender','Roof rack on a Defender']}
+];
+
+/* ── state ── */
+let L = 0;                    /* 0 = is, 1 = en */
+let SCREEN = 'home';
+let mkCurrent = 'Toyota';
+/* The repeat questions the PRD flags (§3: "an FAQ for the repeat questions —
+   price, delivery"). Answers are deliberately conservative: the fitting one
+   says NO, because modification-as-a-service is out of scope for v1 until the
+   Keflavík partnership is settled, and this page must not promise it. */
+const QA = [
+  { q:['Hvernig veit ég hvort hluturinn passar á bílinn minn?','How do I know a part fits my car?'],
+    a:['<p>Á hverri vöru stendur <strong>Passar við</strong> — gerð og árgerðir sem hluturinn passar á.</p><p>Ertu ekki viss? Sendu okkur bíltegund og árgerð og við svörum. Það er fljótlegra en að giska.</p>',
+       '<p>Every product lists <strong>Fits</strong> — the model and the years the part suits.</p><p>Not sure? Send us the make and year of your car and we will answer. That is quicker than guessing.</p>'] },
+
+  { q:['Get ég skilað ef hluturinn passar ekki?','Can I return a part that does not fit?'],
+    a:['<p>Já. Þú hefur <strong>14 daga</strong> til að skila ónotaðri vöru í upprunalegum pakkningum.</p><p><strong>Talaðu við okkur áður en þú setur hlutinn á.</strong> Hlutur sem hefur verið boraður, skorinn eða málaður er ekki hægt að skila — og það er langoftast það sem fer úrskeiðis.</p>',
+       '<p>Yes. You have <strong>14 days</strong> to return an unused item in its original packaging.</p><p><strong>Talk to us before you fit it.</strong> Anything drilled, cut or painted cannot be returned — and that is by far the most common thing that goes wrong.</p>'] },
+
+  { q:['Setjið þið hlutina á?','Do you fit the parts?'],
+    a:['<p>Nei, við sjáum ekki um uppsetningu sjálf. Við flytjum inn og seljum hlutina.</p><p>Flestir hlutir fara á upprunalega festipunkta og þarfnast engrar klippingar, og á mörgum vörum er hlekkur á myndband sem sýnir uppsetninguna. Ef þú vilt fá einhvern til að setja hlutinn á, sendu okkur línu og við bendum þér í rétta átt.</p>',
+       '<p>No, we do not do the fitting ourselves. We import and sell the parts.</p><p>Most of them bolt to the original mounting points and need no cutting, and many products link to a video showing the job. If you want someone to fit it for you, send us a line and we will point you in the right direction.</p>'] },
+
+  { q:['Eru verðin með VSK?','Do prices include VAT?'],
+    a:['<p>Já, öll verð á vefnum eru <strong>með VSK</strong>. Verðið sem þú sérð er verðið sem þú borgar.</p>',
+       '<p>Yes, every price on the site <strong>includes VAT</strong>. The price you see is the price you pay.</p>'] },
+
+  { q:['Hvað kostar sendingin og hvað tekur hún?','What does shipping cost and how long does it take?'],
+    a:['<p>Við sendum á land allt. Kostnaður fer eftir þyngd og stærð — framgrindur og toppgrindur eru sérsending.</p><p>Nánar undir <strong>Sendingar</strong>.</p>',
+       '<p>We ship nationwide. The cost depends on weight and size — bull bars and roof racks go as a special delivery.</p><p>Details under <strong>Shipping</strong>.</p>'] },
+
+  { q:['Eigið þið hlutinn til á lager?','Do you have the part in stock?'],
+    a:['<p>Staðan stendur á hverri vöru. Stendur <strong>Uppselt</strong> — sendu okkur samt línu, oft er hluturinn á leiðinni eða við getum flutt hann inn.</p>',
+       '<p>Availability is shown on each product. If it says <strong>Sold out</strong>, send us a line anyway — it is often already on its way, or we can bring it in.</p>'] },
+
+  { q:['Flytjið þið inn eftir beiðni?','Do you import on request?'],
+    a:['<p>Já. Finnurðu ekki bílinn þinn eða hlutinn sem þú þarft, sendu okkur bíltegund, árgerð og hvað þú ert að leita að.</p>',
+       '<p>Yes. If you cannot find your car or the part you need, send us the make, the year and what you are looking for.</p>'] },
+
+  { q:['Ég er með verkstæði — fæ ég heildsöluverð?','I run a garage — can I get wholesale pricing?'],
+    a:['<p>Já, frá tiltekinni pöntun. Sjá <strong>Heildsala</strong>.</p>',
+       '<p>Yes, from a set order quantity. See <strong>Wholesale</strong>.</p>'] }
+];
+
+const filters = { shopMake:null, shopCat:null, mkModel:null, mkCat:null };
+const CODES = ['is','en'];
+
+/* these marks already spell the make out, so the plate drops its own label
+   rather than printing the name twice */
+/* kept for reference: these marks spell the make out themselves. The tiles show
+   the name under every logo anyway, so the grid keeps one rhythm. */
+const EMB_SPELLS_NAME = ['Ford','Jeep','Land Rover','Nissan','RAM'];
+
+/* one price in the sheet, formatted per language — never a second price column */
+const money = n => L === 0
+  ? n.toLocaleString('de-DE') + ' kr.'
+  : n.toLocaleString('en-US') + ' ISK';
+
+/* a field is either one value for both languages, or an [is, en] pair */
+const pick = v => Array.isArray(v) ? v[L] : v;
+const t = k => (UI[k] ? UI[k][L] : k);
+
+/* Each mark carries its own tight viewBox — its glyph's real bounding box,
+   measured rather than guessed — and is fitted into one fixed envelope. That
+   gives every logo the same optical weight with no per-brand fudge factor, and
+   keeps every tile the same height: a wide wordmark and a round badge each fill
+   the box they are given. */
+const markSvg = (name, cls) => {
+  const e = EMB[name]; if(!e) return '';
+  return `<span class="${cls}__face"><svg viewBox="${e.vb}" fill="${e.c}"
+    preserveAspectRatio="xMidYMid meet" class="${cls}" aria-hidden="true"
+    ><path d="${e.d}"/></svg></span>`;
+};
+
+
+function plateFace(m){
+  /* The brand mark alone, in a colour close to the original.
+     A make with no mark shows just its name, so an addition from
+     Anna cannot break the grid.
+     (CARS / CAR_COLOR below still hold the vehicle-profile version,
+      should we want to go back to it — it is a one-line change here.) */
+  if(EMB[m.n])
+    return { html: markSvg(m.n, 'plate__emb'), cls:'plate--logo', hideName:false };
+  return { html:'', cls:'plate--logo', hideName:false };
+}
+
+function plateHtml(m){
+  const f = plateFace(m);
+  const label = f.hideName ? '' : `<span class="plate__n">${m.n}</span>`;
+  return `<a class="plate ${f.cls}" data-make="${m.n}" aria-label="${m.n}">
+     ${f.html}${label}<span class="beam"></span></a>`;
+}
+
+function cardHtml(p, showMake){
+  return `<a class="card" data-prod="1">
+    <div class="shot shot--sq">${sceneSvg(p.scene)}</div>
+    <div class="card__b">
+      ${showMake ? `<span class="card__mk">${p.make}</span>` : ''}
+      <h3>${pick(p.name)}</h3>
+      <p class="fit">${t('fits')} ${pick(p.fit)}</p>
+    </div>
+    <div class="card__f">
+      <span class="price">${money(p.price)}<s>${t('inclVat')}</s></span>
+      <span class="stock ${p.stock ? '' : 'stock--0'}">${p.stock ? t('inStock') : t('soldOut')}</span>
+    </div></a>`;
+}
+
+const chipsHtml = (items, active, allLabel) =>
+  `<span class="chip" data-filter="" ${active===null?'aria-pressed="true"':''}>${allLabel}</span>` +
+  items.map(x=>`<span class="chip" data-filter="${x}" ${active===x?'aria-pressed="true"':''}>${x}</span>`).join('');
+
+function render(){
+  const above = MAKES.filter(m=>m.c >= FLOOR);
+  const below = MAKES.filter(m=>m.c <  FLOOR);
+
+  /* front page: top eight only */
+  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('');
+  /* choose-your-car: everything that earns a plate, plus the rest as text */
+  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('');
+  document.getElementById('platesRest').innerHTML =
+    below.map(m=>`<span class="chip" data-make="${m.n}">${m.n}</span>`).join('');
+
+
+
+  /* ── shop: all products, filtered by make + category ── */
+  document.getElementById('shopMakeFilter').innerHTML =
+    chipsHtml(above.map(m=>m.n), filters.shopMake, t('fAll'));
+  document.getElementById('shopCatFilter').innerHTML =
+    chipsHtml(CATS.map(c=>c[L]), filters.shopCat, t('fAllCats'));
+  const shopList = PRODS.filter(p=>
+    (!filters.shopMake || p.make === filters.shopMake) &&
+    (!filters.shopCat  || CATS[p.cat][L] === filters.shopCat));
+  document.getElementById('shopProds').innerHTML = shopList.length
+    ? shopList.map(p=>cardHtml(p, true)).join('')
+    : `<p style="padding:40px var(--gut);color:var(--ink-2)">${t('emptyB')}</p>`;
+
+  /* ── make page ── */
+  const m = MAKES.find(x=>x.n === mkCurrent) || MAKES[0];
+  document.getElementById('mkCrumb').textContent = m.n;
+  document.getElementById('mkName').textContent = m.n;
+  document.getElementById('mkFace').innerHTML = EMB[m.n] ? markSvg(m.n, 'mkhd__mark') : '';
+  document.getElementById('mkCount').textContent = m.models;
+
+  const models = m.models.split(' · ');
+  document.getElementById('mkModelFilter').innerHTML =
+    chipsHtml(models, filters.mkModel, t('fAll'));
+  const mkCats = [...new Set(PRODS.filter(p=>p.make===m.n).map(p=>CATS[p.cat][L]))];
+  document.getElementById('mkCatFilter').innerHTML =
+    chipsHtml(mkCats, filters.mkCat, t('fAllCats'));
+
+  const mkList = PRODS.filter(p=>
+    p.make === m.n && (!filters.mkCat || CATS[p.cat][L] === filters.mkCat));
+  document.getElementById('prods').innerHTML = mkList.map(p=>cardHtml(p, false)).join('');
+  document.querySelector('#make .empty').style.display = mkList.length ? 'none' : 'block';
+
+  document.getElementById('qa').innerHTML = QA.map(x=>
+    `<details><summary>${x.q[L]}</summary><div class="a">${x.a[L]}</div></details>`).join('');
+
+  document.getElementById('pdpPrice').textContent = money(34900);
+  document.getElementById('pdpVsk').textContent = t('pdpVsk').replace('{free}', money(15000));
+
+  paintScenes();
+}
+
+function setLang(code){
+  L = CODES.indexOf(code);
+  document.documentElement.lang = code;
+
+  /* clear filters: their values are language-dependent labels, so a switch
+     would otherwise leave a filter set to a string that no longer exists */
+  filters.shopCat = filters.mkCat = null;
+
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const s = UI[el.dataset.t];
+    if(!s) return;
+    /* a couple of strings carry <strong> on purpose */
+    if(s[L].includes('<strong>')) el.innerHTML = s[L]; else el.textContent = s[L];
+  });
+  document.querySelectorAll('[data-talt]').forEach(el=>{
+    const a = UI[el.dataset.talt]; if(a) el.alt = a[L];
+  });
+  document.querySelectorAll('[data-tp]').forEach(el=>{
+    const s = UI[el.dataset.tp]; if(s) el.placeholder = s[L];
+  });
+  document.querySelectorAll('.lang button').forEach(b=>
+    b.setAttribute('aria-pressed', String(b.dataset.lang === code)));
+
+  render();
+  try{ localStorage.setItem('lang', code); }catch(e){}
+}
+
+function go(id, anchor){
+  SCREEN = id;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on', s.id === id));
+  const navItems = [...document.querySelectorAll('#nav a')];
+  navItems.forEach(a=>a.removeAttribute('aria-current'));
+  const exact = navItems.find(a=>a.dataset.go === id && (a.dataset.scroll || '') === (anchor || ''));
+  (exact || navItems.find(a=>a.dataset.go === id))?.setAttribute('aria-current','page');
+  if(anchor){
+    /* wait for the screen to be laid out before measuring the target */
+    requestAnimationFrame(()=>document.getElementById(anchor)
+      ?.scrollIntoView({behavior:'smooth', block:'start'}));
+  } else {
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+}
+
+/* ── one delegated listener for the whole mockup ── */
+document.addEventListener('click', e=>{
+  const lang = e.target.closest('[data-lang]');
+  if(lang){ setLang(lang.dataset.lang); return; }
+
+  const mk = e.target.closest('[data-make]');
+  if(mk){ e.preventDefault(); mkCurrent = mk.dataset.make;
+          filters.mkModel = filters.mkCat = null; render(); go('make'); return; }
+
+  const prod = e.target.closest('[data-prod]');
+  if(prod){ e.preventDefault(); go('product'); return; }
+
+  const nav = e.target.closest('[data-go]');
+  if(nav){ e.preventDefault(); go(nav.dataset.go, nav.dataset.scroll); return; }
+
+  const chip = e.target.closest('.chip[data-filter]');
+  if(chip){
+    const row = chip.parentElement.id;
+    const v = chip.dataset.filter || null;
+    if(row === 'shopMakeFilter') filters.shopMake = v;
+    if(row === 'shopCatFilter')  filters.shopCat  = v;
+    if(row === 'mkModelFilter')  filters.mkModel  = v;
+    if(row === 'mkCatFilter')    filters.mkCat    = v;
+    render();
+    return;
+  }
+});
+
+/* ── mockup chrome ── */
+
+
+/* The story opens from either the button or the photograph. The photograph
+   carries role="button" and its own keyboard handling, because a thing that
+   depresses when you press it has to actually be pressable. */
+const sm = document.getElementById('storyMore');
+const photo = document.getElementById('storyPhoto');
+
+function toggleStory(){
+  const rest = document.getElementById('storyRest');
+  const open = rest.hidden;
+  rest.hidden = !open;
+  sm.dataset.t = open ? 'storyLessBtn' : 'storyMoreBtn';
+  sm.textContent = t(sm.dataset.t);
+  sm.setAttribute('aria-expanded', String(open));
+  photo.setAttribute('aria-expanded', String(open));
+}
+
+sm.addEventListener('click', toggleStory);
+photo.addEventListener('click', toggleStory);
+photo.addEventListener('keydown', e=>{
+  if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleStory(); }
+});
+
+/* ── boot ── */
+let saved = 'is';
+try{ saved = localStorage.getItem('lang') || 'is'; }catch(e){}
+setLang(CODES.includes(saved) ? saved : 'is');
+go('home');
+</script>
+</body>
+</html>
