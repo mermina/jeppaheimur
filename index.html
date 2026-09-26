@@ -206,6 +206,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 }
 .shot>svg.scene{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .shot--sq{aspect-ratio:4/3;min-height:0}
+.shot>img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;z-index:1}
+.thumbs .shot{cursor:pointer}
 
 /* ─── the make plates ─── */
 .plates{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -248,6 +250,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 
 /* ─── proof ─── */
 .proof{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.why__h{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.01em;margin:6px 0 10px;max-width:24ch}
+.why__p{margin:0 0 28px}
 .proof>div,.proof>a{background:var(--paper);border:1px solid var(--line);border-radius:2px;
   padding:26px 22px;display:block}
 /* card 04 leads somewhere, so it behaves like the other things you can press */
@@ -570,7 +574,6 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <a data-go="home" data-scroll="makes" data-t="navChoose">Veldu bíl</a>
       <a data-go="shop"      data-t="navShop">Veldu hlut</a>
       <a data-go="wholesale" data-t="navWholesale">Heildsala</a>
-      <a data-go="home" data-scroll="story" data-t="navAbout">Sagan okkar</a>
       <a data-go="faq"       data-t="navFaq">Spurt og svarað</a>
       <a data-go="contact"   data-t="navContact">Hafa samband</a>
     </nav>
@@ -623,35 +626,10 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   
   
 
-  <section class="band dark" id="story">
-    <div class="two">
-      <div class="portrait" id="storyPhoto" role="button" tabindex="0"
-           aria-expanded="false" aria-controls="storyRest">
-        <img src="assets/edvard-portrait.jpg" width="800" height="800"
-             data-talt="portraitAlt" alt="Edvard við eigin Camaro á hálendinu">
-      </div>
-      <div>
-        <p class="eyebrow" data-t="storyEyebrow">Sagan okkar</p>
-        <h2 data-t="storyH">Áhugamál varð að vandaðri vinnu.</h2>
-        <p class="lead" style="margin:16px 0 14px" data-t="storyB">
-          Ég hef breytt bílum í meira en níu ár — byggt á trausti og verklegri reynslu.
-        </p>
-        <p class="lead" style="margin:0 0 14px" data-t="storyR1"></p>
-        <div class="story__rest" id="storyRest" hidden>
-          <p class="lead" style="margin:0 0 14px" data-t="storyR2"></p>
-          <p class="lead" style="margin:0 0 14px" data-t="storyR3"></p>
-          <p class="lead" style="margin:0 0 14px" data-t="storyLang"></p>
-        </div>
-        <button class="more-btn" id="storyMore" aria-expanded="false"
-                aria-controls="storyRest" data-t="storyMoreBtn">…meira</button>
-        <div class="acts">
-          <a class="btn btn--tt" href="https://www.tiktok.com/@edvardxrcst"
-             target="_blank" rel="noopener">TikTok · @edvardxrcst →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-<section class="band">
+<section class="band dark" id="why">
+    <p class="eyebrow" data-t="whyEyebrow">Af hverju Jeppaheimur</p>
+    <h2 class="why__h" data-t="whyH">Aukahlutir fyrir jeppann — á skýru verði.</h2>
+    <p class="lead why__p" data-t="whyP">Við flytjum inn aukahluti fyrir breytta jeppa og seljum þá beint. Veldu bílinn, sjáðu hvað passar og pantaðu.</p>
     <div class="proof">
       <div><span class="num">01</span><h3 data-t="p1h">Sýnt á bíl</h3>
         <p data-t="p1b">Hver hlutur er myndaður uppsettur á bíl, svo þú sérð hvað þú ert að kaupa.</p></div>
@@ -725,38 +703,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 
 <!-- ══════════════════ PRODUCT ══════════════════ -->
 <main class="screen" id="product">
-  <p class="crumb"><a data-go="home" data-t="crumbHome">Forsíða</a> /
-    <a data-go="make">Toyota</a> / <span data-t="catSnorkel">Snorkel</span></p>
-  <div class="pdp">
-    <div>
-      <div class="shot" style="aspect-ratio:4/3" data-scene="snorkel">
-      </div>
-      <div class="thumbs">
-        <div class="shot" style="aspect-ratio:1;min-height:0" data-scene="part"></div>
-        <div class="shot" style="aspect-ratio:1;min-height:0" data-scene="front"></div>
-        <div class="shot" style="aspect-ratio:1;min-height:0" data-scene="workshop"></div>
-      </div>
-    </div>
-    <div>
-      <h1 data-t="pdpName">Snorkel — Toyota Land Cruiser 150</h1>
-      <p class="sku"><span data-t="skuLabel">Vörunúmer</span> TOY-SNK-150</p>
-      <p style="color:var(--ink-2);margin:0" data-t="pdpDesc">
-        Loftinntak upp á þak fyrir vatnavaðanir og mikið ryk. Sett á með boltum á upprunalega
-        festipunkta — engin klipping.
-      </p>
-      <p class="pprice" id="pdpPrice"></p>
-      <p class="vsk" id="pdpVsk"></p>
-      <table class="fittab">
-        <tr><th data-t="tFits">Passar við</th><td>Land Cruiser 150 · 2010–2017</td></tr>
-        <tr><th data-t="tMaterial">Efni</th><td data-t="vMaterial">Höggþolið plast, UV-varið</td></tr>
-        <tr><th data-t="tFitting">Uppsetning</th><td data-t="vFitting">Á upprunalega punkta, engin klipping</td></tr>
-      </table>
-      <div class="pdp__acts">
-        <a class="btn btn--a btn--w" data-go="contact" data-t="enquire">Senda fyrirspurn</a>
-      </div>
-      <a class="link-out" href="https://www.tiktok.com/@edvardxrcst" target="_blank" rel="noopener" data-t="seeFitting">Sjáðu uppsetninguna á TikTok →</a>
-    </div>
-  </div>
+  <p class="crumb" id="pdpCrumb"></p>
+  <div class="pdp" id="pdp"></div>
 </main>
 
 <!-- ══════════════════ WHOLESALE ══════════════════ -->
@@ -778,7 +726,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   <section class="band">
     <p class="eyebrow" data-t="whTermsH">Skilmálar heildsölu</p>
     <table class="rows">
-      <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">TALA VANTAR — Edvard ákveður</td></tr>
+      <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">TALA VANTAR</td></tr>
       <tr><th data-t="whR2">Afsláttur</th><td data-t="whV2">TALA VANTAR — þrep eftir magni</td></tr>
       <tr><th data-t="whR3">Greiðsluskilmálar</th><td data-t="whV3">ÓSTAÐFEST — reikningur eða fyrirframgreiðsla</td></tr>
       <tr><th data-t="whR4">Afhending</th><td data-t="whV4">ÓSTAÐFEST — sjá Sendingar</td></tr>
@@ -861,7 +809,6 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
           <tr><th data-t="coEmail">Netfang</th><td>xxx@xxx.is</td></tr>
           <tr><th data-t="coPhone">Sími</th><td>+354 xxx xxxx</td></tr>
           <tr><th data-t="coHours">Opnunartími</th><td data-t="coHoursV">ÓSTAÐFEST</td></tr>
-          <tr><th data-t="coSocial">Samfélagsmiðlar</th><td><a class="link-out" href="https://www.tiktok.com/@edvardxrcst" target="_blank" rel="noopener">@edvardxrcst</a></td></tr>
         </table>
       </div>
       <div>
@@ -899,7 +846,6 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
     <ul>
       <li><a data-go="shipping" data-t="navShipping">Sendingar</a></li>
       <li><a data-go="shipping" data-t="ftTerms">Skilmálar</a></li>
-      <li><a data-go="home" data-scroll="story" data-t="navAbout">Sagan okkar</a></li>
     </ul>
   </div>
   <div>
@@ -907,7 +853,6 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
     <ul>
       <li><a data-go="contact" data-t="navContact">Hafa samband</a></li>
       <li>xxx@xxx.is</li>
-      <li><a href="https://www.tiktok.com/@edvardxrcst" target="_blank" rel="noopener">TikTok</a></li>
     </ul>
   </div>
   <div>
@@ -937,7 +882,7 @@ const carG = (t,x,y,s,f) => `<g transform="translate(${x} ${y}) scale(${s})" fil
 /* ── placeholder scenes, in the Iceland palette ──────────────────
    Rhyolite ochre, moss, glacier blue, black sand, dusk. Flat vector,
    drawn here, no external images — the file works offline.
-   All disposable: every one is replaced by a photograph of Edvard's.
+   All disposable: every one is replaced by a real photograph.
    Gradient ids are suffixed per scene so several can coexist on a page.
    ──────────────────────────────────────────────────────────────── */
 const SCENES = {
@@ -1079,7 +1024,7 @@ const SCENES = {
     <path d="M132 190 l24 -96 h9 l-18 96z" fill="#C2CCD2"/>
     <rect x="126" y="182" width="66" height="10" rx="4" fill="#5C676F"/>`,
 
-  /* person — Edvard beside his own car, moss and rhyolite behind */
+  /* person beside a car, moss and rhyolite behind */
   person: `
     <defs>
       <linearGradient id="skyPe" x1="0" y1="0" x2="0" y2="1">
@@ -1114,7 +1059,7 @@ function paintScenes(){
 
 
 /* ── car symbols ─────────────────────────────────────────────────
-   One profile per make, drawn from the vehicle Edvard actually sells
+   One profile per make, drawn from the vehicles the shop sells
    parts for — lifted, on chunky tyres, because that is the visual
    language of this trade. The genuinely distinctive shapes are drawn
    distinctively (the Jimny is stubby, the Wrangler has a flat screen
@@ -1213,6 +1158,10 @@ const UI = {
   searchPh:['Leita — snorkel, brettakantar, Land Cruiser…','Search — snorkel, arch trims, Land Cruiser…'],
   cart:['Karfa (0)','Basket (0)'],
   navShop:['Veldu hlut','Choose part'], navChoose:['Veldu bíl','Choose car'],
+  whyEyebrow:['Af hverju Jeppaheimur','Why Jeppaheimur'],
+  whyH:['Aukahlutir fyrir jeppann — á skýru verði.','Accessories for your 4x4 — at a clear price.'],
+  whyP:['Við flytjum inn aukahluti fyrir breytta jeppa og seljum þá beint. Veldu bílinn, sjáðu hvað passar og pantaðu.',
+        'We import accessories for modified 4x4s and sell them directly. Choose your car, see what fits, and order.'],
   navWholesale:['Heildsala','Wholesale'], navAbout:['Sagan okkar','Our story'],
   navShipping:['Sendingar','Shipping'], navContact:['Hafa samband','Contact'],
 
@@ -1238,22 +1187,6 @@ const UI = {
   p3b:['Verð með VSK, sent á land allt. Engin verð „eftir samtali“.',
        'Prices include VAT, shipped nationwide. No “ask us for a price”.'],
 
-  shot5t:['Mynd 05 — um Edvard','Photo 05 — about Edvard'],
-  shot5d:['Edvard við eigin bíl, í vinnufötum, ekki stúdíómynd.','Edvard with his own car, in work clothes, not a studio shot.'],
-  storyEyebrow:['Sagan okkar','Our story'],
-  storyH:['Áhugamál varð að vandaðri vinnu.','Passion turned into quality work.'],
-  storyMoreBtn:['…meira','…more'],
-  storyLessBtn:['…minna','…less'],
-  storyR1:['Í byrjun var það bara fyrir hann sjálfan. Hann vildi að bílarnir hans litu út og keyrðu eins og hann sá þá fyrir sér — stærri dekk, snorkel, annað útlit, meira afl — svo hann breytti þeim. Svo fór fólk að stoppa hann og spyrja hvort bíllinn væri til sölu.',
-           'At the beginning it was only for himself. He wanted his cars to look and drive the way he pictured them — bigger wheels, a snorkel, a different stance, more power — so he changed them. Then people started stopping him to ask whether the car was for sale.'],
-  storyR2:['Það kenndi honum dálítið. Flestir vilja útkomuna, ekki verkefnið. Þeir hafa ekki tímann, vita ekki hvar á að fá hlutina og langar ekki að eyða heilum vetri í að komast að því. Þannig að hann fór að gera það fyrir þá: velja hlutina, flytja þá inn og vinna með fagmönnum sem hann treystir.',
-           'That taught him something. Most people want the result, not the project. They don’t have the time, they don’t know where to get the parts, and they’d rather not spend a winter finding out. So he started doing it for them: choosing the parts, bringing them in, and working with people he trusts to fit them.'],
-  storyR3:['Í dag eru hlutirnir sem hann fær þeir sömu og hann setur á sína eigin bíla — og hann heldur verðinu skynsamlegu.',
-           'Today the parts he brings in are the same ones he puts on his own cars — and he keeps prices that make sense.'],
-  storyB:['Edvard hefur breytt bílum í meira en níu ár — byggt á trausti og verklegri reynslu.',
-          'Edvard has been building cars for more than nine years — built on trust and hands-on experience.'],
-  storyLang:['Edvard hefur alþjóðlegan bakgrunn og talar fjögur mál — íslensku, ensku, pólsku og úkraínsku, svo þú getur átt samskipti við hann á því máli sem þér er eðlilegast.',
-             'Edvard’s background is international and he speaks four languages — Icelandic, English, Polish and Ukrainian, so you can communicate with him in whichever suits you best.'],
 
   p4h:['Heildsala fyrir verkstæði','Wholesale for garages'],
   p4b:['Rekurðu verkstæði eða selur áfram? Fast verð frá tiltekinni pöntun og beint samband við okkur.',
@@ -1293,14 +1226,13 @@ const UI = {
   shotPt:['Mynd — vara','Photo — product'],
   shotPd:['Snorkel uppsettur á Land Cruiser 150, bíllinn í mynd.','Snorkel fitted to a Land Cruiser 150, whole car in frame.'],
   th2:['_02 nærmynd','_02 close-up'], th3:['_03 festingar','_03 mountings'], th4:['_04 varan sjálf','_04 the part itself'],
-  skuLabel:['Vörunúmer','Product no.'],
+  skuLabel:['Vörunúmer','Product no.'], tStock:['Lagerstaða','Availability'],
   pdpDesc:['Loftinntak upp á þak fyrir vatnavaðanir og mikið ryk. Sett á með boltum á upprunalega festipunkta — engin klipping.',
            'Raised air intake for river crossings and heavy dust. Bolts to the original mounting points — no cutting.'],
   pdpVsk:['Verð með VSK · frí sending yfir {free}','Price includes VAT · free shipping over {free}'],
   tFits:['Passar við','Fits'],
   tMaterial:['Efni','Material'], vMaterial:['Höggþolið plast, UV-varið','Impact-resistant plastic, UV-stable'],
   tFitting:['Uppsetning','Fitting'], vFitting:['Á upprunalega punkta, engin klipping','Original mounting points, no cutting'],
-  seeFitting:['Sjáðu uppsetninguna á TikTok →','See the fitting on TikTok →'],
 
   /* wholesale */
   whPageH:['Heildsala','Wholesale'],
@@ -1316,7 +1248,7 @@ const UI = {
   wh3B:['Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.',
         'The car is in your workshop today, not for four weeks while a shipment crawls over.'],
   whTermsH:['Skilmálar heildsölu','Wholesale terms'],
-  whR1:['Lágmarkspöntun','Minimum order'], whV1:['TALA VANTAR — Edvard ákveður','FIGURE MISSING — Edvard decides'],
+  whR1:['Lágmarkspöntun','Minimum order'], whV1:['TALA VANTAR','FIGURE MISSING'],
   whR2:['Afsláttur','Discount'], whV2:['TALA VANTAR — þrep eftir magni','FIGURE MISSING — tiers by quantity'],
   whR3:['Greiðsluskilmálar','Payment terms'], whV3:['ÓSTAÐFEST — reikningur eða fyrirframgreiðsla','UNCONFIRMED — invoice or prepayment'],
   whR4:['Afhending','Delivery'], whV4:['ÓSTAÐFEST — sjá Sendingar','UNCONFIRMED — see Shipping'],
@@ -1356,7 +1288,6 @@ const UI = {
   faqCtaB:['Sendu okkur bíltegund og árgerð, þá svörum við hvort hluturinn passar.',
            'Send us the make and year of your car and we will tell you whether it fits.'],
 
-  portraitAlt:['Edvard við eigin Camaro á hálendinu','Edvard with his own Camaro in the highlands'],
   coEmail:['Netfang','Email'], coPhone:['Sími','Phone'],
   coHours:['Opnunartími','Opening hours'], coHoursV:['ÓSTAÐFEST','UNCONFIRMED'],
   coSocial:['Samfélagsmiðlar','Social'], coFormH:['Skrifaðu okkur','Write to us']
@@ -1368,7 +1299,7 @@ const UI = {
    Make names are proper nouns — one sheet column, never translated.
    ──────────────────────────────────────────────────────────────── */
 const MAKES = [
-  {n:'Toyota',     c:14, s:'wagon',  models:'Land Cruiser · Hilux · Prado · RAV4', car:'cruiser'},
+  {n:'Toyota',     c:14, s:'wagon',  models:'LC 90 · LC 100 · LC 120 · LC 150', car:'cruiser'},
   {n:'Suzuki',     c:11, s:'small',  models:'Jimny · Vitara · Grand Vitara', car:'jimny'},
   {n:'Jeep',       c:9,  s:'wagon',  models:'Wrangler · Cherokee · Grand Cherokee', car:'wrangler'},
   {n:'Nissan',     c:7,  s:'wagon',  models:'Patrol · Navara · X-Trail', car:'patrol'},
@@ -1385,48 +1316,37 @@ const FLOOR = 4;   /* a make below this gets no plate — see the note on the gr
 
 /* categories: sheet column `category`, one row per language.
    "Brettakantar" is arch trims to some English buyers and fender flares to
-   others — a search decision for Edvard, not a translation decision. */
+   others — a search decision for the owner, not a translation decision. */
 const CATS = [
-  ['Snorkel','Snorkel'], ['Brettakantar','Arch trims'], ['Vindhlífar','Wind deflectors'],
-  ['Mottur','Floor mats'], ['Aukaljós','Auxiliary lights'], ['Framgrind','Bull bar'],
-  ['Toppgrind','Roof rack'], ['Spil','Winch']
+  ['Gluggahlífar','Window deflectors'], ['Huddhlíf','Hood deflector'], ['Snorkel','Snorkel']
 ];
 
-/* PRODS reads like the sheet on purpose: name is two columns,
-   price / stock / fit are one column each, because they are not language. */
+/* PRODS — loaded from KATALOGUR_master (Google Drive, JEEP_WEBSITE), 25 Sep 2026.
+   Icelandic name, category, price, stock, wholesale and photo_filename are
+   copied from the sheet as-is. NOT from the sheet (placeholders, replace later):
+     - sku: generated here (TOY-GLH/HUD/SNK-nnn); sheet column is still empty
+     - English names/categories: drafted by Marina's AI assistant, unverified
+     - model: parsed from the Icelandic name
+     - extra photos on TOY-SNK-004 (IMG_4625, IMG_4630): in the Drive folder,
+       not in the sheet
+   description_is and fits_models are empty in the sheet, so none are shown. */
 const PRODS = [
-  {make:'Toyota', cat:0, name:['Snorkel','Snorkel'], fit:'Land Cruiser 150 · 2010–2017',
-   price:34900, stock:3, shot:'lc150_snorkel_01.jpg', scene:'snorkel',
-   d:['Snorkel uppsettur á bíl, hlið','Snorkel fitted, side view'], car:'ranger'},
-  {make:'Toyota', cat:1, name:['Brettakantar, sett af fjórum','Arch trims, set of four'], fit:'Land Cruiser 150 · 2010–2017',
-   price:28500, stock:5, shot:'lc150_brettak_01.jpg', scene:'gravel',
-   d:['Brettakantar á bíl, bíllinn allur','Arch trims fitted, whole car']},
-  {make:'Toyota', cat:2, name:['Vindhlífar á rúður','Window wind deflectors'], fit:'Hilux · 2016–2023',
-   price:12900, stock:8, shot:'hilux_vindhlifar_01.jpg', scene:'part',
-   d:['Vindhlífar, nærmynd á hurð','Deflectors, close-up on door']},
-  {make:'Toyota', cat:3, name:['Gúmmímottur, djúpar','Rubber floor mats, deep'], fit:'Land Cruiser 150 · 2010–2017',
-   price:16400, stock:12, shot:'lc150_mottur_01.jpg', scene:'workshop',
-   d:['Mottur inni í bílnum','Mats inside the car']},
-  {make:'Toyota', cat:4, name:['Aukaljós, LED-bar 20"','Auxiliary LED bar, 20"'],
-   fit:['Allar gerðir · með festingu','All models · bracket included'],
-   price:44900, stock:2, shot:'toyota_ljosabar_01.jpg', scene:'night',
-   d:['Ljósabar á bíl, kvöldmynd','Light bar fitted, evening shot']},
-  {make:'Toyota', cat:5, name:['Framgrind','Bull bar'], fit:'Hilux · 2016–2023',
-   price:89000, stock:0, shot:'hilux_framgrind_01.jpg', scene:'front',
-   d:['Framgrind á bíl, framan á','Bull bar fitted, front view']},
-  {make:'Suzuki', cat:1, name:['Brettakantar, breiðir','Arch trims, wide'], fit:'Jimny · 2018–2024',
-   price:31500, stock:4, shot:'jimny_brettak_01.jpg', scene:'gravel',
-   d:['Brettakantar á Jimny','Arch trims on a Jimny']},
-  {make:'Jeep', cat:4, name:['Aukaljós, þokuljós','Auxiliary fog lights'], fit:'Wrangler JL · 2018–2024',
-   price:26900, stock:6, shot:'wrangler_ljos_01.jpg', scene:'night',
-   d:['Þokuljós á Wrangler, kvöld','Fog lights on a Wrangler, evening']},
-  {make:'Nissan', cat:0, name:['Snorkel','Snorkel'], fit:'Patrol Y61 · 1997–2013',
-   price:36400, stock:2, shot:'patrol_snorkel_01.jpg', scene:'snorkel',
-   d:['Snorkel á Patrol','Snorkel on a Patrol']},
-  {make:'Land Rover', cat:6, name:['Toppgrind','Roof rack'], fit:'Defender 110 · 2020–',
-   price:112000, stock:1, shot:'defender_toppgrind_01.jpg', scene:'highlandWide',
-   d:['Toppgrind á Defender','Roof rack on a Defender']}
+  {sku:'TOY-GLH-001', make:'Toyota', cat:0, model:'LC 90',  name:['Gluggahlífar fyrir Toyota LC 90','Window deflectors for Toyota LC 90'],  price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4616.jpeg'},
+  {sku:'TOY-GLH-002', make:'Toyota', cat:0, model:'LC 100', name:['Gluggahlífar fyrir Toyota LC 100','Window deflectors for Toyota LC 100'], price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4618.jpeg'},
+  {sku:'TOY-GLH-003', make:'Toyota', cat:0, model:'LC 120', name:['Gluggahlífar fyrir Toyota LC 120','Window deflectors for Toyota LC 120'], price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4616.jpeg'},
+  {sku:'TOY-GLH-004', make:'Toyota', cat:0, model:'LC 150', name:['Gluggahlífar fyrir Toyota LC 150','Window deflectors for Toyota LC 150'], price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4618.jpeg'},
+  {sku:'TOY-HUD-001', make:'Toyota', cat:1, model:'LC 90',  name:['Huddhlíf fyrir Toyota LC 90','Hood deflector for Toyota LC 90'],  price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4617.jpeg'},
+  {sku:'TOY-HUD-002', make:'Toyota', cat:1, model:'LC 120', name:['Huddhlíf fyrir Toyota LC 120','Hood deflector for Toyota LC 120'], price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4620.jpeg'},
+  {sku:'TOY-SNK-001', make:'Toyota', cat:2, model:'LC 120', name:['Snorkel fyrir Toyota LC 120','Snorkel for Toyota LC 120'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4623.jpeg'},
+  {sku:'TOY-SNK-002', make:'Toyota', cat:2, model:'LC 90',  name:['Snorkel fyrir Toyota LC 90','Snorkel for Toyota LC 90'],   price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4622.jpeg'},
+  {sku:'TOY-SNK-003', make:'Toyota', cat:2, model:'LC 100', name:['Snorkel fyrir Toyota LC 100','Snorkel for Toyota LC 100'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4624.jpeg'},
+  {sku:'TOY-SNK-004', make:'Toyota', cat:2, model:'LC 150', name:['Snorkel fyrir Toyota LC 150','Snorkel for Toyota LC 150'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4626.jpeg', more:['IMG_4625.jpeg','IMG_4630.jpeg']}
 ];
+PRODS.forEach(p=>{ p.fit = 'Toyota ' + p.model; });
+const PHOTO_DIR = 'assets/products/';
+const photoHtml = f => `<img class="ph" src="${PHOTO_DIR}${f}" alt="" loading="lazy">`;
+let pdpCurrent = 0;
+let pdpPhoto = null;
 
 /* ── state ── */
 let L = 0;                    /* 0 = is, 1 = en */
@@ -1520,8 +1440,8 @@ function plateHtml(m){
 }
 
 function cardHtml(p, showMake){
-  return `<a class="card" data-prod="1">
-    <div class="shot shot--sq">${sceneSvg(p.scene)}</div>
+  return `<a class="card" data-prod="${PRODS.indexOf(p)}">
+    <div class="shot shot--sq">${p.photo ? photoHtml(p.photo) : sceneSvg(p.scene)}</div>
     <div class="card__b">
       ${showMake ? `<span class="card__mk">${p.make}</span>` : ''}
       <h3>${pick(p.name)}</h3>
@@ -1577,17 +1497,44 @@ function render(){
     chipsHtml(mkCats, filters.mkCat, t('fAllCats'));
 
   const mkList = PRODS.filter(p=>
-    p.make === m.n && (!filters.mkCat || CATS[p.cat][L] === filters.mkCat));
+    p.make === m.n && (!filters.mkCat || CATS[p.cat][L] === filters.mkCat) &&
+    (!filters.mkModel || p.model === filters.mkModel));
   document.getElementById('prods').innerHTML = mkList.map(p=>cardHtml(p, false)).join('');
   document.querySelector('#make .empty').style.display = mkList.length ? 'none' : 'block';
 
   document.getElementById('qa').innerHTML = QA.map(x=>
     `<details><summary>${x.q[L]}</summary><div class="a">${x.a[L]}</div></details>`).join('');
 
-  document.getElementById('pdpPrice').textContent = money(34900);
-  document.getElementById('pdpVsk').textContent = t('pdpVsk').replace('{free}', money(15000));
+  renderPdp();
 
   paintScenes();
+}
+
+function renderPdp(){
+  const p = PRODS[pdpCurrent]; if(!p) return;
+  const photos = [p.photo, ...(p.more || [])];
+  const main = pdpPhoto && photos.includes(pdpPhoto) ? pdpPhoto : p.photo;
+  document.getElementById('pdpCrumb').innerHTML =
+    `<a data-go="home">${t('crumbHome')}</a> / <a data-make="${p.make}">${p.make}</a> / <span>${CATS[p.cat][L]}</span>`;
+  document.getElementById('pdp').innerHTML = `
+    <div>
+      <div class="shot" style="aspect-ratio:4/3">${photoHtml(main)}</div>
+      ${photos.length > 1 ? `<div class="thumbs">${photos.map(f=>
+        `<div class="shot" style="aspect-ratio:1;min-height:0" data-photo="${f}">${photoHtml(f)}</div>`).join('')}</div>` : ''}
+    </div>
+    <div>
+      <h1>${pick(p.name)}</h1>
+      <p class="sku"><span>${t('skuLabel')}</span> ${p.sku}</p>
+      <p class="pprice">${money(p.price)}</p>
+      <p class="vsk">${t('pdpVsk').replace('{free}', money(15000))}</p>
+      <table class="fittab">
+        <tr><th>${t('tFits')}</th><td>${p.fit}</td></tr>
+        <tr><th>${t('tStock')}</th><td>${p.stock ? t('inStock') : t('soldOut')}</td></tr>
+      </table>
+      <div class="pdp__acts">
+        <a class="btn btn--a btn--w" data-go="contact">${t('enquire')}</a>
+      </div>
+    </div>`;
 }
 
 function setLang(code){
@@ -1643,7 +1590,11 @@ document.addEventListener('click', e=>{
           filters.mkModel = filters.mkCat = null; render(); go('make'); return; }
 
   const prod = e.target.closest('[data-prod]');
-  if(prod){ e.preventDefault(); go('product'); return; }
+  if(prod){ e.preventDefault(); pdpCurrent = +prod.dataset.prod || 0; pdpPhoto = null;
+             renderPdp(); go('product'); return; }
+
+  const thumb = e.target.closest('[data-photo]');
+  if(thumb){ pdpPhoto = thumb.dataset.photo; renderPdp(); return; }
 
   const nav = e.target.closest('[data-go]');
   if(nav){ e.preventDefault(); go(nav.dataset.go, nav.dataset.scroll); return; }
@@ -1664,27 +1615,6 @@ document.addEventListener('click', e=>{
 /* ── mockup chrome ── */
 
 
-/* The story opens from either the button or the photograph. The photograph
-   carries role="button" and its own keyboard handling, because a thing that
-   depresses when you press it has to actually be pressable. */
-const sm = document.getElementById('storyMore');
-const photo = document.getElementById('storyPhoto');
-
-function toggleStory(){
-  const rest = document.getElementById('storyRest');
-  const open = rest.hidden;
-  rest.hidden = !open;
-  sm.dataset.t = open ? 'storyLessBtn' : 'storyMoreBtn';
-  sm.textContent = t(sm.dataset.t);
-  sm.setAttribute('aria-expanded', String(open));
-  photo.setAttribute('aria-expanded', String(open));
-}
-
-sm.addEventListener('click', toggleStory);
-photo.addEventListener('click', toggleStory);
-photo.addEventListener('keydown', e=>{
-  if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleStory(); }
-});
 
 /* ── boot ── */
 let saved = 'is';
