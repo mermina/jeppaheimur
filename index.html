@@ -210,7 +210,32 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 .thumbs .shot{cursor:pointer}
 
 /* ─── the make plates ─── */
-.plates{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.plates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.plate--extras{background:linear-gradient(160deg,var(--paper) 0%,#FBF6EE 100%)}
+.plate--extras .plate__n{letter-spacing:.02em}
+.plate__sub{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-3)}
+.plate__tool{width:66px;height:58px;margin-bottom:9px;fill:var(--accent);stroke:none}
+.findbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:11px 14px;
+  border:1px solid var(--line);border-radius:3px;background:var(--paper)}
+.findbar svg{flex:none;stroke:var(--ink-3);fill:none;stroke-width:2}
+.findbar input{flex:1;min-width:0;background:none;border:0;color:var(--ink);
+  font:inherit;font-size:15px}
+.findbar input::placeholder{color:var(--ink-3)}
+.findhits{margin:0 0 18px;font-size:14px;color:var(--ink-2)}
+.findhits a{display:block;padding:10px 12px;border-bottom:1px solid var(--line);
+  text-decoration:none;color:var(--ink);cursor:pointer;border-radius:2px;
+  transition:background var(--press) ease,color var(--press) ease,padding-left var(--press) ease}
+.findhits a:last-child{border-bottom:0}
+.findhits a:hover,.findhits a:focus-visible{background:var(--bg-2);color:var(--accent);
+  padding-left:18px;outline:none}
+.findhits a:hover .sku,.findhits a:focus-visible .sku{color:var(--accent)}
+.findhits a:active{background:var(--edge)}
+.findhits .sku{float:right;color:var(--ink-3);font-size:12.5px;letter-spacing:.04em;
+  transition:color var(--press) ease}
+.findbar{transition:border-color var(--lift) ease,box-shadow var(--lift) ease}
+.findbar:hover{border-color:var(--edge)}
+.findbar:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(176,97,26,.10)}
 .plate{
   position:relative;display:flex;flex-direction:column;align-items:center;
   justify-content:center;min-height:158px;padding:26px 18px;text-align:center;
@@ -326,7 +351,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 /* ─── footer ─── */
 .ft{padding:clamp(34px,4vw,56px) var(--gut) 40px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:26px;font-size:14px;color:var(--ink-2)}
-.ft h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+.ft h2,.ft h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--accent);margin:0 0 12px;font-weight:500}
 .ft ul{margin:0;padding:0;list-style:none}
 .ft li{margin-bottom:7px}
@@ -387,7 +412,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 .card:hover h3{color:var(--accent)}
 .empty{padding:52px var(--gut);text-align:center;border-bottom:1px solid var(--line);
   background:var(--paper)}
-.empty h3{font-size:17px;letter-spacing:.06em;margin-bottom:8px}
+.empty h2,.empty h3{font-size:17px;letter-spacing:.06em;margin-bottom:8px}
 .empty p{color:var(--ink-2);margin:0 auto 18px;max-width:40ch}
 
 /* ─── product page ─── */
@@ -412,7 +437,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 /* ─── inner pages ─── */
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .box{border:1px solid var(--line);background:var(--paper);border-radius:2px;padding:24px 22px}
-.box h3{font-size:14.5px;letter-spacing:.07em;margin-bottom:9px}
+.box h2,.box h3{font-size:14.5px;letter-spacing:.07em;margin-bottom:9px}
 .box p{margin:0;font-size:14.5px;color:var(--ink-2)}
 .box .num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;
   display:block;margin-bottom:11px}
@@ -496,6 +521,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 .dark .btn--tt{background:transparent;border-color:var(--edge);color:var(--ink)}
 .dark .btn--tt:hover{border-color:var(--accent);color:var(--accent);background:transparent}
 
+[hidden]{display:none!important}
 .screen{display:none}
 .screen.on{display:block}
 
@@ -537,7 +563,10 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   .hero{grid-template-columns:1fr;padding-bottom:32px}
   .hero__t{padding-right:var(--gut)}
   .hero__m{padding:0 var(--gut)}
-  .plates{grid-template-columns:repeat(2,1fr)}
+  /* three across stays down to tablet: nine tiles divide by three, and two
+     columns would leave Ýmislegt stranded alone on a fifth row. */
+  .plates{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .plate{min-height:132px;padding:18px 10px}
   .proof,.strip,.grid,.two,.pdp,.trio{grid-template-columns:1fr}
   .proof>div{padding:20px 18px}
   .ft{grid-template-columns:repeat(2,1fr)}
@@ -550,6 +579,41 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   html{scroll-behavior:auto}
   .hero__vid{display:none}
 }
+@media (max-width:560px){
+  .plates{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plate--extras{grid-column:1 / -1;min-height:104px}
+  .plate--extras .plate__tool{width:34px;height:34px;margin-bottom:6px}
+}
+
+/* ── Núna hjá okkur — the seasonal shelf. Dark, so it reads as a break
+      between the makes grid and the story band, and so the products pop. ── */
+.season{background:var(--dark);color:#fff;padding:46px 0 52px}
+.season__in{max-width:1180px;margin:0 auto;padding:0 var(--gut)}
+.season__h{display:flex;align-items:baseline;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;margin:0 0 6px}
+.season h2{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);
+  letter-spacing:-.01em;margin:0;color:#fff}
+.season .eyebrow{color:var(--accent-lift)}
+.season__note{margin:0 0 24px;font-size:14.5px;color:#9AA6B2;max-width:62ch}
+.season__g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sc{display:block;background:var(--dark-2);border:1px solid #243041;border-radius:3px;
+  overflow:hidden;text-decoration:none;color:#fff;
+  transition:transform var(--lift) ease,border-color var(--lift) ease}
+.sc:hover{transform:translateY(-3px);border-color:var(--accent)}
+.sc__sh{aspect-ratio:4/3;background:#0C121A;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sc__sh img{width:100%;height:100%;object-fit:cover}
+.sc__b{padding:15px 16px 17px}
+.sc__tag{display:inline-block;margin-bottom:8px;padding:3px 8px;border-radius:2px;
+  background:rgba(240,163,53,.14);color:var(--accent-lift);
+  font:600 10.5px var(--mono);letter-spacing:.11em;text-transform:uppercase}
+.sc h3{font-family:var(--body);font-weight:600;font-size:16px;text-transform:none;
+  letter-spacing:0;line-height:1.3;margin:0 0 6px;color:#fff}
+.sc:hover h3{color:var(--accent-lift)}
+.sc__sh .ph{width:100%;height:100%;object-fit:cover;display:block}
+.sc__p{font-family:var(--mono);font-size:14.5px;color:#C9D3DD}
+.sc__p s{margin-left:7px;text-decoration:none;font-size:11.5px;color:#7F8C99}
+@media (max-width:940px){ .season__g{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px} }
+@media (max-width:620px){ .season__g{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -557,7 +621,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 
 <header class="hdr">
   <div class="hdr__in">
-    <a class="mark" data-go="home" aria-label="Jeppaheimur">
+    <a class="mark" href="./" data-go="home" aria-label="Jeppaheimur">
       <svg class="mark__m" viewBox="0 0 112 78" aria-hidden="true">
         <!-- The E's top bar runs straight on into the W's first downstroke, so the
              two letters are one continuous line. The colour changes at the joint,
@@ -571,16 +635,12 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <span class="mark__t">Jeppaheimur<span>Aukahlutir í jeppann</span></span>
     </a>
     <nav class="nav" id="nav">
-      <a data-go="home" data-scroll="makes" data-t="navChoose">Veldu bíl</a>
+      <a data-go="home" data-scroll="makes" data-t="navChoose">Byrjaðu hér</a>
       <a data-go="shop"      data-t="navShop">Veldu hlut</a>
       <a data-go="wholesale" data-t="navWholesale">Heildsala</a>
       <a data-go="faq"       data-t="navFaq">Spurt og svarað</a>
       <a data-go="contact"   data-t="navContact">Hafa samband</a>
     </nav>
-    <label class="srch">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.5-4.5"/></svg>
-      <input data-tp="searchPh" aria-label="Leita">
-    </label>
     <div class="hdr__r">
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang="is" aria-pressed="true">IS</button>
@@ -594,9 +654,9 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 
 <!-- ══════════════════ HOME ══════════════════ -->
 <main class="screen on" id="home">
-  <section class="hero dark">
+  <div class="hero dark">
     <div class="hero__t">
-      <h1><span data-t="heroA">Aukahlutir</span><em data-t="heroB">í jeppann</em></h1>
+      <h1><span data-t="heroA">Aukahlutir</span><em data-t="heroB">í jeppann 4×4</em></h1>
       <div class="rule"></div>
       <p data-t="heroP">Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.</p>
     </div>
@@ -608,15 +668,33 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
         </video>
       </div>
     </div>
-  </section>
+  </div>
 
 
-  <section class="band" id="makes" style="border-top:0">
-    <p class="eyebrow" data-t="gridEyebrow">Veldu bíl</p>
+  <div class="band" id="makes" style="border-top:0">
+    <p class="eyebrow" data-t="gridEyebrow">Byrjaðu hér</p>
+    <label class="findbar">
+      <svg width="17" height="17" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.5-4.5"/></svg>
+      <input class="findin" autocomplete="off" data-tp="findPh" placeholder="Leitaðu að hlut eða vörunúmeri — t.d. snorkel, TOY-SNK-001">
+    </label>
+    <div class="findhits" hidden></div>
     <div class="plates" id="plates"></div>
     <div class="more">
       <span data-t="gridMore">Finnur þú ekki bílinn þinn? Sendu okkur línu — við flytjum inn eftir beiðni.</span>
       <a data-go="cars" data-t="allMakes">Allar tegundir →</a>
+    </div>
+  </div>
+
+  <!-- ── seasonal shelf ── -->
+  <section class="season" id="season">
+    <div class="season__in">
+      <div class="season__h">
+        <p class="eyebrow" data-t="seasonEyebrow">Mælum með</p>
+        <a class="sc__more" href="#" data-go="shop" style="color:var(--accent-lift);font-size:14px;text-decoration:none" data-t="seasonAll">Allt í boði →</a>
+      </div>
+      <h2 data-t="seasonTitle">Núna hjá okkur</h2>
+      <p class="season__note" data-t="seasonNote">Það sem við mælum með þessa dagana.</p>
+      <div class="season__g" id="seasonG"></div>
     </div>
   </section>
 
@@ -647,27 +725,32 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   </main>
 
 <!-- ══════════════════ CHOOSE YOUR CAR ══════════════════ -->
-<main class="screen" id="cars">
+<main class="screen" id="cars" hidden>
   <div class="ph">
-    <h1 data-t="carsH">Veldu bíl</h1><div class="rule"></div>
+    <h1 data-t="carsH">Allar tegundir</h1><div class="rule"></div>
     <p data-t="carsP">Við eigum aukahluti fyrir þessar tegundir. Finnurðu ekki þína — sendu okkur línu, við flytjum inn eftir beiðni.</p>
   </div>
-  <section class="band" style="border-top:0">
+  <div class="band" style="border-top:0">
     <div class="plates" id="platesAll"></div>
-  </section>
-  <section class="band">
+  </div>
+  <div class="band">
     <p class="eyebrow" data-t="carsMoreH">Fáar vörur enn þá</p>
     <p class="lead" data-t="carsMoreP">Þessar tegundir eru að byggjast upp. Vörurnar þeirra eru undir Veldu hlut á meðan.</p>
     <div class="chips" id="platesRest" style="margin-top:16px"></div>
-  </section>
+  </div>
 </main>
 
 <!-- ══════════════════ SHOP (all products) ══════════════════ -->
-<main class="screen" id="shop">
+<main class="screen" id="shop" hidden>
   <div class="ph">
     <h1 data-t="shopH">Veldu hlut</h1><div class="rule"></div>
-    <p data-t="shopP">Allt sem við eigum, síað eftir bíltegund og flokki. Veistu hvaða bíl þú ert með? Byrjaðu á Veldu bíl.</p>
+    <p data-t="shopP">Allt sem við eigum, síað eftir bíltegund og flokki. Veistu hvaða bíl þú ert með? Byrjaðu á forsíðunni.</p>
   </div>
+  <label class="findbar">
+    <svg width="17" height="17" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.5-4.5"/></svg>
+    <input class="findin" autocomplete="off" data-tp="findPh" placeholder="Leitaðu að hlut eða vörunúmeri — t.d. snorkel, TOY-SNK-001">
+  </label>
+  <div class="findhits" hidden></div>
   <div class="filters">
     <div class="frow"><span class="flab" data-t="fMake">Tegund</span><div class="chips" id="shopMakeFilter"></div></div>
     <div class="frow"><span class="flab" data-t="fCat">Flokkur</span><div class="chips" id="shopCatFilter"></div></div>
@@ -676,7 +759,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 </main>
 
 <!-- ══════════════════ MAKE ══════════════════ -->
-<main class="screen" id="make">
+<main class="screen" id="make" hidden>
   <p class="crumb"><a data-go="home" data-t="crumbHome">Forsíða</a> / <span id="mkCrumb">Toyota</span></p>
   <div class="mkhd">
     <span id="mkFace"></span>
@@ -695,35 +778,35 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   </div>
   <div class="grid" id="prods"></div>
   <div class="empty">
-    <h3 data-t="emptyH">Engin vara fannst</h3>
+    <h2 data-t="emptyH">Engin vara fannst</h2>
     <p data-t="emptyB">Við eigum ekki þennan flokk fyrir þessa tegund í augnablikinu. Sendu okkur línu — við flytjum inn eftir beiðni.</p>
     <a class="btn" data-go="contact" data-t="enquire">Senda fyrirspurn</a>
   </div>
 </main>
 
 <!-- ══════════════════ PRODUCT ══════════════════ -->
-<main class="screen" id="product">
+<main class="screen" id="product" hidden>
   <p class="crumb" id="pdpCrumb"></p>
   <div class="pdp" id="pdp"></div>
 </main>
 
 <!-- ══════════════════ WHOLESALE ══════════════════ -->
-<main class="screen" id="wholesale">
+<main class="screen" id="wholesale" hidden>
   <div class="ph">
     <h1 data-t="whPageH">Heildsala</h1><div class="rule"></div>
     <p data-t="whPageP">Rekurðu verkstæði eða selur áfram? Við bjóðum heildsöluverð frá tiltekinni pöntun, og beint samband við okkur í stað þess að fara gegnum vefinn.</p>
   </div>
   <section class="band">
     <div class="trio">
-      <div class="box"><span class="num">01</span><h3 data-t="wh1H">Fast verð, ekki tilboð í hvert sinn</h3>
+      <div class="box"><span class="num">01</span><h2 data-t="wh1H">Fast verð, ekki tilboð í hvert sinn</h2>
         <p data-t="wh1B">Þú fær verðlista og veist hvað hluturinn kostar áður en þú lofar viðskiptavini þínum nokkru.</p></div>
-      <div class="box"><span class="num">02</span><h3 data-t="wh2H">Beint samband</h3>
+      <div class="box"><span class="num">02</span><h2 data-t="wh2H">Beint samband</h2>
         <p data-t="wh2B">Þú talar við okkur, ekki við vefform. Við svörum hvort hluturinn passar og hvenær hann kemur.</p></div>
-      <div class="box"><span class="num">03</span><h3 data-t="wh3H">Á lager á Íslandi</h3>
+      <div class="box"><span class="num">03</span><h2 data-t="wh3H">Á lager á Íslandi</h2>
         <p data-t="wh3B">Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.</p></div>
     </div>
   </section>
-  <section class="band">
+  <div class="band">
     <p class="eyebrow" data-t="whTermsH">Skilmálar heildsölu</p>
     <table class="rows">
       <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">TALA VANTAR</td></tr>
@@ -731,8 +814,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <tr><th data-t="whR3">Greiðsluskilmálar</th><td data-t="whV3">ÓSTAÐFEST — reikningur eða fyrirframgreiðsla</td></tr>
       <tr><th data-t="whR4">Afhending</th><td data-t="whV4">ÓSTAÐFEST — sjá Sendingar</td></tr>
     </table>
-  </section>
-  <section class="band">
+  </div>
+  <div class="band">
     <p class="eyebrow" data-t="whFormH">Sendu okkur línu</p>
     <div class="form">
       <div class="row2">
@@ -747,17 +830,17 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <label><span data-t="fMsg">Hvað ertu að leita að?</span><textarea></textarea></label>
       <a class="btn btn--a" style="justify-self:start" data-t="fSend">Senda</a>
     </div>
-  </section>
+  </div>
 </main>
 
 
 <!-- ══════════════════ SHIPPING ══════════════════ -->
-<main class="screen" id="shipping">
+<main class="screen" id="shipping" hidden>
   <div class="ph">
     <h1 data-t="shH">Sendingar</h1><div class="rule"></div>
     <p data-t="shP">Við sendum á land allt. Hér er hvað það kostar, hvað það tekur og hvernig þú skilar ef hluturinn passar ekki.</p>
   </div>
-  <section class="band">
+  <div class="band">
     <table class="rows">
       <tr><th data-t="shR1">Frí sending yfir</th><td data-t="shV1">15.000 kr. — TALA ÓSTAÐFEST</td></tr>
       <tr><th data-t="shR2">Sendingarkostnaður</th><td data-t="shV2">TALA VANTAR — eftir þyngd og stærð</td></tr>
@@ -766,25 +849,25 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <tr><th data-t="shR5">Afhending á staðnum</th><td data-t="shV5">ÓSTAÐFEST — er starfsstöð? hvar?</td></tr>
       <tr><th data-t="shR6">Stórir hlutir</th><td data-t="shV6">Framgrindur og toppgrindur — sérsending, ÓSTAÐFEST</td></tr>
     </table>
-  </section>
-  <section class="band">
+  </div>
+  <div class="band">
     <p class="eyebrow" data-t="shRetH">Skilaréttur</p>
     <div class="prose">
       <p data-t="shRet1">Þú hefur <strong>14 daga</strong> til að skila vöru sem þú hefur ekki notað, í upprunalegum pakkningum. Við endurgreiðum þegar varan er komin til okkar.</p>
       <p data-t="shRet2">Passar hluturinn ekki á bílinn þinn? Hafðu samband áður en þú setur hann á — hlutur sem hefur verið boraður eða málaður er ekki hægt að skila.</p>
     </div>
-  </section>
+  </div>
 </main>
 
 <!-- ══════════════════ Q&A ══════════════════ -->
-<main class="screen" id="faq">
+<main class="screen" id="faq" hidden>
   <div class="ph">
     <h1 data-t="faqH">Spurt og svarað</h1><div class="rule"></div>
     <p data-t="faqP">Þetta er það sem er oftast spurt um. Finnurðu ekki svarið — sendu okkur línu.</p>
   </div>
-  <section class="band">
+  <div class="band">
     <div class="qa" id="qa"></div>
-  </section>
+  </div>
   <section class="band">
     <div class="wh">
       <div>
@@ -797,12 +880,12 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 </main>
 
 <!-- ══════════════════ CONTACT ══════════════════ -->
-<main class="screen" id="contact">
+<main class="screen" id="contact" hidden>
   <div class="ph">
     <h1 data-t="coH">Hafa samband</h1><div class="rule"></div>
     <p data-t="coP">Spurning um hvort hlutur passar á bílinn þinn? Skrifaðu eða hringdu — það er fljótlegast að segja okkur árgerð og gerð.</p>
   </div>
-  <section class="band">
+  <div class="band">
     <div class="two" style="align-items:start">
       <div>
         <table class="rows" style="max-width:none">
@@ -828,36 +911,36 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </main>
 
 <div class="dark">
 <footer class="ft">
   <div>
-    <h4 data-t="ftShop">Verslun</h4>
+    <h2 data-t="ftShop">Verslun</h2>
     <ul>
-      <li><a data-go="home" data-scroll="makes" data-t="navChoose">Veldu bíl</a></li>
+      <li><a data-go="home" data-scroll="makes" data-t="navChoose">Byrjaðu hér</a></li>
       <li><a data-go="shop" data-t="navShop">Veldu hlut</a></li>
       <li><a data-go="wholesale" data-t="navWholesale">Heildsala</a></li>
     </ul>
   </div>
   <div>
-    <h4 data-t="ftInfo">Upplýsingar</h4>
+    <h2 data-t="ftInfo">Upplýsingar</h2>
     <ul>
       <li><a data-go="shipping" data-t="navShipping">Sendingar</a></li>
       <li><a data-go="shipping" data-t="ftTerms">Skilmálar</a></li>
     </ul>
   </div>
   <div>
-    <h4 data-t="ftContact">Samband</h4>
+    <h2 data-t="ftContact">Samband</h2>
     <ul>
       <li><a data-go="contact" data-t="navContact">Hafa samband</a></li>
       <li>xxx@xxx.is</li>
     </ul>
   </div>
   <div>
-    <h4 data-t="ftPay">Greiðslur</h4>
-    <div class="pay"><span data-t="payTransfer">MILLIFÆRSLA</span><span>NETGÍRÓ</span></div>
+    <h2 data-t="ftPay">Greiðslur</h2>
+    <div class="pay"><span data-t="payTransfer">MILLIFÆRSLA</span></div>
   </div>
 </footer>
 <p class="ftbot" data-t="ftBot">Öll verð með VSK · kt. 000000-0000</p>
@@ -1157,7 +1240,7 @@ const EMB = {
 const UI = {
   searchPh:['Leita — snorkel, brettakantar, Land Cruiser…','Search — snorkel, arch trims, Land Cruiser…'],
   cart:['Karfa (0)','Basket (0)'],
-  navShop:['Veldu hlut','Choose part'], navChoose:['Veldu bíl','Choose car'],
+  navShop:['Veldu hlut','Choose part'], navChoose:['Byrjaðu hér','Start here'],
   whyEyebrow:['Af hverju Jeppaheimur','Why Jeppaheimur'],
   whyH:['Aukahlutir fyrir jeppann — á skýru verði.','Accessories for your 4x4 — at a clear price.'],
   whyP:['Við flytjum inn aukahluti fyrir breytta jeppa og seljum þá beint. Veldu bílinn, sjáðu hvað passar og pantaðu.',
@@ -1165,14 +1248,14 @@ const UI = {
   navWholesale:['Heildsala','Wholesale'], navAbout:['Sagan okkar','Our story'],
   navShipping:['Sendingar','Shipping'], navContact:['Hafa samband','Contact'],
 
-  heroA:['Aukahlutir','Accessories'], heroB:['í jeppann','for your 4×4'],
+  heroA:['Aukahlutir','Accessories'], heroB:['í jeppann 4×4','for your 4×4'],
   heroP:['Veldu bílinn þinn og sjáðu aðeins hlutina sem passa á hann. Einfalt að fletta, með ítarlegri lýsingu á hverri vöru — svo þú veist nákvæmlega hvað þú ert að kaupa.',
          'Pick your car and see only the parts that fit it. Easy to browse, with a full description on every product — so you know exactly what you are getting.'],
   shot1t:['Mynd 01 — forsíða','Photo 01 — front page'],
   shot1d:['Hvítur Land Cruiser 150 á 35", snorkel og brettakantar sjáanleg. Hálendi eða möl, dagsljós, bíllinn á þrem fjórðu.',
           'White Land Cruiser 150 on 35s, snorkel and arch trims visible. Highland or gravel, daylight, three-quarter view.'],
 
-  gridEyebrow:['Veldu bíl','Choose car'],
+  gridEyebrow:['Byrjaðu hér','Start here'],
   gridMore:['Finnur þú ekki bílinn þinn? Sendu okkur línu — við flytjum inn eftir beiðni.',
             'Can’t find your car? Send us a line — we import on request.'],
   allMakes:['Allar tegundir →','All makes →'],
@@ -1198,7 +1281,7 @@ const UI = {
   ftBot:['Öll verð með VSK · kt. 000000-0000','All prices include VAT · reg. 000000-0000'],
 
   /* choose your car */
-  carsH:['Veldu bíl','Choose car'],
+  carsH:['Allar tegundir','All makes'],
   carsP:['Við eigum aukahluti fyrir þessar tegundir. Finnurðu ekki þína — sendu okkur línu, við flytjum inn eftir beiðni.',
          'We stock accessories for these makes. Can’t find yours — send us a line, we import on request.'],
   carsMoreH:['Fáar vörur enn þá','Only a few products so far'],
@@ -1207,8 +1290,8 @@ const UI = {
 
   /* shop */
   shopH:['Veldu hlut','Choose part'],
-  shopP:['Allt sem við eigum, síað eftir bíltegund og flokki. Veistu hvaða bíl þú ert með? Byrjaðu á Veldu bíl.',
-         'Everything we stock, filtered by make and category. Know which car you have? Start at Choose car.'],
+  shopP:['Allt sem við eigum, síað eftir bíltegund og flokki. Veistu hvaða bíl þú ert með? Byrjaðu á forsíðunni.',
+         'Everything we stock, filtered by make and category. Know which car you have? Start on the front page.'],
 
   crumbHome:['Forsíða','Home'],
   fMake:['Tegund','Make'], fModel:['Gerð','Model'], fCat:['Flokkur','Category'],
@@ -1281,6 +1364,18 @@ const UI = {
   coP:['Spurning um hvort hlutur passar á bílinn þinn? Skrifaðu eða hringdu — það er fljótlegast að segja okkur árgerð og gerð.',
        'Wondering whether a part fits your car? Write or call — the quickest thing is to tell us the make and year.'],
   navFaq:['Spurt og svarað','Q&A'],
+  extrasName:['Ýmislegt','Extras'],
+  extrasSub:['fyrir alla bíla','for every car'],
+  findPh:['Leitaðu að hlut eða vörunúmeri — t.d. snorkel, TOY-SNK-001','Search by part or part number — e.g. snorkel, TOY-SNK-001'],
+  findNone:['Ekkert fannst — sendu okkur línu og við flytjum inn eftir beiðni.','Nothing found — send us a line and we will import on request.'],
+  findMore:['til viðbótar','more'],
+  seasonEyebrow:['Mælum með','We recommend'],
+  seasonTitle:['Núna hjá okkur','In stock now'],
+  seasonNote:['Það sem við mælum með þessa dagana.','What we recommend at the moment.'],
+  seasonAll:['Allt í boði →','See everything →'],
+  tagSeason:['Vetur','Winter'],
+  tagPopular:['Vinsælt','Popular'],
+  tagNew:['Nýtt','New'],
   faqH:['Spurt og svarað','Questions & answers'],
   faqP:['Þetta er það sem er oftast spurt um. Finnurðu ekki svarið — sendu okkur línu.',
         'The things we get asked most. If your answer is not here, send us a line.'],
@@ -1432,6 +1527,31 @@ function plateFace(m){
   return { html:'', cls:'plate--logo', hideName:false };
 }
 
+/* "Ýmislegt" — the one tile that is not a car make. Things that fit any
+   vehicle: shovels, brushes, straps. It is a CATEGORY, not a make, so it
+   must never enter MAKES or it turns up as a brand in every filter. */
+function extrasHtml(){
+  return `<a class="plate plate--extras" data-extras="1" aria-label="${t('extrasName')}">
+     <svg class="plate__tool" viewBox="0 0 68 60" aria-hidden="true">
+       <!-- bottle: cap, neck, body with a label window punched out -->
+       <rect x="13.5" y="2" width="11" height="6.5" rx="1.6"/>
+       <rect x="15.8" y="8" width="6.4" height="5"/>
+       <path fill-rule="evenodd" d="M12 13h14a6 6 0 0 1 6 6v31a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6V19a6 6 0 0 1 6-6Zm-1.2 15.5v12.5h16.4V28.5H10.8Z"/>
+       <!-- snow brush: handle, head, fine bristles -->
+       <rect x="48.4" y="6" width="5.2" height="17" rx="2.6"/>
+       <rect x="38" y="22" width="26" height="9" rx="2.5"/>
+       <rect x="39.4" y="31" width="2.5" height="13" rx="1.25"/>
+       <rect x="43.3" y="31" width="2.5" height="14" rx="1.25"/>
+       <rect x="47.2" y="31" width="2.5" height="14.5" rx="1.25"/>
+       <rect x="51.1" y="31" width="2.5" height="14"  rx="1.25"/>
+       <rect x="55" y="31"   width="2.5" height="13" rx="1.25"/>
+       <rect x="58.9" y="31" width="2.5" height="11.5" rx="1.25"/>
+     </svg>
+     <span class="plate__n">${t('extrasName')}</span>
+     <span class="plate__sub">${t('extrasSub')}</span>
+     <span class="beam"></span></a>`;
+}
+
 function plateHtml(m){
   const f = plateFace(m);
   const label = f.hideName ? '' : `<span class="plate__n">${m.n}</span>`;
@@ -1462,9 +1582,67 @@ function render(){
   const below = MAKES.filter(m=>m.c <  FLOOR);
 
   /* front page: top eight only */
-  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('');
+  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('') + extrasHtml();
   /* choose-your-car: everything that earns a plate, plus the rest as text */
-  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('');
+  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('') + extrasHtml();
+  /* ── search. One binder for every .findin on the page: the one under the
+        makes grid and the one on the parts page. Each writes into the
+        .findhits that follows its own bar, so adding a third is markup only.
+        Matches name in both languages, SKU, make and model, with Icelandic
+        characters folded so "gluggahlifa" finds "Gluggahlífar". ── */
+  (function(){
+    const norm = x => (x||'').toString().toLowerCase()
+      .replace(/[áà]/g,'a').replace(/[éè]/g,'e').replace(/[íì]/g,'i')
+      .replace(/[óò]/g,'o').replace(/[úù]/g,'u').replace(/ý/g,'y')
+      .replace(/þ/g,'th').replace(/æ/g,'ae').replace(/ö/g,'o').replace(/ð/g,'d');
+    const hay = p => norm([].concat(p.name).join(' ') + ' ' + p.sku + ' ' + p.make + ' ' +
+                       p.model + ' ' + (p.oem || ''));   /* part number — how buyers search */
+
+    document.querySelectorAll('.findin').forEach(box => {
+      const out = box.closest('.findbar').nextElementSibling;
+      if (!out || !out.classList.contains('findhits')) return;
+      if (box.dataset.bound) { box.value=''; out.hidden=true; out.innerHTML=''; return; }
+      box.dataset.bound = '1';
+      box.addEventListener('input', function(){
+        const q = norm(box.value.trim());
+        if (q.length < 2) { out.hidden = true; out.innerHTML = ''; return; }
+        const hits = PRODS.filter(p => q.split(/\s+/).every(w => hay(p).includes(w)));
+        out.hidden = false;
+        out.innerHTML = hits.length
+          ? hits.slice(0,8).map(p =>
+              `<a data-prod="${PRODS.indexOf(p)}">${pick(p.name)}` +
+              `<span class="sku">${p.sku}</span></a>`).join('')
+            + (hits.length > 8 ? `<a style="color:var(--ink-3)">… ${hits.length-8} ${t('findMore')}</a>` : '')
+          : `<a style="color:var(--ink-3)">${t('findNone')}</a>`;
+      });
+    });
+  })();
+
+  /* ── the shelf. Nothing here names a season, on purpose: the heading is
+        permanent so nobody has to edit code in April. What changes is which
+        products sit on it, and in WooCommerce that is the built-in "Featured"
+        star in the product list — one click per product, no site editor, no
+        developer. The little tag on each card ("Vetur", "Nytt") is a WooCommerce product tag
+        he types on the product itself, so that is his too. ── */
+  (function(){
+    const PICKS = ['TOY-SNK-001','TOY-GLH-003','TOY-HUD-002'];
+    const TAGS  = { 'TOY-SNK-001':'tagSeason', 'TOY-GLH-003':'tagPopular', 'TOY-HUD-002':'tagNew' };
+    const g = document.getElementById('seasonG');
+    if (!g) return;
+    g.innerHTML = PICKS.map(sku => {
+      const p = PRODS.find(x => x.sku === sku);
+      if (!p) return '';
+      const shot = p.photo ? photoHtml(p.photo) : sceneSvg(p.scene);
+      return `<a class="sc" data-prod="${PRODS.indexOf(p)}">
+        <div class="sc__sh">${shot}</div>
+        <div class="sc__b">
+          <span class="sc__tag">${t(TAGS[sku] || 'seasonEyebrow')}</span>
+          <h3>${pick(p.name)}</h3>
+          <span class="sc__p">${money(p.price)}<s>m/VSK</s></span>
+        </div></a>`;
+    }).join('');
+  })();
+
   document.getElementById('platesRest').innerHTML =
     below.map(m=>`<span class="chip" data-make="${m.n}">${m.n}</span>`).join('');
 
@@ -1566,7 +1744,7 @@ function setLang(code){
 
 function go(id, anchor){
   SCREEN = id;
-  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on', s.id === id));
+  document.querySelectorAll('.screen').forEach(s=>{ s.classList.toggle('on', s.id === id); s.hidden = s.id !== id; });
   const navItems = [...document.querySelectorAll('#nav a')];
   navItems.forEach(a=>a.removeAttribute('aria-current'));
   const exact = navItems.find(a=>a.dataset.go === id && (a.dataset.scroll || '') === (anchor || ''));
