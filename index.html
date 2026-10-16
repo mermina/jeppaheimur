@@ -843,30 +843,6 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 </main>
 
 
-<!-- ══════════════════ SHIPPING ══════════════════ -->
-<main class="screen" id="shipping" hidden>
-  <div class="ph">
-    <h1 data-t="shH">Sendingar</h1><div class="rule"></div>
-    <p data-t="shP">Við sendum á land allt. Hér er hvað það kostar, hvað það tekur og hvernig þú skilar ef hluturinn passar ekki.</p>
-  </div>
-  <div class="band">
-    <table class="rows">
-      <tr><th data-t="shR1">Frí sending yfir</th><td data-t="shV1">15.000 kr. — TALA ÓSTAÐFEST</td></tr>
-      <tr><th data-t="shR2">Sendingarkostnaður</th><td data-t="shV2">TALA VANTAR — eftir þyngd og stærð</td></tr>
-      <tr><th data-t="shR3">Afhendingartími</th><td data-t="shV3">1–3 virkir dagar — ÓSTAÐFEST</td></tr>
-      <tr><th data-t="shR4">Sendingarleiðir</th><td data-t="shV4">ÓSTAÐFEST — Íslandspóstur, Samskip, Eimskip?</td></tr>
-      <tr><th data-t="shR5">Afhending á staðnum</th><td data-t="shV5">ÓSTAÐFEST — er starfsstöð? hvar?</td></tr>
-      <tr><th data-t="shR6">Stórir hlutir</th><td data-t="shV6">Framgrindur og toppgrindur — sérsending, ÓSTAÐFEST</td></tr>
-    </table>
-  </div>
-  <div class="band">
-    <p class="eyebrow" data-t="shRetH">Skilaréttur</p>
-    <div class="prose">
-      <p data-t="shRet1">Þú hefur <strong>14 daga</strong> til að skila vöru sem þú hefur ekki notað, í upprunalegum pakkningum. Við endurgreiðum þegar varan er komin til okkar.</p>
-      <p data-t="shRet2">Passar hluturinn ekki á bílinn þinn? Hafðu samband áður en þú setur hann á — hlutur sem hefur verið boraður eða málaður er ekki hægt að skila.</p>
-    </div>
-  </div>
-</main>
 
 <!-- ══════════════════ Q&A ══════════════════ -->
 <main class="screen" id="faq" hidden>
@@ -936,8 +912,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   <div>
     <h2 data-t="ftInfo">Upplýsingar</h2>
     <ul>
-      <li><a data-go="shipping" data-t="navShipping">Sendingar</a></li>
-      <li><a data-go="shipping" data-t="ftTerms">Skilmálar</a></li>
+      <li><a data-go="faq" data-t="navFaq">Spurt og svarað</a></li>
     </ul>
   </div>
   <div>
@@ -1353,20 +1328,6 @@ const UI = {
   /* about */
 
   /* shipping */
-  shH:['Sendingar','Shipping'],
-  shP:['Við sendum á land allt. Hér er hvað það kostar, hvað það tekur og hvernig þú skilar ef hluturinn passar ekki.',
-       'We ship nationwide. Here is what it costs, how long it takes, and how you return something that does not fit.'],
-  shR1:['Frí sending yfir','Free shipping over'], shV1:['15.000 kr. — TALA ÓSTAÐFEST','15,000 ISK — FIGURE UNCONFIRMED'],
-  shR2:['Sendingarkostnaður','Shipping cost'], shV2:['TALA VANTAR — eftir þyngd og stærð','FIGURE MISSING — by weight and size'],
-  shR3:['Afhendingartími','Delivery time'], shV3:['1–3 virkir dagar — ÓSTAÐFEST','1–3 working days — UNCONFIRMED'],
-  shR4:['Sendingarleiðir','Carriers'], shV4:['ÓSTAÐFEST — Íslandspóstur, Samskip, Eimskip?','UNCONFIRMED — Íslandspóstur, Samskip, Eimskip?'],
-  shR5:['Afhending á staðnum','Local pickup'], shV5:['ÓSTAÐFEST — er starfsstöð? hvar?','UNCONFIRMED — is there a premises? where?'],
-  shR6:['Stórir hlutir','Oversized items'], shV6:['Framgrindur og toppgrindur — sérsending, ÓSTAÐFEST','Bull bars and roof racks — special delivery, UNCONFIRMED'],
-  shRetH:['Skilaréttur','Returns'],
-  shRet1:['Þú hefur <strong>14 daga</strong> til að skila vöru sem þú hefur ekki notað, í upprunalegum pakkningum. Við endurgreiðum þegar varan er komin til okkar.',
-          'You have <strong>14 days</strong> to return an unused item in its original packaging. We refund once it reaches us.'],
-  shRet2:['Passar hluturinn ekki á bílinn þinn? Hafðu samband áður en þú setur hann á — hlutur sem hefur verið boraður eða málaður er ekki hægt að skila.',
-          'Part doesn’t fit your car? Talk to us before you fit it — anything drilled or painted cannot be returned.'],
 
   /* contact */
   coH:['Hafa samband','Contact'],
@@ -1479,8 +1440,8 @@ const QA = [
        '<p>Yes, every price on the site <strong>includes VAT</strong>. The price you see is the price you pay.</p>'] },
 
   { q:['Hvað kostar sendingin og hvað tekur hún?','What does shipping cost and how long does it take?'],
-    a:['<p>Við sendum á land allt. Kostnaður fer eftir þyngd og stærð — framgrindur og toppgrindur eru sérsending.</p><p>Nánar undir <strong>Sendingar</strong>.</p>',
-       '<p>We ship nationwide. The cost depends on weight and size — bull bars and roof racks go as a special delivery.</p><p>Details under <strong>Shipping</strong>.</p>'] },
+    a:['<p>Við sendum á land allt. Kostnaður fer eftir þyngd og stærð — framgrindur og toppgrindur eru sérsending.</p><p>Frí sending á pöntunum yfir <strong>15.000 kr.</strong> Ertu í vafa um hvað sending á þinn stað kostar? Sendu okkur línu og við staðfestum áður en þú pantar.</p>',
+       '<p>We ship nationwide. The cost depends on weight and size — bull bars and roof racks go as a special delivery.</p><p>Free shipping on orders over <strong>15,000 ISK</strong>. Not sure what delivery to your area costs? Send us a line and we will confirm before you order.</p>'] },
 
   { q:['Eigið þið hlutinn til á lager?','Do you have the part in stock?'],
     a:['<p>Staðan stendur á hverri vöru. Stendur <strong>Uppselt</strong> — sendu okkur samt línu, oft er hluturinn á leiðinni eða við getum flutt hann inn.</p>',
