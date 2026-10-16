@@ -215,7 +215,9 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 .plate--extras .plate__n{letter-spacing:.02em}
 .plate__sub{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--ink-3)}
-.plate__tool{width:66px;height:58px;margin-bottom:9px;fill:var(--accent);stroke:none}
+.plate__word{display:block;font-family:var(--display);font-weight:900;
+  font-size:clamp(19px,2.3vw,29px);letter-spacing:-.012em;line-height:1;
+  color:var(--accent);margin-bottom:14px}
 .findbar{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:11px 14px;
   border:1px solid var(--line);border-radius:3px;background:var(--paper)}
 .findbar svg{flex:none;stroke:var(--ink-3);fill:none;stroke-width:2}
@@ -533,8 +535,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 @media (max-width:1200px){
   .hdr__in{flex-wrap:wrap;padding-bottom:9px}
   .mark{order:1}
-  .hdr__r{order:2;margin-left:auto}
-  .nav{order:3;flex:1 1 auto}
+  .hdr__r{order:3;margin-left:auto}
+  .nav{order:2;flex:1 1 auto}
   /* whatever wraps to the second row starts at the left margin, so the row
      reads normally instead of dangling on the right */
   .srch{order:4;flex:0 1 300px;max-width:340px;margin-left:0}
@@ -582,7 +584,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 @media (max-width:560px){
   .plates{grid-template-columns:repeat(2,minmax(0,1fr))}
   .plate--extras{grid-column:1 / -1;min-height:104px}
-  .plate--extras .plate__tool{width:34px;height:34px;margin-bottom:6px}
+  .plate--extras .plate__word{font-size:19px;margin-bottom:8px}
 }
 
 /* ── Núna hjá okkur — the seasonal shelf. Dark, so it reads as a break
@@ -1532,23 +1534,8 @@ function plateFace(m){
    must never enter MAKES or it turns up as a brand in every filter. */
 function extrasHtml(){
   return `<a class="plate plate--extras" data-extras="1" aria-label="${t('extrasName')}">
-     <svg class="plate__tool" viewBox="0 0 68 60" aria-hidden="true">
-       <!-- bottle: cap, neck, body with a label window punched out -->
-       <rect x="13.5" y="2" width="11" height="6.5" rx="1.6"/>
-       <rect x="15.8" y="8" width="6.4" height="5"/>
-       <path fill-rule="evenodd" d="M12 13h14a6 6 0 0 1 6 6v31a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6V19a6 6 0 0 1 6-6Zm-1.2 15.5v12.5h16.4V28.5H10.8Z"/>
-       <!-- snow brush: handle, head, fine bristles -->
-       <rect x="48.4" y="6" width="5.2" height="17" rx="2.6"/>
-       <rect x="38" y="22" width="26" height="9" rx="2.5"/>
-       <rect x="39.4" y="31" width="2.5" height="13" rx="1.25"/>
-       <rect x="43.3" y="31" width="2.5" height="14" rx="1.25"/>
-       <rect x="47.2" y="31" width="2.5" height="14.5" rx="1.25"/>
-       <rect x="51.1" y="31" width="2.5" height="14"  rx="1.25"/>
-       <rect x="55" y="31"   width="2.5" height="13" rx="1.25"/>
-       <rect x="58.9" y="31" width="2.5" height="11.5" rx="1.25"/>
-     </svg>
-     <span class="plate__n">${t('extrasName')}</span>
-     <span class="plate__sub">${t('extrasSub')}</span>
+     <span class="plate__word">${t('extrasName')}</span>
+     <span class="plate__n">${t('extrasSub')}</span>
      <span class="beam"></span></a>`;
 }
 
