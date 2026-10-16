@@ -116,9 +116,13 @@ img,svg,video{display:block;max-width:100%}
 .lang button[aria-pressed="true"]{background:var(--dark);color:#fff}
 .cart{border:1px solid var(--edge);border-radius:2px;padding:7px 11px;color:var(--ink);
   letter-spacing:.04em;white-space:nowrap;background:var(--paper)}
+/* The logo holds the left edge, the switch and basket the right, and the
+   nav sits centred in the space between them.
+   Reset at the breakpoints below, where the nav wraps onto its own row and
+   an auto margin would strand it against the right edge. */
 .nav{
-  display:flex;gap:clamp(14px,1.5vw,22px);font-size:13.5px;color:var(--ink-2);
-  flex:0 0 auto;min-width:0;
+  display:flex;gap:clamp(16px,1.6vw,24px);font-size:15px;color:var(--ink-2);
+  flex:0 0 auto;min-width:0;margin-inline:auto;
   overflow-x:auto;scrollbar-width:none;
 }
 .nav::-webkit-scrollbar{display:none}
@@ -536,7 +540,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   .hdr__in{flex-wrap:wrap;padding-bottom:9px}
   .mark{order:1}
   .hdr__r{order:3;margin-left:auto}
-  .nav{order:2;flex:1 1 auto}
+  .nav{order:2;flex:1 1 auto;margin-inline:0}
   /* whatever wraps to the second row starts at the left margin, so the row
      reads normally instead of dangling on the right */
   .srch{order:4;flex:0 1 300px;max-width:340px;margin-left:0}
@@ -556,7 +560,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 
   .srch{order:3;flex:1 1 100%;max-width:none;margin-left:0}
   .nav{
-    order:4;flex:1 1 100%;
+    order:4;flex:1 1 100%;margin-inline:0;
     -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%);
             mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%);
   }
@@ -755,6 +759,9 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   <div class="findhits" hidden></div>
   <div class="filters">
     <div class="frow"><span class="flab" data-t="fMake">Tegund</span><div class="chips" id="shopMakeFilter"></div></div>
+    <!-- The model row keeps its place whether or not a make is chosen, so the
+         filters do not jump about; it fills once a make narrows it down. -->
+    <div class="frow"><span class="flab" data-t="fModel">Gerð</span><div class="chips" id="shopModelFilter"></div></div>
     <div class="frow"><span class="flab" data-t="fCat">Flokkur</span><div class="chips" id="shopCatFilter"></div></div>
   </div>
   <div class="grid" id="shopProds"></div>
@@ -1424,8 +1431,9 @@ const CATS = [
      - sku: generated here (TOY-GLH/HUD/SNK-nnn); sheet column is still empty
      - English names/categories: drafted by Marina's AI assistant, unverified
      - model: parsed from the Icelandic name
-     - extra photos on TOY-SNK-004 (IMG_4625, IMG_4630): in the Drive folder,
-       not in the sheet
+   IMG_4625 and IMG_4630 are in Edik's photo folder but the sheet assigns them
+   to no SKU, so they are not shown. Guessing which product they belong to is
+   not ours to do — ask Edik, then put the answer in photo_filename.
    description_is and fits_models are empty in the sheet, so none are shown. */
 const PRODS = [
   {sku:'TOY-GLH-001', make:'Toyota', cat:0, model:'LC 90',  name:['Gluggahlífar fyrir Toyota LC 90','Window deflectors for Toyota LC 90'],  price:15000, stock:20, whPrice:13000, whMin:5, photo:'IMG_4616.jpeg'},
@@ -1437,7 +1445,7 @@ const PRODS = [
   {sku:'TOY-SNK-001', make:'Toyota', cat:2, model:'LC 120', name:['Snorkel fyrir Toyota LC 120','Snorkel for Toyota LC 120'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4623.jpeg'},
   {sku:'TOY-SNK-002', make:'Toyota', cat:2, model:'LC 90',  name:['Snorkel fyrir Toyota LC 90','Snorkel for Toyota LC 90'],   price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4622.jpeg'},
   {sku:'TOY-SNK-003', make:'Toyota', cat:2, model:'LC 100', name:['Snorkel fyrir Toyota LC 100','Snorkel for Toyota LC 100'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4624.jpeg'},
-  {sku:'TOY-SNK-004', make:'Toyota', cat:2, model:'LC 150', name:['Snorkel fyrir Toyota LC 150','Snorkel for Toyota LC 150'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4626.jpeg', more:['IMG_4625.jpeg','IMG_4630.jpeg']}
+  {sku:'TOY-SNK-004', make:'Toyota', cat:2, model:'LC 150', name:['Snorkel fyrir Toyota LC 150','Snorkel for Toyota LC 150'], price:30000, stock:20, whPrice:25000, whMin:5, photo:'IMG_4626.jpeg'}
 ];
 PRODS.forEach(p=>{ p.fit = 'Toyota ' + p.model; });
 const PHOTO_DIR = 'assets/products/';
@@ -1487,7 +1495,7 @@ const QA = [
        '<p>Yes, from a set order quantity. See <strong>Wholesale</strong>.</p>'] }
 ];
 
-const filters = { shopMake:null, shopCat:null, mkModel:null, mkCat:null };
+const filters = { shopMake:null, shopModel:null, shopCat:null, mkModel:null, mkCat:null };
 const CODES = ['is','en'];
 
 /* these marks already spell the make out, so the plate drops its own label
@@ -1636,13 +1644,24 @@ function render(){
 
 
   /* ── shop: all products, filtered by make + category ── */
+  /* every make we carry, in stock or not — a make with an empty shelf is a
+     shop still filling up, not a missing door */
   document.getElementById('shopMakeFilter').innerHTML =
-    chipsHtml(above.map(m=>m.n), filters.shopMake, t('fAll'));
+    chipsHtml(MAKES.map(m=>m.n), filters.shopMake, t('fAll'));
+  /* "LC 120" means nothing until someone has said "Toyota", and across every
+     make at once the row would mix Land Cruisers with Jimnys. So the chips
+     wait for a make; the row keeps its place and sits empty until then. */
+  const shopModels = filters.shopMake
+    ? [...new Set(PRODS.filter(p=>p.make === filters.shopMake).map(p=>p.model))]
+    : [];
+  document.getElementById('shopModelFilter').innerHTML =
+    shopModels.length ? chipsHtml(shopModels, filters.shopModel, t('fAll')) : '';
   document.getElementById('shopCatFilter').innerHTML =
     chipsHtml(CATS.map(c=>c[L]), filters.shopCat, t('fAllCats'));
   const shopList = PRODS.filter(p=>
-    (!filters.shopMake || p.make === filters.shopMake) &&
-    (!filters.shopCat  || CATS[p.cat][L] === filters.shopCat));
+    (!filters.shopMake  || p.make === filters.shopMake) &&
+    (!filters.shopModel || p.model === filters.shopModel) &&
+    (!filters.shopCat   || CATS[p.cat][L] === filters.shopCat));
   document.getElementById('shopProds').innerHTML = shopList.length
     ? shopList.map(p=>cardHtml(p, true)).join('')
     : `<p style="padding:40px var(--gut);color:var(--ink-2)">${t('emptyB')}</p>`;
@@ -1768,7 +1787,9 @@ document.addEventListener('click', e=>{
   if(chip){
     const row = chip.parentElement.id;
     const v = chip.dataset.filter || null;
-    if(row === 'shopMakeFilter') filters.shopMake = v;
+    /* a model belongs to one make, so changing the make clears it */
+    if(row === 'shopMakeFilter'){ filters.shopMake = v; filters.shopModel = null; }
+    if(row === 'shopModelFilter') filters.shopModel = v;
     if(row === 'shopCatFilter')  filters.shopCat  = v;
     if(row === 'mkModelFilter')  filters.mkModel  = v;
     if(row === 'mkCatFilter')    filters.mkCat    = v;
