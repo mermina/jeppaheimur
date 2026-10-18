@@ -109,7 +109,7 @@ img,svg,video{display:block;max-width:100%}
 .lang{display:flex;align-items:center;border:1px solid var(--edge);border-radius:2px;overflow:hidden}
 .lang button{
   font:inherit;font-family:var(--mono);font-size:12px;letter-spacing:.06em;
-  background:var(--paper);border:0;color:var(--ink-3);padding:7px 10px;cursor:pointer;
+  background:var(--paper);border:0;color:var(--ink-3);padding:7px 8px;cursor:pointer;
 }
 .lang button+button{border-left:1px solid var(--line)}
 .lang button:hover{color:var(--ink)}
@@ -555,7 +555,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   .mark__m{width:28px}
   .mark__t span{font-size:7.5px;letter-spacing:.1em;margin-top:2px}
   .hdr__r{gap:6px}
-  .lang button{padding:6px 8px;font-size:11px}
+  .lang button{padding:6px 5px;font-size:11px;letter-spacing:.02em}
   .cart{padding:6px 9px;font-size:11px}
 
   .srch{order:3;flex:1 1 100%;max-width:none;margin-left:0}
@@ -651,6 +651,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang="is" aria-pressed="true">IS</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="pl" aria-pressed="false">PL</button>
+        <button type="button" data-lang="uk" aria-pressed="false">UK</button>
       </div>
       <span class="cart" data-t="cart">Karfa (0)</span>
     </div>
@@ -1358,6 +1360,168 @@ const UI = {
   coSocial:['Samfélagsmiðlar','Social'], coFormH:['Skrifaðu okkur','Write to us']
 };
 
+/* ── Polish and Ukrainian ────────────────────────────────────────
+   DRAFT — neither language has been read by a native speaker.
+
+   These are overlays, not a replacement: a key here wins, and anything
+   missing falls back through UI to Icelandic. That is deliberate, and it is
+   what keeps this build identical to WooCommerce — the catalogue is not
+   translated there either, so product names, categories, stock labels, the
+   filters and the whole Choose part screen are absent from both overlays and
+   therefore stay Icelandic in PL and UK.
+
+   To translate one of those later, add its key here. Nothing else changes.
+   Wording is kept in step with the theme's inc/strings-pl.php and
+   inc/strings-uk.php, so the two builds say the same thing.
+   ──────────────────────────────────────────────────────────────── */
+const STR = {
+  pl: {
+    searchPh:'Szukaj — snorkel, nakładki na błotniki, Land Cruiser…',
+    findPh:'Szukaj części lub numeru — np. snorkel, TOY-SNK-001',
+    findNone:'Nic nie znaleziono — napisz do nas, sprowadzimy na zamówienie.',
+    findMore:'więcej',
+    cart:'Koszyk (0)',
+    navShop:'Wybierz część', navChoose:'Strona główna', navWholesale:'Hurt',
+    navShipping:'Wysyłka', navContact:'Kontakt', navFaq:'Pytania',
+    ftShop:'Sklep', ftInfo:'Informacje', ftContact:'Kontakt', ftPay:'Płatności',
+    ftTerms:'Regulamin', payTransfer:'PRZELEW',
+    ftBot:'Wszystkie ceny zawierają VSK · nr 000000-0000',
+
+    whyEyebrow:'Dlaczego Jeppaheimur',
+    whyH:'Akcesoria do twojego 4x4 — w jasnej cenie.',
+    whyP:'Sprowadzamy akcesoria do terenówek i sprzedajemy je bezpośrednio. Wybierz samochód, zobacz, co pasuje, i zamów.',
+    heroA:'Akcesoria', heroB:'do twojego 4×4',
+    heroP:'Wybierz swój samochód i zobacz tylko te części, które do niego pasują. Wygodne przeglądanie i pełny opis przy każdym produkcie — wiesz dokładnie, co kupujesz.',
+    shot1t:'Zdjęcie 01 — strona główna',
+    shot1d:'Biały Land Cruiser 150 na 35 calach, widoczny snorkel i nakładki na błotniki. Góry albo żwir, światło dzienne, ujęcie na trzy czwarte.',
+    gridEyebrow:'Zacznij tutaj',
+    gridMore:'Nie znajdujesz swojego samochodu? Napisz do nas — sprowadzamy na zamówienie.',
+    allMakes:'Wszystkie marki →',
+
+    p1h:'Pokazane na aucie',
+    p1b:'Każda część jest sfotografowana zamontowana na samochodzie, więc widzisz, co kupujesz.',
+    p2h:'Na stanie na Islandii',
+    p2b:'Części są już tutaj. Nie czekasz czterech tygodni na dostawę.',
+    p3h:'Cena to cena',
+    p3b:'Ceny zawierają VSK, wysyłka na całą Islandię. Żadnego „zapytaj o cenę”.',
+    p4h:'Hurt dla warsztatów',
+    p4b:'Prowadzisz warsztat albo odsprzedajesz? Stałe ceny od określonej ilości i bezpośredni kontakt z nami.',
+    p4link:'Hurt →',
+
+    carsH:'Wszystkie marki',
+    carsP:'Mamy akcesoria do tych marek. Nie znajdujesz swojej — napisz do nas, sprowadzamy na zamówienie.',
+    carsMoreH:'Na razie niewiele produktów',
+    carsMoreP:'Te marki dopiero się zapełniają. Ich produkty są tymczasem w zakładce Veldu hlut.',
+    extrasName:'Różne', extrasSub:'do każdego auta',
+
+    seasonEyebrow:'Polecamy', seasonTitle:'Teraz na stanie',
+    seasonNote:'To, co polecamy w tej chwili.', seasonAll:'Zobacz wszystko →',
+    tagSeason:'Zima', tagPopular:'Popularne', tagNew:'Nowość',
+
+    whPageH:'Hurt',
+    whPageP:'Prowadzisz warsztat albo odsprzedajesz? Oferujemy ceny hurtowe od określonej wielkości zamówienia i bezpośredni kontakt z nami, zamiast zamawiania przez stronę.',
+    wh1H:'Stałe ceny, a nie wycena za każdym razem',
+    wh1B:'Dostajesz cennik, więc znasz koszt, zanim cokolwiek obiecasz swojemu klientowi.',
+    wh2H:'Bezpośredni kontakt',
+    wh2B:'Rozmawiasz z nami, a nie z formularzem. Odpowiemy, czy część pasuje i kiedy będzie.',
+    wh3H:'Na stanie na Islandii',
+    wh3B:'Samochód jest w warsztacie dzisiaj, a nie przez cztery tygodnie w oczekiwaniu na dostawę.',
+    whTermsH:'Warunki hurtowe',
+    whR1:'Minimalne zamówienie', whV1:'BRAK LICZBY',
+    whR2:'Rabat', whV2:'BRAK LICZBY — progi zależne od ilości',
+    whR3:'Warunki płatności', whV3:'NIEPOTWIERDZONE — faktura lub przedpłata',
+    whR4:'Dostawa', whV4:'NIEPOTWIERDZONE — zobacz Wysyłka',
+    whFormH:'Napisz do nas',
+    fCompany:'Firma', fKt:'Numer rejestrowy', fName:'Imię i nazwisko',
+    fPhone:'Telefon', fEmail:'E-mail', fMsg:'Czego szukasz?', fSend:'Wyślij',
+    fCarMake:'Marka auta', fCarYear:'Rocznik',
+
+    faqH:'Pytania i odpowiedzi',
+    faqP:'To, o co pytają najczęściej. Nie znajdujesz odpowiedzi — napisz do nas.',
+    faqCtaH:'Nie znalazłeś odpowiedzi?',
+    faqCtaB:'Podaj markę i rocznik swojego auta, a odpowiemy, czy część pasuje.',
+
+    coH:'Kontakt',
+    coP:'Zastanawiasz się, czy część pasuje do twojego auta? Napisz albo zadzwoń — najszybciej będzie, jeśli podasz markę i rocznik.',
+    coEmail:'E-mail', coPhone:'Telefon',
+    coHours:'Godziny otwarcia', coHoursV:'NIEPOTWIERDZONE',
+    coSocial:'Media społecznościowe', coFormH:'Napisz do nas'
+  },
+
+  uk: {
+    searchPh:'Пошук — snorkel, накладки на арки, Land Cruiser…',
+    findPh:'Шукай деталь або номер — напр. snorkel, TOY-SNK-001',
+    findNone:'Нічого не знайдено — напиши нам, і ми привеземо на замовлення.',
+    findMore:'ще',
+    cart:'Кошик (0)',
+    navShop:'Обрати деталь', navChoose:'Головна', navWholesale:'Опт',
+    navShipping:'Доставка', navContact:'Контакти', navFaq:'Питання',
+    ftShop:'Магазин', ftInfo:'Інформація', ftContact:'Контакти', ftPay:'Оплата',
+    ftTerms:'Умови', payTransfer:'ПЕРЕКАЗ',
+    ftBot:'Усі ціни з VSK · рег. 000000-0000',
+
+    whyEyebrow:'Чому Jeppaheimur',
+    whyH:'Аксесуари для твого 4x4 — за зрозумілою ціною.',
+    whyP:'Ми імпортуємо аксесуари для позашляховиків і продаємо їх напряму. Обери авто, подивись, що підходить, і замов.',
+    heroA:'Аксесуари', heroB:'для твого 4×4',
+    heroP:'Обери свій автомобіль і побач лише ті деталі, що до нього підходять. Зручний перегляд і докладний опис кожного товару — ти точно знаєш, що купуєш.',
+    shot1t:'Фото 01 — головна сторінка',
+    shot1d:'Білий Land Cruiser 150 на 35 дюймах, видно сноркель і накладки на арки. Гори або гравій, денне світло, ракурс три чверті.',
+    gridEyebrow:'Почни тут',
+    gridMore:'Не знаходиш свій автомобіль? Напиши нам — привеземо на замовлення.',
+    allMakes:'Усі марки →',
+
+    p1h:'Показано на авто',
+    p1b:'Кожну деталь сфотографовано встановленою на автомобілі, тож ти бачиш, що купуєш.',
+    p2h:'Є на складі в Ісландії',
+    p2b:'Деталі вже тут. Не треба чекати чотири тижні на доставку.',
+    p3h:'Ціна — це ціна',
+    p3b:'Ціни з VSK, доставка по всій Ісландії. Жодних «запитайте ціну».',
+    p4h:'Опт для майстерень',
+    p4b:'Маєш майстерню або перепродаєш? Фіксовані ціни від певної кількості та прямий зв’язок з нами.',
+    p4link:'Опт →',
+
+    carsH:'Усі марки',
+    carsP:'Ми маємо аксесуари для цих марок. Не знаходиш своєї — напиши нам, привеземо на замовлення.',
+    carsMoreH:'Поки що мало товарів',
+    carsMoreP:'Ці марки ще наповнюються. Їхні товари поки що в розділі Veldu hlut.',
+    extrasName:'Різне', extrasSub:'для будь-якого авта',
+
+    seasonEyebrow:'Радимо', seasonTitle:'Зараз на складі',
+    seasonNote:'Те, що радимо зараз.', seasonAll:'Переглянути все →',
+    tagSeason:'Зима', tagPopular:'Популярне', tagNew:'Новинка',
+
+    whPageH:'Опт',
+    whPageP:'Маєш майстерню або перепродаєш? Пропонуємо оптові ціни від певного обсягу замовлення та прямий зв’язок з нами замість оформлення через сайт.',
+    wh1H:'Фіксовані ціни, а не щоразу нова пропозиція',
+    wh1B:'Ти отримуєш прайс-лист, тож знаєш вартість ще до того, як щось пообіцяєш своєму клієнтові.',
+    wh2H:'Прямий зв’язок',
+    wh2B:'Ти спілкуєшся з нами, а не з формою на сайті. Ми відповімо, чи підходить деталь і коли вона буде.',
+    wh3H:'На складі в Ісландії',
+    wh3B:'Автомобіль у майстерні вже сьогодні, а не чотири тижні в очікуванні доставки.',
+    whTermsH:'Умови опту',
+    whR1:'Мінімальне замовлення', whV1:'ЧИСЛА НЕМАЄ',
+    whR2:'Знижка', whV2:'ЧИСЛА НЕМАЄ — рівні залежно від кількості',
+    whR3:'Умови оплати', whV3:'НЕ ПІДТВЕРДЖЕНО — рахунок або передоплата',
+    whR4:'Доставка', whV4:'НЕ ПІДТВЕРДЖЕНО — див. Доставка',
+    whFormH:'Напиши нам',
+    fCompany:'Компанія', fKt:'Реєстраційний номер', fName:'Ім’я',
+    fPhone:'Телефон', fEmail:'Email', fMsg:'Що шукаєш?', fSend:'Надіслати',
+    fCarMake:'Марка авто', fCarYear:'Рік випуску',
+
+    faqH:'Питання та відповіді',
+    faqP:'Те, про що запитують найчастіше. Не знаходиш відповіді — напиши нам.',
+    faqCtaH:'Не знайшов відповіді?',
+    faqCtaB:'Надішли марку та рік свого авта, і ми скажемо, чи підходить деталь.',
+
+    coH:'Контакти',
+    coP:'Цікавить, чи підходить деталь до твого авта? Напиши або зателефонуй — найшвидше буде назвати марку та рік.',
+    coEmail:'Email', coPhone:'Телефон',
+    coHours:'Години роботи', coHoursV:'НЕ ПІДТВЕРДЖЕНО',
+    coSocial:'Соцмережі', coFormH:'Напиши нам'
+  }
+};
+
 /* ── catalogue stand-in ──────────────────────────────────────────
    Ordered by product count: the grid shows the shop's real shape.
    First four are already folders in the Drive; the rest need Anna.
@@ -1382,8 +1546,12 @@ const FLOOR = 4;   /* a make below this gets no plate — see the note on the gr
 /* categories: sheet column `category`, one row per language.
    "Brettakantar" is arch trims to some English buyers and fender flares to
    others — a search decision for the owner, not a translation decision. */
+/* Four entries each: PL and UK repeat the Icelandic, because the catalogue
+   is not translated — same as WooCommerce, where products stay Icelandic. */
 const CATS = [
-  ['Gluggahlífar','Window deflectors'], ['Huddhlíf','Hood deflector'], ['Snorkel','Snorkel']
+  ['Gluggahlífar','Window deflectors','Gluggahlífar','Gluggahlífar'],
+  ['Huddhlíf','Hood deflector','Huddhlíf','Huddhlíf'],
+  ['Snorkel','Snorkel','Snorkel','Snorkel']
 ];
 
 /* PRODS — loaded from KATALOGUR_master (Google Drive, JEEP_WEBSITE), 25 Sep 2026.
@@ -1456,8 +1624,49 @@ const QA = [
        '<p>Yes, from a set order quantity. See <strong>Wholesale</strong>.</p>'] }
 ];
 
+/* Q&A in Polish and Ukrainian — same order as QA above, DRAFT.
+   A language missing here falls back to Icelandic, question by question. */
+const QA_T = {
+  pl: [
+    { q:'Skąd mam wiedzieć, czy część pasuje do mojego auta?',
+      a:'<p>Przy każdym produkcie jest pole <strong>Passar við</strong> — model i roczniki, do których część pasuje.</p><p>Nie masz pewności? Podaj nam markę i rocznik, a odpowiemy. To szybsze niż zgadywanie.</p>' },
+    { q:'Czy mogę zwrócić część, która nie pasuje?',
+      a:'<p>Tak. Masz <strong>14 dni</strong> na zwrot nieużywanego towaru w oryginalnym opakowaniu.</p><p><strong>Skontaktuj się z nami, zanim zaczniesz montaż.</strong> Część wiercona, cięta albo malowana nie podlega zwrotowi — i to właśnie idzie nie tak najczęściej.</p>' },
+    { q:'Czy montujecie części?',
+      a:'<p>Nie, montażem sami się nie zajmujemy. Sprowadzamy i sprzedajemy części.</p><p>Większość montuje się na fabrycznych punktach i nie wymaga cięcia, a przy wielu produktach jest link do filmu pokazującego montaż. Jeśli szukasz kogoś do montażu, napisz do nas — podpowiemy, gdzie się zwrócić.</p>' },
+    { q:'Czy ceny zawierają VSK?',
+      a:'<p>Tak, wszystkie ceny na stronie są <strong>z VSK</strong>. Cena, którą widzisz, to cena, którą płacisz.</p>' },
+    { q:'Ile kosztuje wysyłka i jak długo trwa?',
+      a:'<p>Wysyłamy na całą Islandię. Koszt zależy od wagi i rozmiaru — orurowania i bagażniki dachowe idą jako przesyłka specjalna.</p><p>Szczegóły w zakładce <strong>Wysyłka</strong>.</p>' },
+    { q:'Czy macie tę część na stanie?',
+      a:'<p>Dostępność jest podana przy każdym produkcie. Jeśli widnieje <strong>Uppselt</strong> — napisz mimo to, często część jest już w drodze albo możemy ją sprowadzić.</p>' },
+    { q:'Czy sprowadzacie na zamówienie?',
+      a:'<p>Tak. Jeśli nie znajdujesz swojego auta albo potrzebnej części, podaj markę, rocznik i to, czego szukasz.</p>' },
+    { q:'Prowadzę warsztat — czy dostanę ceny hurtowe?',
+      a:'<p>Tak, od określonej wielkości zamówienia. Zobacz <strong>Hurt</strong>.</p>' }
+  ],
+  uk: [
+    { q:'Як дізнатися, чи підходить деталь до мого авта?',
+      a:'<p>У кожного товару є поле <strong>Passar við</strong> — модель і роки випуску, до яких деталь підходить.</p><p>Не впевнений? Надішли нам марку та рік, і ми відповімо. Це швидше, ніж вгадувати.</p>' },
+    { q:'Чи можу я повернути деталь, яка не підійшла?',
+      a:'<p>Так. У тебе є <strong>14 днів</strong>, щоб повернути невикористаний товар в оригінальній упаковці.</p><p><strong>Звернися до нас, перш ніж встановлювати.</strong> Деталь, яку свердлили, різали або фарбували, повернути не можна — і саме це найчастіше йде не так.</p>' },
+    { q:'Чи встановлюєте ви деталі?',
+      a:'<p>Ні, встановленням ми самі не займаємося. Ми імпортуємо та продаємо деталі.</p><p>Більшість кріпиться на заводські точки й не потребує різання, а до багатьох товарів є посилання на відео зі встановленням. Якщо потрібен хтось для монтажу — напиши нам, підкажемо, куди звернутися.</p>' },
+    { q:'Чи включено VSK у ціни?',
+      a:'<p>Так, усі ціни на сайті <strong>з VSK</strong>. Ціна, яку ти бачиш, — це ціна, яку ти платиш.</p>' },
+    { q:'Скільки коштує доставка і скільки вона триває?',
+      a:'<p>Доставляємо по всій Ісландії. Вартість залежить від ваги та розміру — кенгурятники й багажники на дах їдуть окремою доставкою.</p><p>Докладніше в розділі <strong>Доставка</strong>.</p>' },
+    { q:'Чи є ця деталь у наявності?',
+      a:'<p>Наявність указана біля кожного товару. Якщо написано <strong>Uppselt</strong> — усе одно напиши нам, часто деталь уже в дорозі або ми можемо її привезти.</p>' },
+    { q:'Чи привозите на замовлення?',
+      a:'<p>Так. Якщо не знаходиш свого авта або потрібної деталі, надішли марку, рік випуску і те, що шукаєш.</p>' },
+    { q:'У мене майстерня — чи можу я отримати оптові ціни?',
+      a:'<p>Так, від певного обсягу замовлення. Дивись <strong>Опт</strong>.</p>' }
+  ]
+};
+
 const filters = { shopMake:null, shopModel:null, shopCat:null, mkModel:null, mkCat:null };
-const CODES = ['is','en'];
+const CODES = ['is','en','pl','uk'];
 
 /* these marks already spell the make out, so the plate drops its own label
    rather than printing the name twice */
@@ -1466,13 +1675,25 @@ const CODES = ['is','en'];
 const EMB_SPELLS_NAME = ['Ford','Jeep','Land Rover','Nissan','RAM'];
 
 /* one price in the sheet, formatted per language — never a second price column */
-const money = n => L === 0
-  ? n.toLocaleString('de-DE') + ' kr.'
-  : n.toLocaleString('en-US') + ' ISK';
+const money = n => L === 1
+  ? n.toLocaleString('en-US') + ' ISK'
+  : n.toLocaleString('de-DE') + ' kr.';
 
-/* a field is either one value for both languages, or an [is, en] pair */
-const pick = v => Array.isArray(v) ? v[L] : v;
-const t = k => (UI[k] ? UI[k][L] : k);
+/* a field is either one value for every language, or an [is, en] pair.
+   A pair asked for PL or UK has no entry at that index, so it falls back to
+   Icelandic — which is how product names stay Icelandic in all four. */
+const pick = v => Array.isArray(v) ? (v[L] !== undefined ? v[L] : v[0]) : v;
+
+/* One string, in the current language. STR (Polish, Ukrainian) is consulted
+   first; anything it does not carry falls back through UI to Icelandic. */
+const str = k => {
+  const o = STR[CODES[L]];
+  if (o && o[k] !== undefined) return o[k];
+  const v = UI[k];
+  if (!v) return k;
+  return v[L] !== undefined ? v[L] : v[0];
+};
+const t = k => str(k);
 
 /* Each mark carries its own tight viewBox — its glyph's real bounding box,
    measured rather than guessed — and is fitted into one fixed envelope. That
@@ -1647,8 +1868,12 @@ function render(){
   document.getElementById('prods').innerHTML = mkList.map(p=>cardHtml(p, false)).join('');
   document.querySelector('#make .empty').style.display = mkList.length ? 'none' : 'block';
 
-  document.getElementById('qa').innerHTML = QA.map(x=>
-    `<details><summary>${x.q[L]}</summary><div class="a">${x.a[L]}</div></details>`).join('');
+  document.getElementById('qa').innerHTML = QA.map((x,i)=>{
+    const o = QA_T[CODES[L]];
+    const q = (o && o[i]) ? o[i].q : (x.q[L] !== undefined ? x.q[L] : x.q[0]);
+    const a = (o && o[i]) ? o[i].a : (x.a[L] !== undefined ? x.a[L] : x.a[0]);
+    return `<details><summary>${q}</summary><div class="a">${a}</div></details>`;
+  }).join('');
 
   renderPdp();
 
@@ -1691,16 +1916,16 @@ function setLang(code){
   filters.shopCat = filters.mkCat = null;
 
   document.querySelectorAll('[data-t]').forEach(el=>{
-    const s = UI[el.dataset.t];
-    if(!s) return;
+    if(!UI[el.dataset.t]) return;
+    const v = str(el.dataset.t);
     /* a couple of strings carry <strong> on purpose */
-    if(s[L].includes('<strong>')) el.innerHTML = s[L]; else el.textContent = s[L];
+    if(v.includes('<strong>')) el.innerHTML = v; else el.textContent = v;
   });
   document.querySelectorAll('[data-talt]').forEach(el=>{
-    const a = UI[el.dataset.talt]; if(a) el.alt = a[L];
+    if(UI[el.dataset.talt]) el.alt = str(el.dataset.talt);
   });
   document.querySelectorAll('[data-tp]').forEach(el=>{
-    const s = UI[el.dataset.tp]; if(s) el.placeholder = s[L];
+    if(UI[el.dataset.tp]) el.placeholder = str(el.dataset.tp);
   });
   document.querySelectorAll('.lang button').forEach(b=>
     b.setAttribute('aria-pressed', String(b.dataset.lang === code)));
