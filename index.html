@@ -1762,11 +1762,11 @@ function render(){
   const below = MAKES.filter(m=>m.c <  FLOOR);
 
   /* front page: top eight only */
-  /* extrasHtml() is off since 24.10.2026 — Anna: the Ýmislegt tile advertises a
-     shelf with nothing on it. Append it again here (and below) when it has stock. */
-  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('');
+  /* Ýmislegt is a category in its own right and will carry its own products —
+     Marina, 24.10.2026. It was briefly removed that morning when it had none. */
+  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('') + extrasHtml();
   /* choose-your-car: everything that earns a plate, plus the rest as text */
-  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('');
+  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('') + extrasHtml();
   /* ── search. One binder for every .findin on the page: the one under the
         makes grid and the one on the parts page. Each writes into the
         .findhits that follows its own bar, so adding a third is markup only.
@@ -1838,7 +1838,7 @@ function render(){
      the two lists disagreed. Keyed on the drawn logo, which is what earns a
      plate — add a mark to EMB and the make appears in both places at once. */
   document.getElementById('shopMakeFilter').innerHTML =
-    chipsHtml(MAKES.filter(m=>EMB[m.n]).map(m=>m.n), filters.shopMake, t('fAll'));
+    chipsHtml([...MAKES.filter(m=>EMB[m.n]).map(m=>m.n), t('extrasName')], filters.shopMake, t('fAll'));
   /* "LC 120" means nothing until someone has said "Toyota", and across every
      make at once the row would mix Land Cruisers with Jimnys. So the chips
      wait for a make; the row keeps its place and sits empty until then. */
@@ -1974,6 +1974,17 @@ document.addEventListener('click', e=>{
 
   const thumb = e.target.closest('[data-photo]');
   if(thumb){ pdpPhoto = thumb.dataset.photo; renderPdp(); return; }
+
+  /* The Ýmislegt tile had no handler at all, so it was decorative — a dead tile,
+     which is the thing this design is meant never to do. It now opens the shop
+     filtered to Ýmislegt: empty for the moment, and an empty shelf reads as a
+     shop still filling up. */
+  const extras = e.target.closest('[data-extras]');
+  if(extras){
+    e.preventDefault();
+    filters.shopMake = t('extrasName'); filters.shopModel = null; filters.shopCat = null;
+    go('shop'); render(); return;
+  }
 
   const nav = e.target.closest('[data-go]');
   if(nav){ e.preventDefault(); go(nav.dataset.go, nav.dataset.scroll); return; }
