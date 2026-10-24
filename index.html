@@ -819,10 +819,10 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   <div class="band">
     <p class="eyebrow" data-t="whTermsH">Skilmálar heildsölu</p>
     <table class="rows">
-      <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">TALA VANTAR</td></tr>
-      <tr><th data-t="whR2">Afsláttur</th><td data-t="whV2">TALA VANTAR — þrep eftir magni</td></tr>
-      <tr><th data-t="whR3">Greiðsluskilmálar</th><td data-t="whV3">ÓSTAÐFEST — reikningur eða fyrirframgreiðsla</td></tr>
-      <tr><th data-t="whR4">Afhending</th><td data-t="whV4">ÓSTAÐFEST — sjá Sendingar</td></tr>
+      <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">Eftir samkomulagi</td></tr>
+      <tr><th data-t="whR2">Afsláttur</th><td data-t="whV2">Eftir samkomulagi</td></tr>
+      <tr><th data-t="whR3">Greiðsluskilmálar</th><td data-t="whV3">Eftir samkomulagi</td></tr>
+      <tr><th data-t="whR4">Afhending</th><td data-t="whV4">Sjá Spurt og svarað</td></tr>
     </table>
   </div>
   <div class="band">
@@ -877,7 +877,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
         <table class="rows" style="max-width:none">
           <tr><th data-t="coEmail">Netfang</th><td><a href="mailto:info@jeppaheimur.is">info@jeppaheimur.is</a></td></tr>
           <tr><th data-t="coPhone">Sími</th><td><a href="tel:+3547813240">+354 781 3240</a></td></tr>
-          <tr><th data-t="coHours">Opnunartími</th><td data-t="coHoursV">ÓSTAÐFEST</td></tr>
+          <tr><th data-t="coHours">Opnunartími</th><td data-t="coHoursV">Vefverslunin er alltaf opin</td></tr>
         </table>
       </div>
       <div>
@@ -1317,10 +1317,15 @@ const UI = {
   wh3B:['Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.',
         'The car is in your workshop today, not for four weeks while a shipment crawls over.'],
   whTermsH:['Skilmálar heildsölu','Wholesale terms'],
-  whR1:['Lágmarkspöntun','Minimum order'], whV1:['TALA VANTAR','FIGURE MISSING'],
-  whR2:['Afsláttur','Discount'], whV2:['TALA VANTAR — þrep eftir magni','FIGURE MISSING — tiers by quantity'],
-  whR3:['Greiðsluskilmálar','Payment terms'], whV3:['ÓSTAÐFEST — reikningur eða fyrirframgreiðsla','UNCONFIRMED — invoice or prepayment'],
-  whR4:['Afhending','Delivery'], whV4:['ÓSTAÐFEST — sjá Sendingar','UNCONFIRMED — see Shipping'],
+  /* No figure is invented here. Edik has not given the wholesale numbers, and an
+     all-caps TALA VANTAR on a client's live page is worse than saying plainly that
+     terms are agreed in conversation — which is also how most wholesale works. */
+  whR1:['Lágmarkspöntun','Minimum order'], whV1:['Eftir samkomulagi','By agreement'],
+  whR2:['Afsláttur','Discount'], whV2:['Eftir samkomulagi','By agreement'],
+  whR3:['Greiðsluskilmálar','Payment terms'], whV3:['Eftir samkomulagi','By agreement'],
+  /* was "sjá Sendingar" — that page was dropped on 16.10.2026 and the reference had
+     been dead for a week. Shipping now lives in Spurt og svarað. */
+  whR4:['Afhending','Delivery'], whV4:['Sjá Spurt og svarað','See Questions & answers'],
   whFormH:['Sendu okkur línu','Send us a line'],
   fCompany:['Fyrirtæki','Company'], fKt:['Kennitala','Company reg. no.'],
   fName:['Nafn','Name'], fPhone:['Sími','Phone'], fEmail:['Netfang','Email'],
@@ -1356,7 +1361,9 @@ const UI = {
            'Send us the make and year of your car and we will tell you whether it fits.'],
 
   coEmail:['Netfang','Email'], coPhone:['Sími','Phone'],
-  coHours:['Opnunartími','Opening hours'], coHoursV:['ÓSTAÐFEST','UNCONFIRMED'],
+  coHours:['Opnunartími','Opening hours'],
+  /* True of any web shop, and neutral — no claim about when anyone answers the phone. */
+  coHoursV:['Vefverslunin er alltaf opin','The web shop is always open'],
   coSocial:['Samfélagsmiðlar','Social'], coFormH:['Skrifaðu okkur','Write to us']
 };
 
