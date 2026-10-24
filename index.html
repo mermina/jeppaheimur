@@ -816,13 +816,16 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
         <p data-t="wh3B">Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.</p></div>
     </div>
   </section>
+  <!-- Anna, 24.10.2026: put the contacts here and drop the rest, so a garage asking
+       about wholesale reaches someone directly instead of reading four rows that all
+       say the same thing. The figures are not settled and a table of "by agreement"
+       tells a buyer nothing. -->
   <div class="band">
-    <p class="eyebrow" data-t="whTermsH">Skilmálar heildsölu</p>
+    <p class="eyebrow" data-t="whTermsH">Verð og skilmálar</p>
+    <p data-t="whTermsP">Verð, lágmarkspöntun og greiðsluskilmálar fara eftir umfangi. Hafðu samband og við sendum þér verðlista.</p>
     <table class="rows">
-      <tr><th data-t="whR1">Lágmarkspöntun</th><td data-t="whV1">Eftir samkomulagi</td></tr>
-      <tr><th data-t="whR2">Afsláttur</th><td data-t="whV2">Eftir samkomulagi</td></tr>
-      <tr><th data-t="whR3">Greiðsluskilmálar</th><td data-t="whV3">Eftir samkomulagi</td></tr>
-      <tr><th data-t="whR4">Afhending</th><td data-t="whV4">Sjá Spurt og svarað</td></tr>
+      <tr><th data-t="coEmail">Netfang</th><td><a href="mailto:info@jeppaheimur.is">info@jeppaheimur.is</a></td></tr>
+      <tr><th data-t="coPhone">Sími</th><td><a href="tel:+3547813240">+354 781 3240</a></td></tr>
     </table>
   </div>
   <div class="band">
@@ -1318,7 +1321,9 @@ const UI = {
   wh3H:['Á lager á Íslandi','Stock here in Iceland'],
   wh3B:['Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.',
         'The car is in your workshop today, not for four weeks while a shipment crawls over.'],
-  whTermsH:['Skilmálar heildsölu','Wholesale terms'],
+  whTermsH:['Verð og skilmálar','Prices and terms'],
+  whTermsP:['Verð, lágmarkspöntun og greiðsluskilmálar fara eftir umfangi. Hafðu samband og við sendum þér verðlista.',
+            'Prices, minimum order and payment terms depend on the volume. Get in touch and we will send you a price list.'],
   /* No figure is invented here. Edik has not given the wholesale numbers, and an
      all-caps TALA VANTAR on a client's live page is worse than saying plainly that
      terms are agreed in conversation — which is also how most wholesale works. */
