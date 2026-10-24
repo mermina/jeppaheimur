@@ -724,7 +724,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
         <p data-t="p3b">Verð með VSK, sent á land allt. Engin verð „eftir samtali“.</p></div>
       <a class="proof__link" data-go="wholesale"><span class="num">04</span>
         <h3 data-t="p4h">Heildsala fyrir verkstæði</h3>
-        <p data-t="p4b">Rekurðu verkstæði eða selur áfram? Fast verð frá tiltekinni pöntun og beint samband við okkur.</p>
+        <p data-t="p4b">Rekurðu verkstæði eða selur áfram? Heildsöluverð frá tiltekinni pöntun og beint samband við okkur.</p>
         <span class="proof__more" data-t="p4link">Heildsala →</span></a>
     </div>
   </section>
@@ -808,11 +808,13 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
   </div>
   <section class="band">
     <div class="trio">
-      <div class="box"><span class="num">01</span><h2 data-t="wh1H">Fast verð, ekki tilboð í hvert sinn</h2>
-        <p data-t="wh1B">Þú fær verðlista og veist hvað hluturinn kostar áður en þú lofar viðskiptavini þínum nokkru.</p></div>
-      <div class="box"><span class="num">02</span><h2 data-t="wh2H">Beint samband</h2>
+      <!-- The "Fast verð, ekki tilboð í hvert sinn" box was removed on 24.10.2026.
+           Anna: a fixed price cannot be promised, because the cost of buying the
+           stock can rise. Its strings wh1H/wh1B are kept in the dictionary but
+           nothing renders them. -->
+      <div class="box"><span class="num">01</span><h2 data-t="wh2H">Beint samband</h2>
         <p data-t="wh2B">Þú talar við okkur, ekki við vefform. Við svörum hvort hluturinn passar og hvenær hann kemur.</p></div>
-      <div class="box"><span class="num">03</span><h2 data-t="wh3H">Á lager á Íslandi</h2>
+      <div class="box"><span class="num">02</span><h2 data-t="wh3H">Á lager á Íslandi</h2>
         <p data-t="wh3B">Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.</p></div>
     </div>
   </section>
@@ -1263,8 +1265,11 @@ const UI = {
 
 
   p4h:['Heildsala fyrir verkstæði','Wholesale for garages'],
-  p4b:['Rekurðu verkstæði eða selur áfram? Fast verð frá tiltekinni pöntun og beint samband við okkur.',
-       'Run a garage or resell? Fixed pricing from a set order quantity, and a direct line to us.'],
+  /* "Fast verð" dropped 24.10.2026 — Anna: the price cannot be promised fixed when
+     the cost of buying the stock can rise. Wholesale pricing is offered; a frozen
+     price is not. */
+  p4b:['Rekurðu verkstæði eða selur áfram? Heildsöluverð frá tiltekinni pöntun og beint samband við okkur.',
+       'Run a garage or resell? Wholesale pricing from a set order quantity, and a direct line to us.'],
   p4link:['Heildsala →','Wholesale →'],
 
   ftShop:['Verslun','Shop'], ftInfo:['Upplýsingar','Information'],
