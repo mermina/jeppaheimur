@@ -1847,8 +1847,23 @@ function render(){
     : [];
   document.getElementById('shopModelFilter').innerHTML =
     shopModels.length ? chipsHtml(shopModels, filters.shopModel, t('fAll')) : '';
+  /* Only the categories that actually exist for the chosen make. Marina,
+     24.10.2026: Ýmislegt was offering Gluggahlífar, Huddhlíf and Snorkel, which
+     no shovel will ever be. Derived from the products rather than listed, so a
+     new flokkur appears here the moment Edik files something under it. */
+  const shopCats = [...new Set(
+    PRODS.filter(p=>!filters.shopMake || p.make === filters.shopMake)
+         .map(p=>CATS[p.cat][L]))];
   document.getElementById('shopCatFilter').innerHTML =
-    chipsHtml(CATS.map(c=>c[L]), filters.shopCat, t('fAllCats'));
+    shopCats.length ? chipsHtml(shopCats, filters.shopCat, t('fAllCats')) : '';
+  /* A filter row with nothing in it is just a stray label. Only the shop's own
+     three rows — the make page renders its filters further down this function,
+     so a blanket sweep here would judge those on last pass's contents. */
+  ['shopMakeFilter','shopModelFilter','shopCatFilter'].forEach(id=>{
+    const chips = document.getElementById(id);
+    const row = chips && chips.closest('.frow');
+    if(row) row.style.display = chips.children.length ? '' : 'none';
+  });
   const shopList = PRODS.filter(p=>
     (!filters.shopMake  || p.make === filters.shopMake) &&
     (!filters.shopModel || p.model === filters.shopModel) &&
