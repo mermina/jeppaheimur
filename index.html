@@ -441,7 +441,10 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
 .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
 
 /* ─── inner pages ─── */
+/* Three boxes by default; two spread across the full width rather than leaving a
+   hole where the third used to be. The fixed-price box was dropped 24.10.2026. */
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.trio:has(> .box:nth-child(2):last-child){grid-template-columns:repeat(2,1fr)}
 .box{border:1px solid var(--line);background:var(--paper);border-radius:2px;padding:24px 22px}
 .box h2,.box h3{font-size:14.5px;letter-spacing:.07em;margin-bottom:9px}
 .box p{margin:0;font-size:14.5px;color:var(--ink-2)}
@@ -719,7 +722,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <div><span class="num">01</span><h3 data-t="p1h">Sýnt á bíl</h3>
         <p data-t="p1b">Hver hlutur er myndaður uppsettur á bíl, svo þú sérð hvað þú ert að kaupa.</p></div>
       <div><span class="num">02</span><h3 data-t="p2h">Til á lager hér</h3>
-        <p data-t="p2b">Vörurnar eru á Íslandi. Þú bíður ekki í fjórar vikur eftir sendingu.</p></div>
+        <p data-t="p2b">Vörurnar eru á Íslandi. Þú bíður ekki eftir sendingu að utan.</p></div>
       <div><span class="num">03</span><h3 data-t="p3h">Verðið er verðið</h3>
         <p data-t="p3b">Verð með VSK, sent á land allt. Engin verð „eftir samtali“.</p></div>
       <a class="proof__link" data-go="wholesale"><span class="num">04</span>
@@ -815,7 +818,7 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
       <div class="box"><span class="num">01</span><h2 data-t="wh2H">Beint samband</h2>
         <p data-t="wh2B">Þú talar við okkur, ekki við vefform. Við svörum hvort hluturinn passar og hvenær hann kemur.</p></div>
       <div class="box"><span class="num">02</span><h2 data-t="wh3H">Á lager á Íslandi</h2>
-        <p data-t="wh3B">Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.</p></div>
+        <p data-t="wh3B">Við eigum hlutina á lager hér á landi, svo bíllinn þarf ekki að bíða eftir sendingu að utan.</p></div>
     </div>
   </section>
   <!-- Anna, 24.10.2026: put the contacts here and drop the rest, so a garage asking
@@ -1257,8 +1260,8 @@ const UI = {
   p1b:['Hver hlutur er myndaður uppsettur á bíl, svo þú sérð hvað þú ert að kaupa.',
        'Every part is photographed fitted to a vehicle, so you can see what you are buying.'],
   p2h:['Til á lager hér','In stock in Iceland'],
-  p2b:['Vörurnar eru á Íslandi. Þú bíður ekki í fjórar vikur eftir sendingu.',
-       'The parts are already here. You are not waiting four weeks for a shipment.'],
+  p2b:['Vörurnar eru á Íslandi. Þú bíður ekki eftir sendingu að utan.',
+       'The parts are already here. You are not waiting on a shipment from abroad.'],
   p3h:['Verðið er verðið','The price is the price'],
   p3b:['Verð með VSK, sent á land allt. Engin verð „eftir samtali“.',
        'Prices include VAT, shipped nationwide. No “ask us for a price”.'],
@@ -1324,8 +1327,10 @@ const UI = {
   wh2B:['Þú talar við okkur, ekki við vefform. Við svörum hvort hluturinn passar og hvenær hann kemur.',
         'You talk to us, not to a web form. We answer whether it fits and when it lands.'],
   wh3H:['Á lager á Íslandi','Stock here in Iceland'],
-  wh3B:['Bíllinn er inni á verkstæðinu í dag, ekki í fjórar vikur á meðan beðið er eftir sendingu.',
-        'The car is in your workshop today, not for four weeks while a shipment crawls over.'],
+  /* No timescale promised — Marina, 24.10.2026. "Four weeks" was a number nobody
+     had committed to, and shipping times are not Edik's to guarantee. */
+  wh3B:['Við eigum hlutina á lager hér á landi, svo bíllinn þarf ekki að bíða eftir sendingu að utan.',
+        'We keep the parts in stock here in Iceland, so the car does not have to wait for a shipment from abroad.'],
   whTermsH:['Verð og skilmálar','Prices and terms'],
   whTermsP:['Verð, lágmarkspöntun og greiðsluskilmálar fara eftir umfangi. Hafðu samband og við sendum þér verðlista.',
             'Prices, minimum order and payment terms depend on the volume. Get in touch and we will send you a price list.'],
