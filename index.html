@@ -635,8 +635,8 @@ h2{font-size:clamp(22px,3.4vw,34px);letter-spacing:-.005em}
              White hands over to orange at the crossbar. Sized to the footprint
              the EW mark occupied, so the header proportions do not shift. -->
         <g fill="none" stroke-width="10" stroke-linecap="butt" stroke-linejoin="miter">
-          <path d="M48 8 V70 H14 V52" stroke="#F1F3F5"/>
-          <path d="M48 39 H101 M101 8 V70" stroke="var(--accent-lift)"/>
+          <path d="M57 8 V70 H17 V52" stroke="#F1F3F5"/>
+          <path d="M45 8 V70 M45 39 H96 M96 8 V70" stroke="var(--accent-lift)"/>
         </g>
       </svg>
       <span class="mark__t">Jeppaheimur<span>Aukahlutir í jeppann</span></span>
@@ -1762,9 +1762,11 @@ function render(){
   const below = MAKES.filter(m=>m.c <  FLOOR);
 
   /* front page: top eight only */
-  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('') + extrasHtml();
+  /* extrasHtml() is off since 24.10.2026 — Anna: the Ýmislegt tile advertises a
+     shelf with nothing on it. Append it again here (and below) when it has stock. */
+  document.getElementById('plates').innerHTML = above.slice(0,8).map(plateHtml).join('');
   /* choose-your-car: everything that earns a plate, plus the rest as text */
-  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('') + extrasHtml();
+  document.getElementById('platesAll').innerHTML = above.map(plateHtml).join('');
   /* ── search. One binder for every .findin on the page: the one under the
         makes grid and the one on the parts page. Each writes into the
         .findhits that follows its own bar, so adding a third is markup only.
@@ -1831,8 +1833,12 @@ function render(){
   /* ── shop: all products, filtered by make + category ── */
   /* every make we carry, in stock or not — a make with an empty shelf is a
      shop still filling up, not a missing door */
+  /* Same eight makes as the grid upstairs. Anna, 24.10.2026: Isuzu, Dodge and
+     Volkswagen were offered as filters but have no plate on the front page, so
+     the two lists disagreed. Keyed on the drawn logo, which is what earns a
+     plate — add a mark to EMB and the make appears in both places at once. */
   document.getElementById('shopMakeFilter').innerHTML =
-    chipsHtml(MAKES.map(m=>m.n), filters.shopMake, t('fAll'));
+    chipsHtml(MAKES.filter(m=>EMB[m.n]).map(m=>m.n), filters.shopMake, t('fAll'));
   /* "LC 120" means nothing until someone has said "Toyota", and across every
      make at once the row would mix Land Cruisers with Jimnys. So the chips
      wait for a make; the row keeps its place and sits empty until then. */
